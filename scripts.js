@@ -1,16 +1,76 @@
+/*=============== FIREBASE SETUP & GLOBAL VIEWS ===============*/
+// We fetch the Firebase SDK globally so it works natively without module restrictions
+const firebaseConfig = {
+  apiKey: 'AIzaSyC7t_zDeZfqb9pE_8L5BOfpZOX3_PdbSYg',
+  authDomain: 'nedcode-7b25f.firebaseapp.com',
+  projectId: 'nedcode-7b25f',
+  storageBucket: 'nedcode-7b25f.firebasestorage.app',
+  messagingSenderId: '683098380380',
+  appId: '1:683098380380:web:895ae95a6e75133dabee99',
+};
+
+// Fallback initial data
+let unfilteredData = [
+  {
+    id: 1,
+    caption: 'uConsole - polybar gedit',
+    date: 'Sept 20, 2026',
+    views: 732,
+    mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1836.jpeg' }],
+  },
+  {
+    id: 2,
+    caption: 'uConsole mod case',
+    date: 'Sept 18, 2026',
+    views: 78480,
+    mediaItems: [
+      { type: 'image', url: 'unfiltered Data/203745.png' },
+      { type: 'image', url: 'unfiltered Data/203808.png' },
+      { type: 'image', url: 'unfiltered Data/203820.png' },
+      { type: 'image', url: 'unfiltered Data/203845.png' },
+      { type: 'image', url: 'unfiltered Data/203857.png' },
+      { type: 'image', url: 'unfiltered Data/203908.png' },
+      { type: 'image', url: 'unfiltered Data/203950.png' },
+    ],
+  },
+  {
+    id: 3,
+    caption: 'uConsole',
+    date: 'Mar 28, 2025',
+    views: 574,
+    mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1892.jpeg' }],
+  },
+  {
+    id: 4,
+    caption: 'Mini notebook',
+    date: 'Aug 21 , 2025',
+    views: 220,
+    mediaItems: [
+      { type: 'image', url: 'unfiltered Data/IMG_2886.jpeg' },
+      { type: 'image', url: 'unfiltered Data/IMG_2887.jpeg' },
+    ],
+  },
+  {
+    id: 5,
+    caption: 'Unknown fruit',
+    date: 'Aug 17, 2025',
+    views: 341,
+    mediaItems: [
+      { type: 'image', url: 'unfiltered Data/IMG_2880.jpeg' },
+      { type: 'image', url: 'unfiltered Data/IMG_2881.jpeg' },
+    ],
+  },
+];
+
 /*=============== SHOW MENU ===============*/
 const navMenu = document.getElementById('nav-menu'),
   navToggle = document.getElementById('nav-toggle'),
   navClose = document.getElementById('nav-close');
 
-/*===== MENU SHOW =====*/
-// Validate if constant exists
 if (navToggle) {
   navToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent this click from triggering the document click
+    e.stopPropagation();
     navMenu.classList.toggle('show-menu');
-
-    // When opening the menu, make sure the hamburger animation stays in sync
     if (navMenu.classList.contains('show-menu')) {
       if (
         navToggle.querySelector('.ham1') &&
@@ -29,13 +89,9 @@ if (navToggle) {
   });
 }
 
-/*===== MENU HIDDEN =====*/
-// Validate if constant exists
 if (navClose) {
   navClose.addEventListener('click', () => {
     navMenu.classList.remove('show-menu');
-
-    // Update hamburger icon state
     if (
       navToggle.querySelector('.ham1') &&
       navToggle.querySelector('.ham1').classList.contains('active')
@@ -45,19 +101,13 @@ if (navClose) {
   });
 }
 
-/*===== ACTIVE AND REMOVE MENU =====*/
 const navLink = document.querySelectorAll('.nav-link');
 
 function linkAction() {
-  /*Active link*/
   navLink.forEach((n) => n.classList.remove('active'));
   this.classList.add('active');
-
-  /*Remove menu mobile*/
   const navMenu = document.getElementById('nav-menu');
   navMenu.classList.remove('show-menu');
-
-  // Update hamburger icon state
   if (
     navToggle.querySelector('.ham1') &&
     navToggle.querySelector('.ham1').classList.contains('active')
@@ -68,19 +118,15 @@ function linkAction() {
 
 navLink.forEach((n) => n.addEventListener('click', linkAction));
 
-// Prevent menu from closing when clicking inside the menu
 if (navMenu) {
   navMenu.addEventListener('click', (e) => {
     e.stopPropagation();
   });
 }
 
-// Close the menu when clicking outside
-document.addEventListener('click', (event) => {
+document.addEventListener('click', () => {
   if (navMenu && navMenu.classList.contains('show-menu')) {
     navMenu.classList.remove('show-menu');
-
-    // Update hamburger icon state
     if (
       navToggle.querySelector('.ham1') &&
       navToggle.querySelector('.ham1').classList.contains('active')
@@ -93,21 +139,18 @@ document.addEventListener('click', (event) => {
 /*===== CONTACT-TEXTAREA =====*/
 let textArea = document.getElementById('textbox');
 let characterCounter = document.getElementById('char_count');
-const maxNumOfChars = 250; // Updated from 100 to 250
+const maxNumOfChars = 250;
 
 const countCharacters = () => {
-  if (!textArea) return; // Guard clause if element doesn't exist
-
+  if (!textArea) return;
   let numOfEnteredChars = textArea.value.length;
   let counter = maxNumOfChars - numOfEnteredChars;
 
   if (characterCounter) {
-    characterCounter.textContent = counter + '/250'; // Updated from /100 to /250
-
+    characterCounter.textContent = counter + '/250';
     if (counter < 0) {
       characterCounter.style.color = 'var(--ninth-color)';
     } else if (counter < 50) {
-      // Updated from 20 to 50
       characterCounter.style.color = 'var(--fifteenth-color)';
     } else {
       characterCounter.style.color = 'var(--second-color)';
@@ -117,14 +160,11 @@ const countCharacters = () => {
 
 if (textArea) {
   textArea.addEventListener('input', countCharacters);
-  // Set maxlength attribute
   textArea.setAttribute('maxlength', maxNumOfChars);
-  // Initialize counter on page load
   countCharacters();
 }
 
 /*===== BACK TO TOP BUTTON =====*/
-// Create the back to top button element
 const createBackToTopButton = () => {
   const button = document.createElement('button');
   button.innerHTML = '<i class="uil uil-arrow-up"></i>';
@@ -135,10 +175,8 @@ const createBackToTopButton = () => {
   return button;
 };
 
-// Initialize the button
 const backToTopBtn = createBackToTopButton();
 
-// Show/hide the button based on scroll position
 window.addEventListener('scroll', () => {
   if (window.scrollY > 300) {
     backToTopBtn.classList.add('show');
@@ -147,7 +185,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Scroll to top when the button is clicked
 backToTopBtn.addEventListener('click', () => {
   window.scrollTo({
     top: 0,
@@ -155,103 +192,83 @@ backToTopBtn.addEventListener('click', () => {
   });
 });
 
-// Unfiltered items supporting multi-image/video carousels & touch/click navigation
-// Load saved views from localStorage if they exist, otherwise use default data
-const savedViews = JSON.parse(localStorage.getItem('unfiltered_views')) || {};
+/*=============== FIREBASE CLOUD VIEWS LOGIC ===============*/
+let db = null;
 
-const unfilteredData = [
-  {
-    id: 1,
-    caption: 'uConsole - polybar gedit',
-    date: 'Sept 20, 2026',
-    views: savedViews[1] !== undefined ? savedViews[1] : 732,
-    mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1836.jpeg' }],
-  },
-  {
-    id: 2,
-    caption: 'uConsole mod case',
-    date: 'Sept 18, 2026',
-    views: savedViews[2] !== undefined ? savedViews[2] : 78480,
-    mediaItems: [
-      { type: 'image', url: 'unfiltered Data/203745.png' },
-      { type: 'image', url: 'unfiltered Data/203808.png' },
-      { type: 'image', url: 'unfiltered Data/203820.png' },
-      { type: 'image', url: 'unfiltered Data/203845.png' },
-      { type: 'image', url: 'unfiltered Data/203857.png' },
-      { type: 'image', url: 'unfiltered Data/203908.png' },
-      { type: 'image', url: 'unfiltered Data/203950.png' },
-    ],
-  },
-  {
-    id: 3,
-    caption: 'uConsole',
-    date: 'Mar 28, 2025',
-    views: savedViews[3] !== undefined ? savedViews[3] : 574,
-    mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1892.jpeg' }],
-  },
-  {
-    id: 4,
-    caption: 'Mini notebook',
-    date: 'Aug 21 , 2025',
-    views: savedViews[4] !== undefined ? savedViews[4] : 220,
-    mediaItems: [
-      { type: 'image', url: 'unfiltered Data/IMG_2886.jpeg' },
-      { type: 'image', url: 'unfiltered Data/IMG_2887.jpeg' },
-    ],
-  },
-  {
-    id: 5,
-    caption: 'Unknown fruit',
-    date: 'Aug 17, 2025',
-    views: savedViews[5] !== undefined ? savedViews[5] : 341,
-    mediaItems: [
-      { type: 'image', url: 'unfiltered Data/IMG_2880.jpeg' },
-      { type: 'image', url: 'unfiltered Data/IMG_2881.jpeg' },
-    ],
-  },
-];
+async function initFirebaseAndViews() {
+  try {
+    if (typeof firebase !== 'undefined') {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
 
-// Helper to increment and persist views
-function incrementPostView(postId) {
-  const viewedSessionKey = `viewed_post_${postId}`;
+      // Fetch global view counts from Firestore
+      const docRef = db.collection('stats').doc('post_views');
+      const docSnap = await docRef.get();
 
-  // Check if this specific browser already counted this view in this session/storage
-  if (!sessionStorage.getItem(viewedSessionKey)) {
-    sessionStorage.setItem(viewedSessionKey, 'true');
+      if (docSnap.exists) {
+        const cloudViews = docSnap.data();
+        unfilteredData.forEach((post) => {
+          if (cloudViews[post.id] !== undefined) {
+            post.views = cloudViews[post.id];
+          }
+        });
+      } else {
+        // Initialize document if it doesn't exist yet
+        const initialViews = {};
+        unfilteredData.forEach((p) => (initialViews[p.id] = p.views));
+        await docRef.set(initialViews);
+      }
+    }
+  } catch (err) {
+    console.error('Error connecting to Firebase, using default views:', err);
+  }
 
-    const item = unfilteredData.find((p) => p.id === postId);
-    if (item) {
-      item.views += 1;
+  // Render feed after checking cloud views
+  renderUnfilteredFeed();
+}
 
-      // Save all current view counts into localStorage
-      const viewsMap = {};
-      unfilteredData.forEach((p) => {
-        viewsMap[p.id] = p.views;
+// Increment post view safely once per session
+async function incrementPostView(postId) {
+  const sessionKey = `firebase_viewed_${postId}`;
+  if (sessionStorage.getItem(sessionKey)) return;
+  sessionStorage.setItem(sessionKey, 'true');
+
+  const post = unfilteredData.find((p) => p.id === postId);
+  if (!post) return;
+
+  post.views += 1;
+
+  if (db) {
+    try {
+      const docRef = db.collection('stats').doc('post_views');
+      await docRef.update({
+        [postId]: firebase.firestore.FieldValue.increment(1),
       });
-      localStorage.setItem('unfiltered_views', JSON.stringify(viewsMap));
+    } catch (err) {
+      console.error('Failed to update cloud view count:', err);
     }
   }
 }
 
 const unfilteredIndices = {};
-
-// Pagination state variables (5 items per page)
+const unfilteredCooldowns = {};
 let unfilteredCurrentPage = 1;
 const unfilteredPostsPerPage = 5;
 
-// Switch slides seamlessly without re-rendering the whole DOM / feed
 function updateUnfilteredSlideView(id, newIndex, totalSlides) {
+  const now = Date.now();
+  if (unfilteredCooldowns[id] && now - unfilteredCooldowns[id] < 350) return;
+  unfilteredCooldowns[id] = now;
+
   unfilteredIndices[id] = newIndex;
   const container = document.getElementById(`uf-container-${id}`);
   if (!container) return;
 
-  // 1. Show/hide correct slide images
   const slides = container.querySelectorAll('.unfiltered-slide');
   slides.forEach((slide, idx) => {
     slide.style.display = idx === newIndex ? 'flex' : 'none';
   });
 
-  // 2. Update dots styling
   const dotsContainer = document.getElementById(`uf-dots-${id}`);
   if (dotsContainer) {
     const dots = dotsContainer.querySelectorAll('.unfiltered-dot');
@@ -261,32 +278,17 @@ function updateUnfilteredSlideView(id, newIndex, totalSlides) {
     });
   }
 
-  // 3. Update arrow opacities & states dynamically
   const buttons = container.querySelectorAll('button');
   if (buttons.length >= 2) {
     const prevBtn = buttons[0];
     const nextBtn = buttons[1];
-
     const isFirst = newIndex === 0;
     const isLast = newIndex === totalSlides - 1;
 
     prevBtn.style.opacity = isFirst ? '0.3' : '0.8';
     prevBtn.style.pointerEvents = isFirst ? 'none' : 'auto';
-    prevBtn.onmouseover = () => {
-      if (!isFirst) prevBtn.style.opacity = '1';
-    };
-    prevBtn.onmouseout = () => {
-      if (!isFirst) prevBtn.style.opacity = '0.8';
-    };
-
     nextBtn.style.opacity = isLast ? '0.3' : '0.8';
     nextBtn.style.pointerEvents = isLast ? 'none' : 'auto';
-    nextBtn.onmouseover = () => {
-      if (!isLast) nextBtn.style.opacity = '1';
-    };
-    nextBtn.onmouseout = () => {
-      if (!isLast) nextBtn.style.opacity = '0.8';
-    };
   }
 }
 
@@ -294,7 +296,6 @@ function changeUnfilteredSlide(id, direction, totalSlides, event) {
   if (event) event.stopPropagation();
   const currentIndex = unfilteredIndices[id] || 0;
   const newIndex = currentIndex + direction;
-
   if (newIndex >= 0 && newIndex < totalSlides) {
     updateUnfilteredSlideView(id, newIndex, totalSlides);
   }
@@ -310,7 +311,6 @@ function renderUnfilteredFeed() {
 
   feedContainer.innerHTML = '';
 
-  // Calculate pagination boundaries
   const totalPosts = unfilteredData.length;
   const totalPages = Math.ceil(totalPosts / unfilteredPostsPerPage) || 1;
 
@@ -322,7 +322,6 @@ function renderUnfilteredFeed() {
   const paginatedItems = unfilteredData.slice(startIndex, endIndex);
 
   paginatedItems.forEach((item) => {
-    // Increment view count persistently upon rendering/viewing
     incrementPostView(item.id);
 
     if (unfilteredIndices[item.id] === undefined)
@@ -343,12 +342,9 @@ function renderUnfilteredFeed() {
             }" data-slide="${idx}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: ${
           idx === currIdx ? 'flex' : 'none'
         }; align-items: center; justify-content: center; overflow: hidden; background: #000;">
-                <!-- Blurred background fill -->
                 <div style="position: absolute; inset: 0; background-image: url('${
                   media.url
                 }'); background-size: cover; background-position: center; filter: blur(20px) brightness(0.6); transform: scale(1.1); pointer-events: none;"></div>
-                
-                <!-- Main sharp image -->
                 <img src="${
                   media.url
                 }" alt="Post content" loading="lazy" style="position: relative; max-width: 100%; max-height: 100%; object-fit: contain; z-index: 2; pointer-events: none;">
@@ -361,28 +357,18 @@ function renderUnfilteredFeed() {
       ? `
             <button onclick="changeUnfilteredSlide(${item.id}, -1, ${
           item.mediaItems.length
-        }, event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; transition: opacity 0.2s; opacity: ${
+        }, event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; opacity: ${
           currIdx === 0 ? '0.3' : '0.8'
-        }; pointer-events: ${
-          currIdx === 0 ? 'none' : 'auto'
-        };" onmouseover="if(${
-          currIdx !== 0
-        }) this.style.opacity='1';" onmouseout="if(${
-          currIdx !== 0
-        }) this.style.opacity='0.8';">
+        }; pointer-events: ${currIdx === 0 ? 'none' : 'auto'};">
                 <i class="fa-solid fa-chevron-left" style="font-size: 0.8rem;"></i>
             </button>
             <button onclick="changeUnfilteredSlide(${item.id}, 1, ${
           item.mediaItems.length
-        }, event)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; transition: opacity 0.2s; opacity: ${
+        }, event)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; opacity: ${
           currIdx === item.mediaItems.length - 1 ? '0.3' : '0.8'
         }; pointer-events: ${
           currIdx === item.mediaItems.length - 1 ? 'none' : 'auto'
-        };" onmouseover="if(${
-          currIdx !== item.mediaItems.length - 1
-        }) this.style.opacity='1';" onmouseout="if(${
-          currIdx !== item.mediaItems.length - 1
-        }) this.style.opacity='0.8';">
+        };">
                 <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
             </button>
         `
@@ -411,7 +397,6 @@ function renderUnfilteredFeed() {
       : '';
 
     itemEl.innerHTML = `
-            <!-- TOP BAR: Views on top left, Date/Time on top right -->
             <div class="unfiltered-header-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 0.9rem; color: var(--text-color, #ccc);">
                 <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 6px;">
                     <i class="fa-regular fa-eye"></i>
@@ -422,32 +407,15 @@ function renderUnfilteredFeed() {
                     <span class="unfiltered-date">${item.date}</span>
                 </div>
             </div>
-
-            <!-- MEDIA CONTAINER -->
             <div class="unfiltered-media-container" id="uf-container-${item.id}" style="position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; user-select: none; background: #000;">
                 ${slidesHTML}
                 ${arrowsHTML}
                 ${dotsHTML}
             </div>
-
-            <!-- POST CONTENT & BOTTOM ACTIONS -->
             <div class="unfiltered-post-content" style="padding: 16px;">
                 <p class="unfiltered-caption" style="margin-bottom: 14px; line-height: 1.5;">${item.caption}</p>
-                
                 <div class="unfiltered-footer-row" style="display: flex; justify-content: flex-end; align-items: center;">
-                    
-                    <!-- UNCOMMENT BELOW TO RE-ENABLE LIKES BUTTON & COUNT -->
-                    <!-- 
-                    <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 8px;">
-                        <button class="unfiltered-like-btn \${item.liked ? 'liked' : ''}" onclick="toggleUnfilteredLike(\${item.id})" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center;">
-                            <i class="\${item.liked ? 'fa-solid' : 'fa-regular'} fa-heart" style="font-size: 1.2rem; color: \${item.liked ? '#ff3b30' : 'inherit'};"></i>
-                        </button>
-                        <span id="uf-count-\${item.id}" style="font-weight: 500;">\${item.likes}</span>
-                    </div> 
-                    -->
-
-                    <!-- Share Button -->
-                    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${item.id})" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: inherit; opacity: 0.8; font-size: 0.9rem; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${item.id})" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: inherit; opacity: 0.8; font-size: 0.9rem;">
                         <i class="fa-solid fa-share-nodes"></i> Share
                     </button>
                 </div>
@@ -458,7 +426,6 @@ function renderUnfilteredFeed() {
     setupUnfilteredGestures(item.id, item.mediaItems.length);
   });
 
-  // Render bottom page numbers pagination bar (only if there's more than 1 page)
   if (totalPages > 1) {
     const paginationEl = document.createElement('div');
     paginationEl.className = 'unfiltered-pagination';
@@ -482,7 +449,6 @@ function renderUnfilteredFeed() {
           cursor: pointer;
           font-weight: ${isActive ? '600' : '400'};
           font-size: 0.9rem;
-          transition: all 0.2s;
         ">${i}</button>
       `;
     }
@@ -491,22 +457,18 @@ function renderUnfilteredFeed() {
   }
 }
 
-// Function to handle page clicks and smooth scroll back up
 function changeUnfilteredPage(pageNumber) {
   unfilteredCurrentPage = pageNumber;
   renderUnfilteredFeed();
-
   const feedContainer = document.getElementById('unfilteredFeedList');
   if (feedContainer) {
     feedContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
-// Share helper function
 async function shareUnfilteredPost(postId) {
   const post = unfilteredData.find((p) => p.id === postId);
   if (!post) return;
-
   const shareUrl = window.location.href.split('#')[0] + '#post-' + postId;
   const shareData = {
     title: 'NEDCODE Unfiltered',
@@ -514,51 +476,30 @@ async function shareUnfilteredPost(postId) {
     url: shareUrl,
   };
 
-  // 1. Try mobile native share first if available
   if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
     try {
       await navigator.share(shareData);
       return;
     } catch (err) {
-      if (err.name === 'AbortError') return; // User cancelled, do nothing
+      if (err.name === 'AbortError') return;
     }
   }
 
-  // 2. Fallback clipboard copy for PC desktop (using a temporary textarea)
   try {
     const textarea = document.createElement('textarea');
     textarea.value = shareUrl;
-    textarea.style.position = 'fixed'; // Avoid scrolling to bottom
+    textarea.style.position = 'fixed';
     textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-
-    const successful = document.execCommand('copy');
+    document.execCommand('copy');
     document.body.removeChild(textarea);
-
-    if (successful) {
-      alert('Link copied to clipboard!');
-    } else {
-      prompt('Copy this link:', shareUrl);
-    }
+    alert('Link copied to clipboard!');
   } catch (err) {
-    console.error('Failed to copy link: ', err);
     prompt('Copy this link:', shareUrl);
   }
 }
-
-/* 
-// UNCOMMENT BELOW TO RE-ENABLE LIKE TOGGLE LOGIC
-function toggleUnfilteredLike(id) {
-  const item = unfilteredData.find((i) => i.id === id);
-  if (item) {
-    item.liked = !item.liked;
-    item.likes += item.liked ? 1 : -1;
-    renderUnfilteredFeed();
-  }
-}
-*/
 
 function setupUnfilteredGestures(id, totalSlides) {
   const container = document.getElementById(`uf-container-${id}`);
@@ -566,38 +507,71 @@ function setupUnfilteredGestures(id, totalSlides) {
 
   let startX = 0;
   let isDragging = false;
+  let hasSwiped = false;
 
   container.addEventListener('pointerdown', (e) => {
     startX = e.clientX;
     isDragging = true;
+    hasSwiped = false;
   });
 
-  container.addEventListener('pointerup', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
+  container.addEventListener('pointermove', (e) => {
+    if (!isDragging || hasSwiped) return;
     const diffX = e.clientX - startX;
     const currentIdx = unfilteredIndices[id] || 0;
 
     if (Math.abs(diffX) > 40) {
+      hasSwiped = true;
       if (diffX < 0 && currentIdx < totalSlides - 1) {
         updateUnfilteredSlideView(id, currentIdx + 1, totalSlides);
       } else if (diffX > 0 && currentIdx > 0) {
         updateUnfilteredSlideView(id, currentIdx - 1, totalSlides);
       }
-    } else {
+    }
+  });
+
+  container.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    if (!hasSwiped) {
       const rect = container.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
+      const currentIdx = unfilteredIndices[id] || 0;
+
       if (clickX < rect.width / 2 && currentIdx > 0) {
         updateUnfilteredSlideView(id, currentIdx - 1, totalSlides);
       } else if (clickX >= rect.width / 2 && currentIdx < totalSlides - 1) {
         updateUnfilteredSlideView(id, currentIdx + 1, totalSlides);
       }
     }
+    hasSwiped = false;
   });
 
   container.addEventListener('pointerleave', () => {
     isDragging = false;
+    hasSwiped = false;
   });
+
+  container.addEventListener(
+    'wheel',
+    (e) => {
+      e.preventDefault();
+      const currentIdx = unfilteredIndices[id] || 0;
+      const scrollDelta =
+        Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+      if (Math.abs(scrollDelta) > 15) {
+        if (scrollDelta > 0 && currentIdx < totalSlides - 1) {
+          updateUnfilteredSlideView(id, currentIdx + 1, totalSlides);
+        } else if (scrollDelta < 0 && currentIdx > 0) {
+          updateUnfilteredSlideView(id, currentIdx - 1, totalSlides);
+        }
+      }
+    },
+    { passive: false }
+  );
 }
 
-document.addEventListener('DOMContentLoaded', renderUnfilteredFeed);
+// Initialize Firebase and run feed renderer on page load
+document.addEventListener('DOMContentLoaded', initFirebaseAndViews);
