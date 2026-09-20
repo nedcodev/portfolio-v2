@@ -163,7 +163,7 @@ const unfilteredData = [
     date: 'Sept 20, 2026',
     /* likes: 142, */ // <-- Uncomment to re-enable likes data
     /* liked: false, */
-    views: 432,
+    views: 732,
     mediaItems: [
       {
         type: 'image',
@@ -177,7 +177,7 @@ const unfilteredData = [
     date: 'Sept 18, 2026',
     /* likes: 89, */ // <-- Uncomment to re-enable likes data
     /* liked: false, */
-    views: 280,
+    views: 78480,
     mediaItems: [
       {
         type: 'image',
@@ -215,7 +215,7 @@ const unfilteredData = [
     date: 'Mar 28, 2025',
     /* likes: 89, */ // <-- Uncomment to re-enable likes data
     /* liked: false, */
-    views: 280,
+    views: 574,
     mediaItems: [
       {
         type: 'image',
@@ -229,7 +229,7 @@ const unfilteredData = [
     date: 'Aug 21 , 2025',
     /* likes: 89, */ // <-- Uncomment to re-enable likes data
     /* liked: false, */
-    views: 280,
+    views: 220,
     mediaItems: [
       {
         type: 'image',
@@ -247,7 +247,7 @@ const unfilteredData = [
     date: 'Aug 17, 2025',
     /* likes: 89, */ // <-- Uncomment to re-enable likes data
     /* liked: false, */
-    views: 280,
+    views: 341,
     mediaItems: [
       {
         type: 'image',
