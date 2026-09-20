@@ -1,0 +1,8 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nedmarafawi/portfolio.git",
+  "author": "Ned Marafawi <70671308+nedmarafawi@users.noreply.github.com>",
+  "license": "MIT"
+}

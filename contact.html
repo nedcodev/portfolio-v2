@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="shortcut icon" type="image/png" href="./img/favicon.ico" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <title>Contact - NEDCODE</title>
+</head>
+
+<body>
+  <!--===== HEADER =====-->
+  <header class="l-header">
+    <nav class="nav bd-grid">
+
+      <div class="nav-logo">
+        <a href="index.html">
+          <img src="img/full-logo.png" alt="">
+        </a>
+      </div>
+      <div class="nav-logo1">
+        <a href="index.html">
+          <img src="img/logo-ned-n.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo2">
+        <a href="index.html">
+          <img src="img/logo-ned-e.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo3">
+        <a href="index.html">
+          <img src="img/logo-ned-d.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo4">
+        <a href="index.html">
+          <img src="img/logo-code-c.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo5">
+        <a href="index.html">
+          <img src="img/logo-code-o.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo6">
+        <a href="index.html">
+          <img src="img/logo-code-d.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo7">
+        <a href="index.html">
+          <img src="img/logo-code-e.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html" class="nav-link ">HOME</a></li>
+          <li class="nav-item "><a href="about.html" class="nav-link ">ABOUT</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">BLOG</a></li>
+          <li class="nav-item"><a href="favorites.html" class="nav-link">FAVORITES</a></li>
+          <!-- <li class="nav-item"><a href="shop.html" class="nav-link">SHOP</a></li> -->
+          <li class="nav-item"><a href="projects.html" class="nav-link ">PROJECTS</a></li>
+          <!-- <li class="nav-item"><a href="hotdeals.html" class="nav-link">HOT DEALS</a></li> -->
+          <li class="nav-item"><a href="contact.html" class="nav-link active">CONTACT</a></li>
+        </ul>
+      </div>
+
+      <!-- <div class="nav-toggle" id="nav-toggle">
+        <i class="uil uil-align-right"></i>
+      </div> -->
+
+      <!--===== MENU ICON =====-->
+      <div class="nav-toggle" id="nav-toggle">
+        <svg class="nav-toggle hamRotate ham1" viewBox="0 0 100 100" width="50"
+          onclick="this.classList.toggle('active')">
+          <path class="line top"
+            d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+          <path class="line middle" d="m 30,50 h 40" />
+          <path class="line bottom"
+            d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+        </svg>
+      </div>
+
+    </nav>
+  </header>
+
+  <!--===== CONTACT =====-->
+  <main class="l-main">
+    <section class="contact section " id="contact">
+      <div class="about-data">
+        <h2 class="contact-title section-title ">Contact</h2>
+
+        <div class="contact-container bd-grid">
+          <p class="contact-bio">Fill out this quick form and I'll get back to you as soon as I can!
+            <br>
+            <span class="contact-instagram">You can also send me a direct message on&nbsp;<a
+                class="contact-instagram-link" href="https://www.instagram.com/nedcodev/" target="_blank">Instagram</a>
+            </span>
+          </p>
+          <form name="contact" method="POST" class="contact-form" data-netlify="true" netlify-honeypot="bot-field">
+            <div class="form-group">
+              <!-- <label for="name" class="visually-hidden">Name</label> -->
+              <input type="text" id="name" name="name" placeholder="Name" class="contact-input" required />
+            </div>
+
+            <div class="form-group">
+              <!-- <label for="email" class="visually-hidden">Email</label> -->
+              <input type="email" id="email" name="email" placeholder="Email" class="contact-input" required />
+            </div>
+
+            <div class="form-group">
+              <!-- <label for="textbox" class="visually-hidden">Message</label> -->
+              <textarea name="message" id="textbox" cols="0" rows="10" placeholder="Write something..."
+                class="contact-input" style="min-height: 10em;" required></textarea>
+              <span id="char_count" class="char-count">250/250</span>
+            </div>
+
+            <button type="submit" class="contact-button button">SEND</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--===== FOOTER =====-->
+  <footer class="footer">
+    <div class="footer-social">
+      <a href="https://www.threads.net/@nedcodev/" target="_blank" class="footer-icon">
+        <iconify-icon icon="mingcute:threads-line"></iconify-icon>
+      </a>
+      <a href="https://www.instagram.com/nedcodev/" target="_blank" class="footer-icon">
+        <!-- <i class="uil uil-instagram"></i> -->
+        <iconify-icon icon="uil:instagram"></iconify-icon>
+      </a>
+      <a href="https://www.youtube.com/@NEDCODEV" target="_blank" class="footer-icon">
+        <iconify-icon icon="tdesign:logo-youtube"></iconify-icon>
+      </a>
+      <a href="https://www.tiktok.com/@nedcodev" target="_blank" class="footer-icon">
+        <iconify-icon icon="bxl:tiktok"></iconify-icon>
+      </a>
+      <!-- <a href="https://www.pinterest.com/nedcode/" target="_blank" class="footer-icon">
+        <iconify-icon icon="ph:pinterest-logo-bold"></iconify-icon>
+      </a> -->
+      <a href="https://twitter.com/nedcodev" target="_blank" class="footer-icon">
+        <iconify-icon icon="fa6-brands:x-twitter"></iconify-icon>
+      </a>
+      <a href="https://github.com/nedcodev" target="_blank" class="footer-icon">
+        <!-- <i class="uil uil-github-alt"></i> -->
+        <iconify-icon icon="mingcute:github-line"></iconify-icon>
+      </a>
+    </div>
+    <p>&#169; Designed & Developed by Ned, 2025
+      <br>
+      <br>
+    <p class="disclosure-footer">
+      Disclosure: My content is reader-supported. This means if you click on some of my links, then I may earn a
+      commission. I only recommend products and services I personally use and trust.
+    </p>
+
+    </p>
+  </footer>
+
+  <!--===== SCRIPTS =====-->
+  <script src="scripts.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+</body>
+
+</html>

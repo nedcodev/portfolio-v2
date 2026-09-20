@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.css" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="shortcut icon" type="image/png" href="./img/favicon.ico" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <title>Favorites - NEDCODE</title>
+</head>
+
+<body>
+  <!--===== HEADER =====-->
+  <header class="l-header">
+    <nav class="nav bd-grid">
+      <div class="nav-logo">
+        <a href="index.html">
+          <img src="img/full-logo.png" alt="">
+        </a>
+      </div>
+      <div class="nav-logo1">
+        <a href="index.html">
+          <img src="img/logo-ned-n.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo2">
+        <a href="index.html">
+          <img src="img/logo-ned-e.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo3">
+        <a href="index.html">
+          <img src="img/logo-ned-d.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo4">
+        <a href="index.html">
+          <img src="img/logo-code-c.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo5">
+        <a href="index.html">
+          <img src="img/logo-code-o.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo6">
+        <a href="index.html">
+          <img src="img/logo-code-d.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-logo7">
+        <a href="index.html">
+          <img src="img/logo-code-e.png" alt="">
+        </a>
+      </div>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">ABOUT</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">BLOG</a></li>
+          <!-- <li class="nav-item"><a href="shop.html" class="nav-link">SHOP</a></li> -->
+          <li class="nav-item"><a href="favorites.html" class="nav-link active">FAVORITES</a></li>
+          <li class="nav-item"><a href="projects.html" class="nav-link">PROJECTS</a></li>
+          <!-- <li class="nav-item"><a href="hotdeals.html" class="nav-link">HOT DEALS</a></li> -->
+          <li class="nav-item"><a href="contact.html" class="nav-link">CONTACT</a></li>
+        </ul>
+        <!-- <div class="nav-close" id="nav-close">
+          &#10799;
+          <span class="fa fa-solid fa-rectangle-xmark"></span>
+        </div> -->
+      </div>
+
+
+      <!--===== MENU ICON =====-->
+      <div class="nav-toggle" id="nav-toggle">
+        <svg class="nav-toggle hamRotate ham1" viewBox="0 0 100 100" width="50"
+          onclick="this.classList.toggle('active')">
+          <path class="line top"
+            d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+          <path class="line middle" d="m 30,50 h 40" />
+          <path class="line bottom"
+            d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+        </svg>
+      </div>
+
+
+      <!-- <div class="nav-toggle" id="nav-toggle">
+        <i class="uil uil-align-right"></i>
+      </div> -->
+    </nav>
+  </header>
+
+  <main class="l-main">
+    <!--===== PRODUCTS =====-->
+    <section class=" bd-grid" id="about">
+      <!-- Change about-data name to each it's own title -->
+      <div class="favorites-title">
+        <h1 class="about-title section-title">
+          Top
+          <!-- <br> -->
+          <span class="about-title-color">Picks</span>
+        </h1>
+        <p class="favorites-bio favorites-container-bio">A personally curated collection of films, shows, books, and
+          products that inspire me.<br>Discover what keeps me entertained when I'm not coding.
+          <span class="highlight">Updated regularly with new favorites.</span>
+        </p>
+        <!-- <span class="favorites-bio">Discover what keeps me entertained when I'm not coding.</span> -->
+      </div>
+
+
+
+
+      <article class="project section " id="projects">
+
+        <!--===== Books =====-->
+        <details class="favorites-img-title">
+          <summary class="favorites-link-title">Books</summary>
+          <!-- <ul style="list-style-type: '👉 ';"> -->
+          <!-- <ul style="list-style: disc"> -->
+
+          <details class="tree-nav__item is-expandable">
+
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Marcus Aurelius</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Meditations</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Tim Ferriss</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> The 4-Hour Workweek</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Ryan Holiday</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> The Obstacle Is the Way</li>
+                </a>
+              </ul>
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> Trust Me, I'm Lying</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Paulo Coelho</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> The Alchemist</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Simon Sinek</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Start with Why</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Robert Greene</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> The 48 Laws of Power</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> The 50th Law</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Ashlee Vance</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> Elon Musk</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Arlene Dickinso</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 3.5;"> Persuasion</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== Author =====-->
+            <summary class="tree-nav__item-title">by Tony Robbins</summary>
+            <div class="tree-nav__item">
+
+              <!--===== Title/Rating =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Unlimited Power</li>
+                </a>
+              </ul>
+            </div>
+          </details>
+
+
+        </details>
+
+
+
+
+        <!--===== MOVIES =====-->
+        <details class="favorites-img-title">
+          <summary class="favorites-link-title">Movies</summary>
+          <details class="tree-nav__item is-expandable">
+
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Sci-fi</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Christopher Nolan</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Oppenheimer (2024)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Interstellar (2014)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Inception (2010)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Dunkirk (2017)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Denis Villeneuve</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.4;"> Blade Runner 2049 (2017)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.1;"> Dune (2021)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4;"> Arrival (2016)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Stanley Kubrick</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> 2001: A Space Odyssey (1968)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by James Gray</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Ad Astra (2019)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Damien Chazelle</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> First Man (2018)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Alfonso Cuarón</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Gravity (2013)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Alex Garland</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Ex Machina (2014)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Ridley Scott</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Prometheus (2012)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Joseph Kosinski</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Oblivion (2013)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Lana Wachowski, Lilly Wachowski</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> The Matrix (1999)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+
+
+          </details>
+
+
+          <details class="tree-nav__item is-expandable">
+
+
+            <!--===== GENRE: Thriller =====-->
+            <summary class="tree-nav__item-title">Thriller</summary>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Christopher Nolan</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Memento (2000)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Stanley Kubrick</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Eyes Wide Shut (1999)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Todd Phillips</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Joker (2019)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Martin Scorsese</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Shutter Island (2010)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+
+
+          </details>
+
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Action =====-->
+            <summary class="tree-nav__item-title">Action</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Christopher Nolan</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Tenet (2020)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> The Dark Knight (2008)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by David Fincher</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Fight Club (1999)</li>
+                  </a>
+                </ul>
+
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by George Miller</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Mad Max: Fury Road (2015)</li>
+                  </a>
+                </ul>
+
+
+
+              </div>
+            </details>
+
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Horror =====-->
+            <summary class="tree-nav__item-title">Horror</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Stanley Kubrick</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> The Shining (1980)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Crime =====-->
+            <summary class="tree-nav__item-title">Crime</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Stanley Kubrick</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> A Clockwork Orange (1972)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Brian Helgeland</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 3.5;"> Legend (2015)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Steven Spielberg</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Catch Me If You Can (2002)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Martin Scorsese</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4;"> The Departed (2006)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Francis Ford Coppola</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> The Godfather (1972)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> The Godfather II (1974)</li>
+                  </a>
+                </ul>
+
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> The Godfather III (1990)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Brian De Palma</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Scarface (1983)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Michael Mann</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Public Enemies (2009)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Quentin Tarantino</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Pulp Fiction (1994)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+
+
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Western =====-->
+            <summary class="tree-nav__item-title">Western</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Quentin Tarantino</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Django Unchained (2012)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Martin Scorsese</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4;"> Killers of the Flower Moon (2023)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by John Hillcoat</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4;"> Lawless (2012)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Comedy =====-->
+            <summary class="tree-nav__item-title">Comedy</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Quentin Tarantino</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> Once Upon a Time in Hollywood (2019)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Martin Scorsese</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4.5;"> The Wolf of Wall Street (2013)</li>
+                  </a>
+                </ul>
+
+
+
+              </div>
+            </details>
+
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Drama =====-->
+            <summary class="tree-nav__item-title">Drama</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Lasse Hallström</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> What's Eating Gilbert Grape (1993)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+            <details class="tree-nav__item is-expandable">
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Gus Van Sant</summary>
+              <div class="tree-nav__item">
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> Good Will Hunting (1997)</li>
+                  </a>
+                </ul>
+
+              </div>
+            </details>
+
+
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Adventure =====-->
+            <summary class="tree-nav__item-title">Adventure</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Martin Scorsese</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 4;"> The Aviator (2004)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+
+
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: War =====-->
+            <summary class="tree-nav__item-title">War</summary>
+
+            <details class="tree-nav__item is-expandable">
+
+              <!--===== DIRECTOR =====-->
+              <summary class="tree-nav__item-title">by Sam Mendes</summary>
+              <div class="tree-nav__item">
+
+                <!--===== MOVIES =====-->
+                <ul>
+                  <a class="favorites-lists-font">
+                    <li class="rating" style="--rating-value: 5;"> 1917 (2019)</li>
+                  </a>
+                </ul>
+
+
+              </div>
+            </details>
+          </details>
+        </details>
+
+
+        <!--===== TV Shows =====-->
+        <details class="favorites-img-title">
+          <summary class="favorites-link-title">TV Shows</summary>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Sci-fi</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> The First (2018)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Black Mirror (2011)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> Westworld (2016)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> Raised by Wolves (2020)</li>
+                </a>
+              </ul>
+
+
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Drama</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 3.5;"> Succession (2018)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> The Queen's Gambit (2020)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Mystery</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Dark (2017)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> 1899 (2022)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> Hannibal (2013)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> Silo (2023)</li>
+                </a>
+              </ul>
+
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Western</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Yellowstone (2018)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Godless (2017)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> American Primeval (2025)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Comedy</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> The Office (2005)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Crime</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Mr. Robot (2015)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> Fargo (2014)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> The Sopranos (1999)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Breaking Bad (2008)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Ozark (2017)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Narcos (2015)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4;"> The Penguin (2024)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Fantasy</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 5;"> Stranger Things (2006)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> The Witcher (2019)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">History</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> Chernobyl (2019)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Adventure</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> Game of Thrones (2011)</li>
+                </a>
+              </ul>
+
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 3.5;"> The Last of Us (2023)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Horror</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> The Walking Dead (2010)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Action</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> The Boys (2019)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+          <details class="tree-nav__item is-expandable">
+            <!--===== GENRE: Sci-fi =====-->
+            <summary class="tree-nav__item-title">Thriller</summary>
+            <div class="tree-nav__item">
+              <!--===== Shows =====-->
+              <ul>
+                <a class="favorites-lists-font">
+                  <li class="rating" style="--rating-value: 4.5;"> The Agency (2024)</li>
+                </a>
+              </ul>
+
+            </div>
+          </details>
+
+
+
+        </details>
+
+
+
+      </article>
+
+      <!--===== 500+ ChatGPT Prompts =====-->
+      <!-- <section class="project section " id="projects">
+        <div class="projects-img-title">
+          <a href="https://www.etsy.com/ca/listing/1733892780/500-chatgpt-prompts-for-amazon-sellers?click_key=ab577b179ed9f5d8ac51f7ae99b96ac91dbd266c%3A1733892780&click_sum=c6158ffb&ref=shop_home_active_1&pro=1"
+            target="_blank" class="project-link-title ">
+            <div class="projects-title-arrow">
+              <i class="uil uil-angle-right"></i>
+            </div>
+            500+ ChatGPT Prompts
+          </a>
+
+          <a href="https://www.etsy.com/ca/listing/1733892780/500-chatgpt-prompts-for-amazon-sellers?click_key=ab577b179ed9f5d8ac51f7ae99b96ac91dbd266c%3A1733892780&click_sum=c6158ffb&ref=shop_home_active_1&pro=1"
+            target="_blank">
+            <div class="projects-img">
+              <img src="/img/NEDCODE-500ChatGPTPrompts.gif" alt="">
+            </div>
+          </a>
+        </div>
+        <p class="projects-img-description">
+          These prompts offer actionable insights and strategies that can propel your business to new heights.
+        </p>
+        <p class="projects-img-marketplace">
+          <a href="https://www.etsy.com/ca/listing/1733892780/500-chatgpt-prompts-for-amazon-sellers?click_key=ab577b179ed9f5d8ac51f7ae99b96ac91dbd266c%3A1733892780&click_sum=c6158ffb&ref=shop_home_active_1&pro=1"
+            target="_blank">
+            <button class="button-62" role="button">BUY NOW</button>
+          </a>
+        </p>
+      </section> -->
+    </section>
+    </section>
+  </main>
+
+  <!--===== FOOTER =====-->
+  <footer class="footer">
+    <div class="footer-social">
+      <a href="https://www.threads.net/@nedcodev/" target="_blank" class="footer-icon">
+        <iconify-icon icon="mingcute:threads-line"></iconify-icon>
+      </a>
+      <a href="https://www.instagram.com/nedcodev/" target="_blank" class="footer-icon">
+        <!-- <i class="uil uil-instagram"></i> -->
+        <iconify-icon icon="uil:instagram"></iconify-icon>
+      </a>
+      <a href="https://www.youtube.com/@NEDCODEV" target="_blank" class="footer-icon">
+        <iconify-icon icon="tdesign:logo-youtube"></iconify-icon>
+      </a>
+      <a href="https://www.tiktok.com/@nedcodev" target="_blank" class="footer-icon">
+        <iconify-icon icon="bxl:tiktok"></iconify-icon>
+      </a>
+      <!-- <a href="https://www.pinterest.com/nedcode/" target="_blank" class="footer-icon">
+        <iconify-icon icon="ph:pinterest-logo-bold"></iconify-icon>
+      </a> -->
+      <a href="https://twitter.com/nedcodev" target="_blank" class="footer-icon">
+        <iconify-icon icon="fa6-brands:x-twitter"></iconify-icon>
+      </a>
+      <a href="https://github.com/nedcodev" target="_blank" class="footer-icon">
+        <!-- <i class="uil uil-github-alt"></i> -->
+        <iconify-icon icon="mingcute:github-line"></iconify-icon>
+      </a>
+    </div>
+    <p>&#169; Designed & Developed by Ned, 2025
+      <br>
+      <br>
+    <p class="disclosure-footer">
+      Disclosure: My content is reader-supported. This means if you click on some of my links, then I may earn a
+      commission. I only recommend products and services I personally use and trust.
+    </p>
+    </p>
+  </footer>
+
+  <!--===== SCRIPTS =====-->
+  <script src="scripts.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <script>
+    pintrk('track', 'pagevisit', {
+      event_id: 'eventId0001'
+    });
+  </script>
+
+</html>
