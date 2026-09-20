@@ -156,116 +156,153 @@ backToTopBtn.addEventListener('click', () => {
 });
 
 // Unfiltered items supporting multi-image/video carousels & touch/click navigation
+// Load saved views from localStorage if they exist, otherwise use default data
+const savedViews = JSON.parse(localStorage.getItem('unfiltered_views')) || {};
+
 const unfilteredData = [
   {
     id: 1,
     caption: 'uConsole - polybar gedit',
     date: 'Sept 20, 2026',
-    /* likes: 142, */ // <-- Uncomment to re-enable likes data
-    /* liked: false, */
-    views: 732,
-    mediaItems: [
-      {
-        type: 'image',
-        url: 'unfiltered Data/IMG_1836.jpeg',
-      },
-    ],
+    views: savedViews[1] !== undefined ? savedViews[1] : 732,
+    mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1836.jpeg' }],
   },
   {
     id: 2,
     caption: 'uConsole mod case',
     date: 'Sept 18, 2026',
-    /* likes: 89, */ // <-- Uncomment to re-enable likes data
-    /* liked: false, */
-    views: 78480,
+    views: savedViews[2] !== undefined ? savedViews[2] : 78480,
     mediaItems: [
-      {
-        type: 'image',
-        url: 'unfiltered Data/203745.png',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/203808.png',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/203820.png',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/203845.png',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/203857.png',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/203908.png',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/203950.png',
-      },
+      { type: 'image', url: 'unfiltered Data/203745.png' },
+      { type: 'image', url: 'unfiltered Data/203808.png' },
+      { type: 'image', url: 'unfiltered Data/203820.png' },
+      { type: 'image', url: 'unfiltered Data/203845.png' },
+      { type: 'image', url: 'unfiltered Data/203857.png' },
+      { type: 'image', url: 'unfiltered Data/203908.png' },
+      { type: 'image', url: 'unfiltered Data/203950.png' },
     ],
   },
   {
     id: 3,
     caption: 'uConsole',
     date: 'Mar 28, 2025',
-    /* likes: 89, */ // <-- Uncomment to re-enable likes data
-    /* liked: false, */
-    views: 574,
-    mediaItems: [
-      {
-        type: 'image',
-        url: 'unfiltered Data/IMG_1892.jpeg',
-      },
-    ],
+    views: savedViews[3] !== undefined ? savedViews[3] : 574,
+    mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1892.jpeg' }],
   },
   {
     id: 4,
     caption: 'Mini notebook',
     date: 'Aug 21 , 2025',
-    /* likes: 89, */ // <-- Uncomment to re-enable likes data
-    /* liked: false, */
-    views: 220,
+    views: savedViews[4] !== undefined ? savedViews[4] : 220,
     mediaItems: [
-      {
-        type: 'image',
-        url: 'unfiltered Data/IMG_2886.jpeg',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/IMG_2887.jpeg',
-      },
+      { type: 'image', url: 'unfiltered Data/IMG_2886.jpeg' },
+      { type: 'image', url: 'unfiltered Data/IMG_2887.jpeg' },
     ],
   },
   {
     id: 5,
     caption: 'Unknown fruit',
     date: 'Aug 17, 2025',
-    /* likes: 89, */ // <-- Uncomment to re-enable likes data
-    /* liked: false, */
-    views: 341,
+    views: savedViews[5] !== undefined ? savedViews[5] : 341,
     mediaItems: [
-      {
-        type: 'image',
-        url: 'unfiltered Data/IMG_2880.jpeg',
-      },
-      {
-        type: 'image',
-        url: 'unfiltered Data/IMG_2881.jpeg',
-      },
+      { type: 'image', url: 'unfiltered Data/IMG_2880.jpeg' },
+      { type: 'image', url: 'unfiltered Data/IMG_2881.jpeg' },
     ],
   },
 ];
+
+// Helper to increment and persist views
+function incrementPostView(postId) {
+  const viewedSessionKey = `viewed_post_${postId}`;
+
+  // Check if this specific browser already counted this view in this session/storage
+  if (!sessionStorage.getItem(viewedSessionKey)) {
+    sessionStorage.setItem(viewedSessionKey, 'true');
+
+    const item = unfilteredData.find((p) => p.id === postId);
+    if (item) {
+      item.views += 1;
+
+      // Save all current view counts into localStorage
+      const viewsMap = {};
+      unfilteredData.forEach((p) => {
+        viewsMap[p.id] = p.views;
+      });
+      localStorage.setItem('unfiltered_views', JSON.stringify(viewsMap));
+    }
+  }
+}
 
 const unfilteredIndices = {};
 
 // Pagination state variables (5 items per page)
 let unfilteredCurrentPage = 1;
 const unfilteredPostsPerPage = 5;
+
+// Switch slides seamlessly without re-rendering the whole DOM / feed
+function updateUnfilteredSlideView(id, newIndex, totalSlides) {
+  unfilteredIndices[id] = newIndex;
+  const container = document.getElementById(`uf-container-${id}`);
+  if (!container) return;
+
+  // 1. Show/hide correct slide images
+  const slides = container.querySelectorAll('.unfiltered-slide');
+  slides.forEach((slide, idx) => {
+    slide.style.display = idx === newIndex ? 'flex' : 'none';
+  });
+
+  // 2. Update dots styling
+  const dotsContainer = document.getElementById(`uf-dots-${id}`);
+  if (dotsContainer) {
+    const dots = dotsContainer.querySelectorAll('.unfiltered-dot');
+    dots.forEach((dot, idx) => {
+      dot.style.background =
+        idx === newIndex ? '#fff' : 'rgba(255,255,255,0.4)';
+    });
+  }
+
+  // 3. Update arrow opacities & states dynamically
+  const buttons = container.querySelectorAll('button');
+  if (buttons.length >= 2) {
+    const prevBtn = buttons[0];
+    const nextBtn = buttons[1];
+
+    const isFirst = newIndex === 0;
+    const isLast = newIndex === totalSlides - 1;
+
+    prevBtn.style.opacity = isFirst ? '0.3' : '0.8';
+    prevBtn.style.pointerEvents = isFirst ? 'none' : 'auto';
+    prevBtn.onmouseover = () => {
+      if (!isFirst) prevBtn.style.opacity = '1';
+    };
+    prevBtn.onmouseout = () => {
+      if (!isFirst) prevBtn.style.opacity = '0.8';
+    };
+
+    nextBtn.style.opacity = isLast ? '0.3' : '0.8';
+    nextBtn.style.pointerEvents = isLast ? 'none' : 'auto';
+    nextBtn.onmouseover = () => {
+      if (!isLast) nextBtn.style.opacity = '1';
+    };
+    nextBtn.onmouseout = () => {
+      if (!isLast) nextBtn.style.opacity = '0.8';
+    };
+  }
+}
+
+function changeUnfilteredSlide(id, direction, totalSlides, event) {
+  if (event) event.stopPropagation();
+  const currentIndex = unfilteredIndices[id] || 0;
+  const newIndex = currentIndex + direction;
+
+  if (newIndex >= 0 && newIndex < totalSlides) {
+    updateUnfilteredSlideView(id, newIndex, totalSlides);
+  }
+}
+
+function goToUnfilteredSlide(id, index, totalSlides) {
+  updateUnfilteredSlideView(id, index, totalSlides);
+}
 
 function renderUnfilteredFeed() {
   const feedContainer = document.getElementById('unfilteredFeedList');
@@ -285,6 +322,9 @@ function renderUnfilteredFeed() {
   const paginatedItems = unfilteredData.slice(startIndex, endIndex);
 
   paginatedItems.forEach((item) => {
+    // Increment view count persistently upon rendering/viewing
+    incrementPostView(item.id);
+
     if (unfilteredIndices[item.id] === undefined)
       unfilteredIndices[item.id] = 0;
     const currIdx = unfilteredIndices[item.id];
@@ -298,27 +338,51 @@ function renderUnfilteredFeed() {
     let slidesHTML = item.mediaItems
       .map(
         (media, idx) => `
-            <div class="unfiltered-slide" data-id="${item.id}" data-slide="${idx}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: ${idx === currIdx ? 'flex' : 'none'}; align-items: center; justify-content: center; overflow: hidden; background: #000;">
+            <div class="unfiltered-slide" data-id="${
+              item.id
+            }" data-slide="${idx}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: ${
+          idx === currIdx ? 'flex' : 'none'
+        }; align-items: center; justify-content: center; overflow: hidden; background: #000;">
                 <!-- Blurred background fill -->
-                <div style="position: absolute; inset: 0; background-image: url('${media.url}'); background-size: cover; background-position: center; filter: blur(20px) brightness(0.6); transform: scale(1.1); pointer-events: none;"></div>
+                <div style="position: absolute; inset: 0; background-image: url('${
+                  media.url
+                }'); background-size: cover; background-position: center; filter: blur(20px) brightness(0.6); transform: scale(1.1); pointer-events: none;"></div>
                 
                 <!-- Main sharp image -->
-                <img src="${media.url}" alt="Post content" loading="lazy" style="position: relative; max-width: 100%; max-height: 100%; object-fit: contain; z-index: 2; pointer-events: none;">
-                
-                <!-- UNCOMMENT BELOW TO RE-ENABLE DOUBLE-TAP HEART ANIMATION -->
-                <!-- <i class="fa-solid fa-heart unfiltered-floating-heart" id="uf-heart-${item.id}-${idx}" style="z-index: 3;"></i> -->
+                <img src="${
+                  media.url
+                }" alt="Post content" loading="lazy" style="position: relative; max-width: 100%; max-height: 100%; object-fit: contain; z-index: 2; pointer-events: none;">
             </div>
-        `,
+        `
       )
       .join('');
 
-    // Left & Right Arrow Controls (Visible only if there are multiple images)
     let arrowsHTML = hasMultiple
       ? `
-            <button onclick="prevUnfilteredSlide(${item.id}, event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; transition: background 0.2s; ${currIdx === 0 ? 'opacity: 0.3; pointer-events: none;' : 'opacity: 0.8;'}" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+            <button onclick="changeUnfilteredSlide(${item.id}, -1, ${
+          item.mediaItems.length
+        }, event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; transition: opacity 0.2s; opacity: ${
+          currIdx === 0 ? '0.3' : '0.8'
+        }; pointer-events: ${
+          currIdx === 0 ? 'none' : 'auto'
+        };" onmouseover="if(${
+          currIdx !== 0
+        }) this.style.opacity='1';" onmouseout="if(${
+          currIdx !== 0
+        }) this.style.opacity='0.8';">
                 <i class="fa-solid fa-chevron-left" style="font-size: 0.8rem;"></i>
             </button>
-            <button onclick="nextUnfilteredSlide(${item.id}, ${item.mediaItems.length}, event)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; transition: background 0.2s; ${currIdx === item.mediaItems.length - 1 ? 'opacity: 0.3; pointer-events: none;' : 'opacity: 0.8;'}" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+            <button onclick="changeUnfilteredSlide(${item.id}, 1, ${
+          item.mediaItems.length
+        }, event)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; transition: opacity 0.2s; opacity: ${
+          currIdx === item.mediaItems.length - 1 ? '0.3' : '0.8'
+        }; pointer-events: ${
+          currIdx === item.mediaItems.length - 1 ? 'none' : 'auto'
+        };" onmouseover="if(${
+          currIdx !== item.mediaItems.length - 1
+        }) this.style.opacity='1';" onmouseout="if(${
+          currIdx !== item.mediaItems.length - 1
+        }) this.style.opacity='0.8';">
                 <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
             </button>
         `
@@ -326,12 +390,20 @@ function renderUnfilteredFeed() {
 
     let dotsHTML = hasMultiple
       ? `
-            <div class="unfiltered-dots" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; background: rgba(0,0,0,0.4); padding: 6px 10px; border-radius: 20px; backdrop-filter: blur(4px);">
+            <div class="unfiltered-dots" id="uf-dots-${
+              item.id
+            }" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; background: rgba(0,0,0,0.4); padding: 6px 10px; border-radius: 20px; backdrop-filter: blur(4px);">
                 ${item.mediaItems
                   .map(
                     (_, idx) => `
-                    <span class="unfiltered-dot ${idx === currIdx ? 'active' : ''}" onclick="goToUnfilteredSlide(${item.id}, ${idx})" style="width: 8px; height: 8px; border-radius: 50\%; background: ${idx === currIdx ? '#fff' : 'rgba(255,255,255,0.4)'}; cursor: pointer; transition: background 0.3s;"></span>
-                `,
+                    <span class="unfiltered-dot ${
+                      idx === currIdx ? 'active' : ''
+                    }" onclick="goToUnfilteredSlide(${item.id},${idx}, ${
+                      item.mediaItems.length
+                    })" style="width: 8px; height: 8px; border-radius: 50\%; background: ${
+                      idx === currIdx ? '#fff' : 'rgba(255,255,255,0.4)'
+                    }; cursor: pointer; transition: background 0.3s;"></span>
+                `
                   )
                   .join('')}
             </div>
@@ -398,9 +470,13 @@ function renderUnfilteredFeed() {
       const isActive = i === unfilteredCurrentPage;
       pagesHTML += `
         <button onclick="changeUnfilteredPage(${i})" style="
-          background: ${isActive ? 'var(--accent-color, #fff)' : 'rgba(255, 255, 255, 0.05)'};
+          background: ${
+            isActive ? 'var(--accent-color, #fff)' : 'rgba(255, 255, 255, 0.05)'
+          };
           color: ${isActive ? '#000' : 'var(--text-color, #ccc)'};
-          border: 1px solid ${isActive ? 'transparent' : 'rgba(255, 255, 255, 0.1)'};
+          border: 1px solid ${
+            isActive ? 'transparent' : 'rgba(255, 255, 255, 0.1)'
+          };
           padding: 8px 14px;
           border-radius: 6px;
           cursor: pointer;
@@ -423,23 +499,6 @@ function changeUnfilteredPage(pageNumber) {
   const feedContainer = document.getElementById('unfilteredFeedList');
   if (feedContainer) {
     feedContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-// Slide navigation helper functions for arrows
-function prevUnfilteredSlide(id, event) {
-  if (event) event.stopPropagation();
-  if (unfilteredIndices[id] > 0) {
-    unfilteredIndices[id]--;
-    renderUnfilteredFeed();
-  }
-}
-
-function nextUnfilteredSlide(id, totalSlides, event) {
-  if (event) event.stopPropagation();
-  if (unfilteredIndices[id] < totalSlides - 1) {
-    unfilteredIndices[id]++;
-    renderUnfilteredFeed();
   }
 }
 
@@ -489,11 +548,6 @@ async function shareUnfilteredPost(postId) {
   }
 }
 
-function goToUnfilteredSlide(id, index) {
-  unfilteredIndices[id] = index;
-  renderUnfilteredFeed();
-}
-
 /* 
 // UNCOMMENT BELOW TO RE-ENABLE LIKE TOGGLE LOGIC
 function toggleUnfilteredLike(id) {
@@ -522,26 +576,21 @@ function setupUnfilteredGestures(id, totalSlides) {
     if (!isDragging) return;
     isDragging = false;
     const diffX = e.clientX - startX;
+    const currentIdx = unfilteredIndices[id] || 0;
 
     if (Math.abs(diffX) > 40) {
-      if (diffX < 0 && unfilteredIndices[id] < totalSlides - 1) {
-        unfilteredIndices[id]++;
-      } else if (diffX > 0 && unfilteredIndices[id] > 0) {
-        unfilteredIndices[id]--;
+      if (diffX < 0 && currentIdx < totalSlides - 1) {
+        updateUnfilteredSlideView(id, currentIdx + 1, totalSlides);
+      } else if (diffX > 0 && currentIdx > 0) {
+        updateUnfilteredSlideView(id, currentIdx - 1, totalSlides);
       }
-      renderUnfilteredFeed();
     } else {
       const rect = container.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
-      if (clickX < rect.width / 2 && unfilteredIndices[id] > 0) {
-        unfilteredIndices[id]--;
-        renderUnfilteredFeed();
-      } else if (
-        clickX >= rect.width / 2 &&
-        unfilteredIndices[id] < totalSlides - 1
-      ) {
-        unfilteredIndices[id]++;
-        renderUnfilteredFeed();
+      if (clickX < rect.width / 2 && currentIdx > 0) {
+        updateUnfilteredSlideView(id, currentIdx - 1, totalSlides);
+      } else if (clickX >= rect.width / 2 && currentIdx < totalSlides - 1) {
+        updateUnfilteredSlideView(id, currentIdx + 1, totalSlides);
       }
     }
   });
