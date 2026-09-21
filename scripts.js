@@ -1,5 +1,4 @@
-/*=============== FIREBASE SETUP & GLOBAL VIEWS ===============*/
-// We fetch the Firebase SDK globally so it works natively without module restrictions
+/*=============== FIREBASE SETUP & GLOBAL DATA ===============*/
 const firebaseConfig = {
   apiKey: 'AIzaSyC7t_zDeZfqb9pE_8L5BOfpZOX3_PdbSYg',
   authDomain: 'nedcode-7b25f.firebaseapp.com',
@@ -9,13 +8,14 @@ const firebaseConfig = {
   appId: '1:683098380380:web:895ae95a6e75133dabee99',
 };
 
-// Fallback initial data
+// Fallback initial data (including default likes)
 let unfilteredData = [
   {
     id: 1,
     caption: 'uConsole - polybar gedit',
     date: 'Sept 20, 2026',
     views: 732,
+    likes: 42,
     mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1836.jpeg' }],
   },
   {
@@ -23,6 +23,7 @@ let unfilteredData = [
     caption: 'uConsole mod case',
     date: 'Sept 18, 2026',
     views: 78480,
+    likes: 1250,
     mediaItems: [
       { type: 'image', url: 'unfiltered Data/203745.png' },
       { type: 'image', url: 'unfiltered Data/203808.png' },
@@ -38,6 +39,7 @@ let unfilteredData = [
     caption: 'uConsole',
     date: 'Mar 28, 2025',
     views: 574,
+    likes: 18,
     mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1892.jpeg' }],
   },
   {
@@ -45,6 +47,7 @@ let unfilteredData = [
     caption: 'Mini notebook',
     date: 'Aug 21 , 2025',
     views: 220,
+    likes: 31,
     mediaItems: [
       { type: 'image', url: 'unfiltered Data/IMG_2886.jpeg' },
       { type: 'image', url: 'unfiltered Data/IMG_2887.jpeg' },
@@ -55,6 +58,7 @@ let unfilteredData = [
     caption: 'Unknown fruit',
     date: 'Aug 17, 2025',
     views: 341,
+    likes: 24,
     mediaItems: [
       { type: 'image', url: 'unfiltered Data/IMG_2880.jpeg' },
       { type: 'image', url: 'unfiltered Data/IMG_2881.jpeg' },
@@ -192,38 +196,53 @@ backToTopBtn.addEventListener('click', () => {
   });
 });
 
-/*=============== FIREBASE CLOUD VIEWS LOGIC ===============*/
+/*=============== FIREBASE CLOUD SYNC LOGIC ===============*/
 let db = null;
 
-async function initFirebaseAndViews() {
+async function initFirebaseAndData() {
   try {
     if (typeof firebase !== 'undefined') {
       firebase.initializeApp(firebaseConfig);
       db = firebase.firestore();
 
-      // Fetch global view counts from Firestore
       const docRef = db.collection('stats').doc('post_views');
       const docSnap = await docRef.get();
 
       if (docSnap.exists) {
-        const cloudViews = docSnap.data();
+        const cloudData = docSnap.data();
         unfilteredData.forEach((post) => {
-          if (cloudViews[post.id] !== undefined) {
-            post.views = cloudViews[post.id];
+          // Map views from direct properties (e.g. cloudData["1"]) or nested objects
+          if (cloudData[post.id] !== undefined) {
+            if (typeof cloudData[post.id] === 'number') {
+              post.views = cloudData[post.id];
+            } else if (cloudData[post.id].views !== undefined) {
+              post.views = cloudData[post.id].views;
+            }
+          }
+          // Map likes from separate fields (e.g. cloudData["like_1"]) or nested objects
+          if (cloudData[`like_${post.id}`] !== undefined) {
+            post.likes = cloudData[`like_${post.id}`];
+          } else if (
+            cloudData[post.id] &&
+            cloudData[post.id].likes !== undefined
+          ) {
+            post.likes = cloudData[post.id].likes;
           }
         });
       } else {
-        // Initialize document if it doesn't exist yet
-        const initialViews = {};
-        unfilteredData.forEach((p) => (initialViews[p.id] = p.views));
-        await docRef.set(initialViews);
+        // Initialize document fields if it doesn't exist yet
+        const initialData = {};
+        unfilteredData.forEach((p) => {
+          initialData[p.id] = p.views;
+          initialData[`like_${p.id}`] = p.likes;
+        });
+        await docRef.set(initialData);
       }
     }
   } catch (err) {
-    console.error('Error connecting to Firebase, using default views:', err);
+    console.error('Error connecting to Firebase, using default data:', err);
   }
 
-  // Render feed after checking cloud views
   renderUnfilteredFeed();
 }
 
@@ -246,6 +265,36 @@ async function incrementPostView(postId) {
       });
     } catch (err) {
       console.error('Failed to update cloud view count:', err);
+    }
+  }
+}
+
+// Toggle Like function
+async function toggleUnfilteredLike(postId) {
+  const post = unfilteredData.find((p) => p.id === postId);
+  if (!post) return;
+
+  const likedKey = `liked_post_${postId}`;
+  const isLiked = localStorage.getItem(likedKey) === 'true';
+
+  const newLikedState = !isLiked;
+  localStorage.setItem(likedKey, newLikedState);
+
+  const incrementVal = newLikedState ? 1 : -1;
+  post.likes += incrementVal;
+
+  // Update UI instantly
+  renderUnfilteredFeed();
+
+  if (db) {
+    try {
+      const docRef = db.collection('stats').doc('post_views');
+      await docRef.update({
+        [`like_${postId}`]:
+          firebase.firestore.FieldValue.increment(incrementVal),
+      });
+    } catch (err) {
+      console.error('Failed to update cloud likes:', err);
     }
   }
 }
@@ -328,6 +377,7 @@ function renderUnfilteredFeed() {
       unfilteredIndices[item.id] = 0;
     const currIdx = unfilteredIndices[item.id];
     const hasMultiple = item.mediaItems.length > 1;
+    const isLiked = localStorage.getItem(`liked_post_${item.id}`) === 'true';
 
     const itemEl = document.createElement('div');
     itemEl.className = 'unfiltered-feed-item';
@@ -407,15 +457,39 @@ function renderUnfilteredFeed() {
                     <span class="unfiltered-date">${item.date}</span>
                 </div>
             </div>
-            <div class="unfiltered-media-container" id="uf-container-${item.id}" style="position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; user-select: none; background: #000;">
+            <div class="unfiltered-media-container" id="uf-container-${
+              item.id
+            }" style="position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; user-select: none; background: #000;">
                 ${slidesHTML}
                 ${arrowsHTML}
                 ${dotsHTML}
             </div>
             <div class="unfiltered-post-content" style="padding: 16px;">
-                <p class="unfiltered-caption" style="margin-bottom: 14px; line-height: 1.5;">${item.caption}</p>
-                <div class="unfiltered-footer-row" style="display: flex; justify-content: flex-end; align-items: center;">
-                    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${item.id})" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: inherit; opacity: 0.8; font-size: 0.9rem;">
+                <p class="unfiltered-caption" style="margin-bottom: 14px; line-height: 1.5;">${
+                  item.caption
+                }</p>
+                <div class="unfiltered-footer-row" style="display: flex; justify-content: space-between; align-items: center;">
+                    
+                    <!-- Likes Button & Count -->
+                    <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 8px;">
+                        <button class="unfiltered-like-btn" onclick="toggleUnfilteredLike(${
+                          item.id
+                        })" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center;">
+                            <i class="${
+                              isLiked ? 'fa-solid' : 'fa-regular'
+                            } fa-heart" style="font-size: 1.2rem; color: ${
+      isLiked ? '#ff3b30' : 'inherit'
+    }; transition: color 0.2s;"></i>
+                        </button>
+                        <span style="font-weight: 500; font-size: 0.9rem;">${
+                          item.likes
+                        }</span>
+                    </div>
+
+                    <!-- Share Button -->
+                    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${
+                      item.id
+                    })" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: inherit; opacity: 0.8; font-size: 0.9rem;">
                         <i class="fa-solid fa-share-nodes"></i> Share
                     </button>
                 </div>
@@ -574,4 +648,4 @@ function setupUnfilteredGestures(id, totalSlides) {
 }
 
 // Initialize Firebase and run feed renderer on page load
-document.addEventListener('DOMContentLoaded', initFirebaseAndViews);
+document.addEventListener('DOMContentLoaded', initFirebaseAndData);
