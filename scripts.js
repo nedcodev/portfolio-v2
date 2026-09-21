@@ -211,7 +211,6 @@ async function initFirebaseAndData() {
       if (docSnap.exists) {
         const cloudData = docSnap.data();
         unfilteredData.forEach((post) => {
-          // Map views from direct properties (e.g. cloudData["1"]) or nested objects
           if (cloudData[post.id] !== undefined) {
             if (typeof cloudData[post.id] === 'number') {
               post.views = cloudData[post.id];
@@ -219,7 +218,6 @@ async function initFirebaseAndData() {
               post.views = cloudData[post.id].views;
             }
           }
-          // Map likes from separate fields (e.g. cloudData["like_1"]) or nested objects
           if (cloudData[`like_${post.id}`] !== undefined) {
             post.likes = cloudData[`like_${post.id}`];
           } else if (
@@ -230,7 +228,6 @@ async function initFirebaseAndData() {
           }
         });
       } else {
-        // Initialize document fields if it doesn't exist yet
         const initialData = {};
         unfilteredData.forEach((p) => {
           initialData[p.id] = p.views;
@@ -246,7 +243,6 @@ async function initFirebaseAndData() {
   renderUnfilteredFeed();
 }
 
-// Increment post view safely once per session
 async function incrementPostView(postId) {
   const sessionKey = `firebase_viewed_${postId}`;
   if (sessionStorage.getItem(sessionKey)) return;
@@ -269,7 +265,6 @@ async function incrementPostView(postId) {
   }
 }
 
-// Toggle Like function
 async function toggleUnfilteredLike(postId) {
   const post = unfilteredData.find((p) => p.id === postId);
   if (!post) return;
@@ -283,7 +278,6 @@ async function toggleUnfilteredLike(postId) {
   const incrementVal = newLikedState ? 1 : -1;
   post.likes += incrementVal;
 
-  // Update UI instantly
   renderUnfilteredFeed();
 
   if (db) {
@@ -453,7 +447,6 @@ function renderUnfilteredFeed() {
                     <span>${item.views}</span>
                 </div>
                 <div class="unfiltered-header-right" style="display: flex; align-items: center; gap: 6px; opacity: 0.85;">
-                    <i class="fa-regular fa-clock"></i>
                     <span class="unfiltered-date">${item.date}</span>
                 </div>
             </div>
@@ -465,12 +458,9 @@ function renderUnfilteredFeed() {
                 ${dotsHTML}
             </div>
             <div class="unfiltered-post-content" style="padding: 16px;">
-                <p class="unfiltered-caption" style="margin-bottom: 14px; line-height: 1.5;">${
-                  item.caption
-                }</p>
-                <div class="unfiltered-footer-row" style="display: flex; justify-content: space-between; align-items: center;">
-                    
-                    <!-- Likes Button & Count -->
+                <!-- Footer row above the caption, with likes, count, and share button tightly grouped together -->
+                <div class="unfiltered-footer-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 14px;">
+                    <!-- Heart Button & Count -->
                     <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 8px;">
                         <button class="unfiltered-like-btn" onclick="toggleUnfilteredLike(${
                           item.id
@@ -486,13 +476,17 @@ function renderUnfilteredFeed() {
                         }</span>
                     </div>
 
-                    <!-- Share Button -->
+                    <!-- Curved Arrow Share Button right beside it -->
                     <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${
                       item.id
-                    })" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: inherit; opacity: 0.8; font-size: 0.9rem;">
-                        <i class="fa-solid fa-share-nodes"></i> Share
+                    })" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0; color: inherit; opacity: 0.8; font-size: 1.1rem;">
+                        <i class="fa-solid fa-share"></i>
                     </button>
                 </div>
+
+                <p class="unfiltered-caption" style="margin-bottom: 0; line-height: 1.5;">${
+                  item.caption
+                }</p>
             </div>
         `;
 
@@ -647,5 +641,4 @@ function setupUnfilteredGestures(id, totalSlides) {
   );
 }
 
-// Initialize Firebase and run feed renderer on page load
 document.addEventListener('DOMContentLoaded', initFirebaseAndData);
