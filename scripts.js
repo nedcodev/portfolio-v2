@@ -8,7 +8,7 @@ const firebaseConfig = {
   appId: '1:683098380380:web:895ae95a6e75133dabee99',
 };
 
-// Fallback initial data (including default likes)
+// Fallback & initial manual data (these serve as your manual entry points)
 let unfilteredData = [
   {
     id: 1,
@@ -65,6 +65,11 @@ let unfilteredData = [
     ],
   },
 ];
+
+/*=============== NUMBER FORMATTER HELPER ===============*/
+function formatNumber(num) {
+  return num.toLocaleString();
+}
 
 /*=============== SHOW MENU ===============*/
 const navMenu = document.getElementById('nav-menu'),
@@ -211,33 +216,46 @@ async function initFirebaseAndData() {
       if (docSnap.exists) {
         const cloudData = docSnap.data();
         unfilteredData.forEach((post) => {
+          const baseViews = post.views;
+          const baseLikes = post.likes;
+
+          let cloudViewsDelta = 0;
+          let cloudLikesDelta = 0;
+
           if (cloudData[post.id] !== undefined) {
             if (typeof cloudData[post.id] === 'number') {
-              post.views = cloudData[post.id];
+              cloudViewsDelta = cloudData[post.id];
             } else if (cloudData[post.id].views !== undefined) {
-              post.views = cloudData[post.id].views;
+              cloudViewsDelta = cloudData[post.id].views;
             }
           }
+
           if (cloudData[`like_${post.id}`] !== undefined) {
-            post.likes = cloudData[`like_${post.id}`];
+            cloudLikesDelta = cloudData[`like_${post.id}`];
           } else if (
             cloudData[post.id] &&
             cloudData[post.id].likes !== undefined
           ) {
-            post.likes = cloudData[post.id].likes;
+            cloudLikesDelta = cloudData[post.id].likes;
           }
+
+          post.views = baseViews + cloudViewsDelta;
+          post.likes = baseLikes + cloudLikesDelta;
         });
       } else {
         const initialData = {};
         unfilteredData.forEach((p) => {
-          initialData[p.id] = p.views;
-          initialData[`like_${p.id}`] = p.likes;
+          initialData[p.id] = 0;
+          initialData[`like_${p.id}`] = 0;
         });
         await docRef.set(initialData);
       }
     }
   } catch (err) {
-    console.error('Error connecting to Firebase, using default data:', err);
+    console.error(
+      'Error connecting to Firebase, using manual script data:',
+      err
+    );
   }
 
   renderUnfilteredFeed();
@@ -252,13 +270,17 @@ async function incrementPostView(postId) {
   if (!post) return;
 
   post.views += 1;
+  renderUnfilteredFeed();
 
   if (db) {
     try {
       const docRef = db.collection('stats').doc('post_views');
-      await docRef.update({
-        [postId]: firebase.firestore.FieldValue.increment(1),
-      });
+      await docRef.set(
+        {
+          [postId]: firebase.firestore.FieldValue.increment(1),
+        },
+        { merge: true }
+      );
     } catch (err) {
       console.error('Failed to update cloud view count:', err);
     }
@@ -283,10 +305,13 @@ async function toggleUnfilteredLike(postId) {
   if (db) {
     try {
       const docRef = db.collection('stats').doc('post_views');
-      await docRef.update({
-        [`like_${postId}`]:
-          firebase.firestore.FieldValue.increment(incrementVal),
-      });
+      await docRef.set(
+        {
+          [`like_${postId}`]:
+            firebase.firestore.FieldValue.increment(incrementVal),
+        },
+        { merge: true }
+      );
     } catch (err) {
       console.error('Failed to update cloud likes:', err);
     }
@@ -444,7 +469,7 @@ function renderUnfilteredFeed() {
             <div class="unfiltered-header-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 0.9rem; color: var(--text-color, #ccc);">
                 <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 6px;">
                     <i class="fa-regular fa-eye"></i>
-                    <span>${item.views}</span>
+                    <span>${formatNumber(item.views)}</span>
                 </div>
                 <div class="unfiltered-header-right" style="display: flex; align-items: center; gap: 6px; opacity: 0.85;">
                     <span class="unfiltered-date">${item.date}</span>
@@ -471,9 +496,9 @@ function renderUnfilteredFeed() {
       isLiked ? '#ff3b30' : 'inherit'
     }; transition: color 0.2s;"></i>
                         </button>
-                        <span style="font-weight: 500; font-size: 0.9rem;">${
+                        <span style="font-weight: 500; font-size: 0.9rem;">${formatNumber(
                           item.likes
-                        }</span>
+                        )}</span>
                     </div>
 
                     <!-- Curved Arrow Share Button right beside it -->
