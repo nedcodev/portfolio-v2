@@ -416,7 +416,7 @@ function renderUnfilteredFeed() {
                 }'); background-size: cover; background-position: center; filter: blur(20px) brightness(0.6); transform: scale(1.1); pointer-events: none;"></div>
                 <img src="${
                   media.url
-                }" alt="Post content" loading="lazy" style="position: relative; max-width: 100%; max-height: 100%; object-fit: contain; z-index: 2; pointer-events: none;">
+                }" alt="Post content" loading="lazy" style="position: relative; width: 100%; height: 100%; object-fit: cover; z-index: 2; pointer-events: none;">
             </div>
         `
       )

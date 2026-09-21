@@ -488,116 +488,87 @@ img {
 
 
 /* --- Unfiltered Feed Component Styles --- */
+
 .unfiltered-section {
-    max-width: 600px;
-    width: 100%;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-family: inherit;
-    color: #e0e0e0;
-}
-
-.unfiltered-section .feed-title {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 6px;
-}
-
-.unfiltered-section .feed-subtitle {
-    font-size: 0.9rem;
-    color: #888888;
-    margin-bottom: 24px;
-}
-
-.unfiltered-feed-list {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-.unfiltered-feed-item {
-    background-color: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .unfiltered-media-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background-color: #000000;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: #000000;
+  user-select: none;
+  isolation: isolate; /* Creates a clean rendering layer so background colors can't leak through sub-pixel gaps */
 }
 
 .unfiltered-media-track {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-    width: 100%;
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
 }
 
 .unfiltered-slide {
-    min-width: 100%;
-    position: relative;
-    cursor: pointer;
-    user-select: none;
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #000000;
+  flex-shrink: 0;
 }
 
 .unfiltered-slide img,
 .unfiltered-slide video {
-    width: 100%;
-    height: auto;
-    max-height: 550px;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+  flex-shrink: 0;
 }
 
-/* Floating Heart Animation */
-.unfiltered-floating-heart {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    color: #ff3b30;
-    font-size: 4rem;
-    pointer-events: none;
-    z-index: 10;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-    opacity: 0;
-}
-
-.unfiltered-floating-heart.animate {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 1;
-}
-
+/* Navigation and Pagination Dots */
 /* Dots & Arrows */
 .unfiltered-dots {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 6px 10px;
-    border-radius: 20px;
-    backdrop-filter: blur(4px);
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+  background: transparent; /* Remove the semi-transparent box background */
+  padding: 0;
+  backdrop-filter: none;
 }
 
 .unfiltered-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.4);
-    transition: background-color 0.2s ease, transform 0.2s ease;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border: none;
 }
 
 .unfiltered-dot.active {
-    background-color: #ffffff;
-    transform: scale(1.2);
+  background-color: #ffffff;
+  transform: scale(1.2);
 }
 
 .unfiltered-carousel-btn {
