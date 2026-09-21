@@ -17,12 +17,16 @@
   <link rel="shortcut icon" type="image/png" href="./img/favicon.ico" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <title>NEDCODE</title>
 </head>
 
 <body>
-  <!-- HEADER SECTION - Contains navigation and logo -->
+
+
+  <main class="l-main">
+      <!-- HEADER SECTION - Contains navigation and logo -->
   <header class="l-header">
     <nav class="nav bd-grid ">
 
@@ -72,9 +76,9 @@
       <!-- Navigation menu -->
       <div class="nav-menu" id="nav-menu">
         <ul class="nav-list">
-          <li class="nav-item"><a href="index.html" class="nav-link active">home</a></li>
+         <li class="nav-item"><a href="index.html" class="nav-link ">home</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">about</a></li>
-          <li class="nav-item"><a href="unfiltered.html" class="nav-link">unfiltered</a></li>
+          <li class="nav-item"><a href="unfiltered.html" class="nav-link active">unfiltered</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">blog</a></li>
           <li class="nav-item"><a href="favorites.html" class="nav-link">favorites</a></li>
           <li class="nav-item"><a href="projects.html" class="nav-link">projects</a></li>
@@ -95,34 +99,26 @@
       </div>
     </nav>
   </header>
-
-  <main class="l-main">
     <!-- HOME SECTION - Main content area -->
     <section class="home bd-grid" id="home">
-      <!-- Introduction text -->
-      <div class="home-data">
-        <h1 class="home-title">
-          Hi, I'm
-          <span class="home-name-color">
-            Ned
-          </span>
-          <span class="emoji" id="wave">
-            <img class="wave" src="img/wave-hand.png" alt="Waving hand emoji">
-          </span>
-           <br>
-          <span class="home-title-color">
-            Frontend Developer
-          </span>
+       <!-- Change about-data name to each it's own title -->
+      <div class="favorites-title">
+        <h1 class="about-title section-title">
+          unfiltered
+          <span class="about-title-color">Data</span>
         </h1>
-        <h2 class="home-title-description">
-          Based out of
-          <span class="home-city-color">Montreal</span>,
-          <span class="home-country-color">Canada</span>.
-        </h2>
+        <p class="favorites-bio ">Raw logs, tech builds, gaming, GIFs, IRL.
+        </p>
       </div>
+    
+    <!-- Feed items will inject here -->
+    <div class="unfiltered-feed-list" id="unfilteredFeedList"></div>
+
+
+      
 
       <!-- Social media links -->
-      <div class="home-social">
+      <!-- <div class="home-social">
         <a href="https://www.threads.net/@nedcodev/" target="_blank" class="home-social-icon">
           <iconify-icon icon="mingcute:threads-line"></iconify-icon>
         </a>
@@ -144,10 +140,10 @@
         <a href="https://buymeacoffee.com/nedcode" target="_blank" class="coffee-social-icon">
           <iconify-icon icon="simple-icons:buymeacoffee"></iconify-icon>
         </a>
-      </div>
+      </div> -->
 
       <!-- Newsletter subscription section -->
-      <div class="subscribe-description">
+      <!-- <div class="subscribe-description">
         <p>Exciting Updates <span class="highlight">Coming Soon!</span>
           <br><strong><span class="subscribe">SUBSCRIBE</span></strong> to my newsletter to stay in the loop.
         </p>
@@ -155,9 +151,44 @@
       <div class="subscribe-button">
         <iframe src="https://embeds.beehiiv.com/70a8bd62-70d8-435c-9c06-6860d82f5cf3?slim=true"
           data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no"></iframe>
-      </div>
+      </div> -->
     </section>
   </main>
+
+  <footer class="footer">
+    <!-- <div class="footer-social">
+      <a href="https://www.threads.net/@nedcodev/" target="_blank" class="footer-icon">
+        <iconify-icon icon="mingcute:threads-line"></iconify-icon>
+      </a>
+      <a href="https://www.instagram.com/nedcodev/" target="_blank" class="footer-icon">
+        <iconify-icon icon="uil:instagram"></iconify-icon>
+      </a>
+      <a href="https://www.youtube.com/@NEDCODEV" target="_blank" class="footer-icon">
+        <iconify-icon icon="tdesign:logo-youtube"></iconify-icon>
+      </a>
+      <a href="https://www.tiktok.com/@nedcodev" target="_blank" class="footer-icon">
+        <iconify-icon icon="bxl:tiktok"></iconify-icon>
+      </a>
+     
+      <a href="https://twitter.com/nedcodev" target="_blank" class="footer-icon">
+
+        <iconify-icon icon="fa6-brands:x-twitter"></iconify-icon>
+      </a>
+      <a href="https://github.com/nedcodev" target="_blank" class="footer-icon">
+      
+        <iconify-icon icon="mingcute:github-line"></iconify-icon>
+      </a>
+    </div> -->
+    <p>&#169; Designed & Developed by Ned, 2026
+      <br>
+      <br>
+    <!-- <p class="disclosure-footer">
+      Disclosure: My content is reader-supported. This means if you click on some of my links, then I may earn a
+      commission. I only recommend products and services I personally use and trust.
+    </p> -->
+    </p>
+
+  </footer>
 
   <!-- SCRIPTS - JavaScript files and integrations -->
   <script src="scripts.js"></script>
@@ -168,6 +199,9 @@
       event_id: 'eventId0001'
     });
   </script>
+  <!-- Firebase App SDK (Compat versions) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </body>
 
 </html>
