@@ -19,6 +19,10 @@
   --rating-inactive-color: #3e3e3e;
   --rating-background: #FFDD00;
 
+  /* ===== Yellow Title Underline ===== */
+    --page-title-gap: 1.5rem;
+  --page-title-underline-offset: 3rem;
+
   /* ===== MARGIN-BOTTOM ===== */
   --mb-2: 1rem;
   --mb-4: 2rem;
@@ -110,14 +114,16 @@ img {
 
 .section-title {
   font-size: var(--h2-font-size);
-  margin-top: -20px;
+  /* margin-top: -20px; */
+  margin-top: var(--page-title-gap);
   margin-bottom: var(--mb-4);
   text-align: center;
 }
 
 .section {
-  padding-top: 3rem;
+  /* padding-top: 3rem; */
   padding-bottom: 2rem;
+  padding-top: 1rem;
 }
 
 /* ===== LAYOUT ===== */
@@ -207,6 +213,9 @@ position: relative;
     border-radius: 10px 0 0 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
+  /* .unfiltered-underline-fix::after {
+    top: 1.2rem;
+  } */
 }
 
 .nav-item {
@@ -349,7 +358,18 @@ width: 32px;
   cursor: pointer;
 }
 
+/* .unfiltered-title {
+  font-size: var(--big-font-size);
+  margin-top: 0;
+  margin-bottom: -50px;
+  text-align: center;
+  padding: 1rem;
+} */
+
+
+
 /* --- Unfiltered Feed Component Styles --- */
+
 .unfiltered-section {
   position: relative;
   width: 100%;
@@ -561,7 +581,8 @@ width: 32px;
 .home {
   position: relative;
   row-gap: 5rem;
-  padding: 4rem 0 5rem;
+  /* padding: 4rem 0 5rem; */
+  padding: 0 0 5rem;
 }
 
 .home-data {
@@ -721,6 +742,7 @@ iconify-icon {
 .about-title {
   font-size: var(--big-font-size);
   margin-bottom: var(--mb-1);
+  padding: 1rem 0 2rem;
 }
 
 .about-title-color {
@@ -770,7 +792,7 @@ iconify-icon {
 }
 
 .blog-title {
-  margin-top: 4rem;
+  margin-top: 0;
   margin-bottom: -50px;
 }
 
@@ -1220,9 +1242,13 @@ iconify-icon {
 
 /*===== FAVORITES =====*/
 .favorites-title {
-  margin-top: 4rem; 
+  margin-top: 0;
   margin-bottom: -50px;
 }
+
+/* .favorites-title .section-title {
+  margin-top: 0;
+} */
 
 .home .favorites-title {
   margin-top: 0;   
@@ -1241,7 +1267,7 @@ iconify-icon {
   margin-right: auto;
   width: 65%;
   margin-bottom: 50px;
-  margin-top: -25px;
+  margin-top: -60px;
   display: block;
   font-size: 12px;
   text-align: center;
@@ -1470,7 +1496,7 @@ ul li:before {
 
 
 .project-title {
-  margin-top: 4rem;  
+  margin-top: 0;
   margin-bottom: -50px;
 }
 
@@ -1844,7 +1870,7 @@ details>summary {
   height: 47px;
   width: 120%;
   left: -12px;
-  top: 3.3rem;
+  top: var(--page-title-underline-offset);
   background-image: url(../img/navbar_brush4.png);
   background-size: 100% 100%;
   opacity: 100%;
@@ -1913,6 +1939,7 @@ details>summary {
 @media screen and (min-width: 320px) {
   .section-title {
     margin-bottom: var(--mb-6);
+    margin-top: var(--page-title-gap);
   }
 
   /* .wave {
@@ -1954,7 +1981,8 @@ details>summary {
   } */
 
   .home {
-    padding: 4rem 0 2rem;
+    /* padding: 4rem 0 2rem; */
+    padding: 0 0 2rem;
   }
 
   .home-title {
@@ -1964,6 +1992,7 @@ details>summary {
 
   .section-title {
     margin-bottom: var(--mb-6);
+    margin-top: var(--page-title-gap);
   }
 
   .about-title {
@@ -2006,7 +2035,8 @@ details>summary {
   } */
 
   .home {
-    padding: 4rem 0 2rem;
+    /* padding: 4rem 0 2rem; */
+    padding: 0 0 2rem;
   }
 
   .home-social {
@@ -2042,6 +2072,7 @@ details>summary {
 
   .section-title {
     margin-bottom: var(--mb-4);
+    margin-top: var(--page-title-gap);
   }
 
   .about-container {
@@ -2058,9 +2089,9 @@ details>summary {
     margin-bottom: -20px;
   } */
 
-  .about-data {
+  /* .about-data {
     margin-top: 4rem;
-  }
+  } */
 
 
 
@@ -2080,13 +2111,15 @@ details>summary {
   }
 
   .section {
-    padding-top: 4rem;
+    /* padding-top: 4rem; */
+    padding-top: 1rem;
     padding-bottom: 3rem;
   }
 
   .section-title {
     margin-bottom: var(--mb-6);
-    margin-top: var(--mb-2);
+    /* margin-top: var(--mb-2); */
+    margin-top: var(--page-title-gap);
   }
 
   .blog {
@@ -2136,7 +2169,8 @@ details>summary {
 
   .home {
     /* padding: 8rem 0 2rem; */
-    padding: 4rem 0 2rem; 
+    /* padding: 4rem 0 2rem;  */
+    padding: 0 0 2rem;
   }
 
   .home-img {
@@ -2183,7 +2217,8 @@ details>summary {
 
   .home {
     /* padding: 10rem 0 2rem; */
-    padding: 6rem 0 2rem;
+    /* padding: 6rem 0 2rem; */
+    padding: 0 0 2rem;
   }
 
   .home-img {
@@ -2246,7 +2281,8 @@ details>summary {
 .home-data,
 .blog-title,
 .section-title {
-    margin-top: 4rem;
+    margin-top: 1.5rem;
+    margin-top: var(--page-title-gap);
 }
 
 /* Ensure headings have proper line height and breathing room */
