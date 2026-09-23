@@ -15,7 +15,6 @@ let unfilteredData = [
     caption: 'uConsole - polybar gedit',
     date: 'Sept 20, 2026',
     views: 732,
-    likes: 42,
     mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1836.jpeg' }],
   },
   {
@@ -23,7 +22,6 @@ let unfilteredData = [
     caption: 'uConsole mod case',
     date: 'Sept 18, 2026',
     views: 78480,
-    likes: 1250,
     mediaItems: [
       { type: 'image', url: 'unfiltered Data/203745.png' },
       { type: 'image', url: 'unfiltered Data/203808.png' },
@@ -39,7 +37,6 @@ let unfilteredData = [
     caption: 'uConsole',
     date: 'Mar 28, 2025',
     views: 574,
-    likes: 18,
     mediaItems: [{ type: 'image', url: 'unfiltered Data/IMG_1892.jpeg' }],
   },
   {
@@ -47,7 +44,6 @@ let unfilteredData = [
     caption: 'Mini notebook',
     date: 'Aug 21 , 2025',
     views: 220,
-    likes: 31,
     mediaItems: [
       { type: 'image', url: 'unfiltered Data/IMG_2886.jpeg' },
       { type: 'image', url: 'unfiltered Data/IMG_2887.jpeg' },
@@ -58,7 +54,6 @@ let unfilteredData = [
     caption: 'Unknown fruit',
     date: 'Aug 17, 2025',
     views: 341,
-    likes: 24,
     mediaItems: [
       { type: 'image', url: 'unfiltered Data/IMG_2880.jpeg' },
       { type: 'image', url: 'unfiltered Data/IMG_2881.jpeg' },
@@ -217,10 +212,8 @@ async function initFirebaseAndData() {
         const cloudData = docSnap.data();
         unfilteredData.forEach((post) => {
           const baseViews = post.views;
-          const baseLikes = post.likes;
 
           let cloudViewsDelta = 0;
-          let cloudLikesDelta = 0;
 
           if (cloudData[post.id] !== undefined) {
             if (typeof cloudData[post.id] === 'number') {
@@ -230,23 +223,12 @@ async function initFirebaseAndData() {
             }
           }
 
-          if (cloudData[`like_${post.id}`] !== undefined) {
-            cloudLikesDelta = cloudData[`like_${post.id}`];
-          } else if (
-            cloudData[post.id] &&
-            cloudData[post.id].likes !== undefined
-          ) {
-            cloudLikesDelta = cloudData[post.id].likes;
-          }
-
           post.views = baseViews + cloudViewsDelta;
-          post.likes = baseLikes + cloudLikesDelta;
         });
       } else {
         const initialData = {};
         unfilteredData.forEach((p) => {
           initialData[p.id] = 0;
-          initialData[`like_${p.id}`] = 0;
         });
         await docRef.set(initialData);
       }
@@ -254,7 +236,7 @@ async function initFirebaseAndData() {
   } catch (err) {
     console.error(
       'Error connecting to Firebase, using manual script data:',
-      err
+      err,
     );
   }
 
@@ -279,41 +261,10 @@ async function incrementPostView(postId) {
         {
           [postId]: firebase.firestore.FieldValue.increment(1),
         },
-        { merge: true }
+        { merge: true },
       );
     } catch (err) {
       console.error('Failed to update cloud view count:', err);
-    }
-  }
-}
-
-async function toggleUnfilteredLike(postId) {
-  const post = unfilteredData.find((p) => p.id === postId);
-  if (!post) return;
-
-  const likedKey = `liked_post_${postId}`;
-  const isLiked = localStorage.getItem(likedKey) === 'true';
-
-  const newLikedState = !isLiked;
-  localStorage.setItem(likedKey, newLikedState);
-
-  const incrementVal = newLikedState ? 1 : -1;
-  post.likes += incrementVal;
-
-  renderUnfilteredFeed();
-
-  if (db) {
-    try {
-      const docRef = db.collection('stats').doc('post_views');
-      await docRef.set(
-        {
-          [`like_${postId}`]:
-            firebase.firestore.FieldValue.increment(incrementVal),
-        },
-        { merge: true }
-      );
-    } catch (err) {
-      console.error('Failed to update cloud likes:', err);
     }
   }
 }
@@ -396,7 +347,6 @@ function renderUnfilteredFeed() {
       unfilteredIndices[item.id] = 0;
     const currIdx = unfilteredIndices[item.id];
     const hasMultiple = item.mediaItems.length > 1;
-    const isLiked = localStorage.getItem(`liked_post_${item.id}`) === 'true';
 
     const itemEl = document.createElement('div');
     itemEl.className = 'unfiltered-feed-item';
@@ -409,8 +359,8 @@ function renderUnfilteredFeed() {
             <div class="unfiltered-slide" data-id="${
               item.id
             }" data-slide="${idx}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: ${
-          idx === currIdx ? 'flex' : 'none'
-        }; align-items: center; justify-content: center; overflow: hidden; background: #000;">
+              idx === currIdx ? 'flex' : 'none'
+            }; align-items: center; justify-content: center; overflow: hidden; background: #000;">
                 <div style="position: absolute; inset: 0; background-image: url('${
                   media.url
                 }'); background-size: cover; background-position: center; filter: blur(20px) brightness(0.6); transform: scale(1.1); pointer-events: none;"></div>
@@ -418,26 +368,26 @@ function renderUnfilteredFeed() {
                   media.url
                 }" alt="Post content" loading="lazy" style="position: relative; width: 100%; height: 100%; object-fit: cover; z-index: 2; pointer-events: none;">
             </div>
-        `
+        `,
       )
       .join('');
 
     let arrowsHTML = hasMultiple
       ? `
             <button onclick="changeUnfilteredSlide(${item.id}, -1, ${
-          item.mediaItems.length
-        }, event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; opacity: ${
-          currIdx === 0 ? '0.3' : '0.8'
-        }; pointer-events: ${currIdx === 0 ? 'none' : 'auto'};">
+              item.mediaItems.length
+            }, event)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; opacity: ${
+              currIdx === 0 ? '0.3' : '0.8'
+            }; pointer-events: ${currIdx === 0 ? 'none' : 'auto'};">
                 <i class="fa-solid fa-chevron-left" style="font-size: 0.8rem;"></i>
             </button>
             <button onclick="changeUnfilteredSlide(${item.id}, 1, ${
-          item.mediaItems.length
-        }, event)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; opacity: ${
-          currIdx === item.mediaItems.length - 1 ? '0.3' : '0.8'
-        }; pointer-events: ${
-          currIdx === item.mediaItems.length - 1 ? 'none' : 'auto'
-        };">
+              item.mediaItems.length
+            }, event)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; opacity: ${
+              currIdx === item.mediaItems.length - 1 ? '0.3' : '0.8'
+            }; pointer-events: ${
+              currIdx === item.mediaItems.length - 1 ? 'none' : 'auto'
+            };">
                 <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem;"></i>
             </button>
         `
@@ -458,7 +408,7 @@ function renderUnfilteredFeed() {
                     })" style="width: 8px; height: 8px; border-radius: 50\%; background: ${
                       idx === currIdx ? '#fff' : 'rgba(255,255,255,0.4)'
                     }; cursor: pointer; transition: background 0.3s;"></span>
-                `
+                `,
                   )
                   .join('')}
             </div>
@@ -483,36 +433,14 @@ function renderUnfilteredFeed() {
                 ${dotsHTML}
             </div>
             <div class="unfiltered-post-content" style="padding: 16px;">
-                <!-- Footer row above the caption, with likes, count, and share button tightly grouped together -->
-                <div class="unfiltered-footer-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 14px;">
-                    <!-- Heart Button & Count -->
-                    <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 8px;">
-                        <button class="unfiltered-like-btn" onclick="toggleUnfilteredLike(${
-                          item.id
-                        })" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center;">
-                            <i class="${
-                              isLiked ? 'fa-solid' : 'fa-regular'
-                            } fa-heart" style="font-size: 1.2rem; color: ${
-      isLiked ? '#ff3b30' : 'inherit'
-    }; transition: color 0.2s;"></i>
-                        </button>
-                        <span style="font-weight: 500; font-size: 0.9rem;">${formatNumber(
-                          item.likes
-                        )}</span>
-                    </div>
+                <!-- Footer row above the caption, with the share button -->
+               <div class="unfiltered-footer-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 0;">
+    <p class="unfiltered-caption" style="margin: 0; line-height: 1.5; flex: 1;">${item.caption}</p>
 
-                    <!-- Curved Arrow Share Button right beside it -->
-                    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${
-                      item.id
-                    })" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0; color: inherit; opacity: 0.8; font-size: 1.1rem;">
-                        <i class="fa-solid fa-share"></i>
-                    </button>
-                </div>
-
-                <p class="unfiltered-caption" style="margin-bottom: 0; line-height: 1.5;">${
-                  item.caption
-                }</p>
-            </div>
+    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${item.id})" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0; color: inherit; opacity: 0.8; font-size: 1.1rem; margin-left: auto; flex-shrink: 0;">
+    <i class="fa-solid fa-share"></i>
+</button>
+</div>
         `;
 
     feedContainer.appendChild(itemEl);
@@ -662,7 +590,7 @@ function setupUnfilteredGestures(id, totalSlides) {
         }
       }
     },
-    { passive: false }
+    { passive: false },
   );
 }
 
