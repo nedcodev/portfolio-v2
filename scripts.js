@@ -11,7 +11,7 @@ const firebaseConfig = {
 // Fallback & initial manual data (these serve as your manual entry points)
 let unfilteredData = [
   {
-    id: 6,
+    id: 1,
     caption: 'uConsole - polybar gedit',
     date: 'Sept 22, 2026',
     views: 0,
@@ -19,6 +19,30 @@ let unfilteredData = [
       {
         type: 'threads',
         url: 'https://www.threads.com/@nedcodev/post/DdlYrANlRqK',
+      },
+    ],
+  },
+  // {
+  //   id: 2,
+  //   caption: 'Raspberry Pi CM4',
+  //   date: 'Sept 22, 2026',
+  //   views: 0,
+  //   mediaItems: [
+  //     {
+  //       type: 'twitter',
+  //       url: 'https://x.com/nedcodev/status/2102322618812772407',
+  //     },
+  //   ],
+  // },
+  {
+    id: 3,
+    caption: 'ClockworkPi uConsole teardown & assembly',
+    date: 'Sept 22, 2026',
+    views: 0,
+    mediaItems: [
+      {
+        type: 'threads',
+        url: 'https://www.threads.com/@nedcodev/post/Ddmb_RLEwnd',
       },
     ],
   },
@@ -45,7 +69,7 @@ function extractThreadsId(url) {
 function buildThreadsEmbedHTML(url) {
   const postId = extractThreadsId(url);
   return `
-    <blockquote class="text-post-media" data-text-post-permalink="${url}" data-text-post-version="0" id="ig-tp-${postId}" style=" background:#FFF; border-width: 1px; border-style: solid; border-color: #00000026; border-radius: 16px; max-width:650px; margin: 1px auto; min-width:270px; padding:0; width:99.375%; width:calc(100% - 2px);">
+    <blockquote class="text-post-media" data-text-post-permalink="${url}" data-text-post-version="0" id="ig-tp-${postId}" style=" background:#FFF; border: none; border-radius: 0; max-width:100%; margin: 0; min-width:270px; padding:0; width:100%;">
       <a href="${url}" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%; font-family: -apple-system, BlinkMacSystemFont, sans-serif;" target="_blank">
         <div style=" padding: 40px; display: flex; flex-direction: column; align-items: center;">
           <div style=" display:block; height:32px; width:32px; padding-bottom:20px;">
@@ -71,6 +95,27 @@ function reloadThreadsEmbedScript() {
   newScript.async = true;
   newScript.src = 'https://www.threads.com/embed.js';
   document.body.appendChild(newScript);
+}
+
+/*=============== TWITTER / X EMBED HELPERS ===============*/
+// Builds the same blockquote markup X's own "Embed Post" option generates,
+// using only the tweet URL. X's widgets.js scans the page for this exact
+// structure and replaces it with the fully rendered tweet.
+function buildTwitterEmbedHTML(url) {
+  return `
+    <blockquote class="twitter-tweet" data-theme="dark">
+      <a href="${url}"></a>
+    </blockquote>
+  `;
+}
+
+// Unlike Threads, X's widgets.js exposes an official reprocess function, so
+// we just call it after new tweets are added to the page instead of having
+// to reload the whole script.
+function reloadTwitterEmbeds() {
+  if (window.twttr && window.twttr.widgets) {
+    window.twttr.widgets.load();
+  }
 }
 
 /*=============== SHOW MENU ===============*/
@@ -259,7 +304,9 @@ async function incrementPostView(postId) {
   if (!post) return;
 
   post.views += 1;
-  renderUnfilteredFeed();
+
+  const viewsEl = document.getElementById(`uf-views-${postId}`);
+  if (viewsEl) viewsEl.textContent = formatNumber(post.views);
 
   if (db) {
     try {
@@ -348,6 +395,7 @@ function renderUnfilteredFeed() {
   const paginatedItems = unfilteredData.slice(startIndex, endIndex);
 
   let sawThreadsEmbed = false;
+  let sawTwitterEmbed = false;
 
   paginatedItems.forEach((item) => {
     incrementPostView(item.id);
@@ -358,6 +406,8 @@ function renderUnfilteredFeed() {
     const hasMultiple = item.mediaItems.length > 1;
     const isThreadsPost =
       item.mediaItems[0] && item.mediaItems[0].type === 'threads';
+    const isTwitterPost =
+      item.mediaItems[0] && item.mediaItems[0].type === 'twitter';
 
     const itemEl = document.createElement('div');
     itemEl.className = 'unfiltered-feed-item';
@@ -369,15 +419,17 @@ function renderUnfilteredFeed() {
             <div class="unfiltered-header-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 0.9rem; color: var(--text-color, #ccc);">
                 <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 6px;">
                     <i class="fa-regular fa-eye"></i>
-                    <span>${formatNumber(item.views)}</span>
+                    <span id="uf-views-${item.id}">${formatNumber(item.views)}</span>
                 </div>
                 <div class="unfiltered-header-right" style="display: flex; align-items: center; gap: 6px; opacity: 0.85;">
                     <span class="unfiltered-date">${item.date}</span>
                 </div>
             </div>
-            <div class="unfiltered-threads-container" style="width: 100%; overflow: hidden; background: #fff;">
-                ${buildThreadsEmbedHTML(item.mediaItems[0].url)}
-            </div>
+     <div class="unfiltered-threads-container" style="width: 100%; overflow: hidden; padding: 16px; background: transparent; display: flex; justify-content: center;">
+    <div style="width: 100%; max-width: 500px; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.08);">
+        ${buildThreadsEmbedHTML(item.mediaItems[0].url)}
+    </div>
+</div>
             <div class="unfiltered-post-content" style="padding: 16px;">
                <div class="unfiltered-footer-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 0;">
     <p class="unfiltered-caption" style="margin: 0; line-height: 1.5; flex: 1;">${item.caption}</p>
@@ -390,6 +442,38 @@ function renderUnfilteredFeed() {
 
       feedContainer.appendChild(itemEl);
       sawThreadsEmbed = true;
+      return;
+    }
+
+    if (isTwitterPost) {
+      itemEl.innerHTML = `
+            <div class="unfiltered-header-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 0.9rem; color: var(--text-color, #ccc);">
+                <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-regular fa-eye"></i>
+                    <span id="uf-views-${item.id}">${formatNumber(item.views)}</span>
+                </div>
+                <div class="unfiltered-header-right" style="display: flex; align-items: center; gap: 6px; opacity: 0.85;">
+                    <span class="unfiltered-date">${item.date}</span>
+                </div>
+            </div>
+          <div class="unfiltered-twitter-container" style="width: 100%; overflow: hidden; padding: 16px; background: transparent; display: flex; justify-content: center;">
+    <div style="width: 100%; max-width: 500px;">
+        ${buildTwitterEmbedHTML(item.mediaItems[0].url)}
+    </div>
+</div>
+</div>
+            <div class="unfiltered-post-content" style="padding: 16px;">
+               <div class="unfiltered-footer-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 0;">
+    <p class="unfiltered-caption" style="margin: 0; line-height: 1.5; flex: 1;">${item.caption}</p>
+
+    <button class="unfiltered-share-btn" onclick="shareUnfilteredPost(${item.id})" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; padding: 0; color: inherit; opacity: 0.8; font-size: 1.1rem; margin-left: auto; flex-shrink: 0;">
+    <i class="fa-solid fa-share"></i>
+</button>
+</div>
+        `;
+
+      feedContainer.appendChild(itemEl);
+      sawTwitterEmbed = true;
       return;
     }
 
@@ -459,7 +543,7 @@ function renderUnfilteredFeed() {
             <div class="unfiltered-header-row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; font-size: 0.9rem; color: var(--text-color, #ccc);">
                 <div class="unfiltered-stat-item" style="display: flex; align-items: center; gap: 6px;">
                     <i class="fa-regular fa-eye"></i>
-                    <span>${formatNumber(item.views)}</span>
+                    <span id="uf-views-${item.id}">${formatNumber(item.views)}</span>
                 </div>
                 <div class="unfiltered-header-right" style="display: flex; align-items: center; gap: 6px; opacity: 0.85;">
                     <span class="unfiltered-date">${item.date}</span>
@@ -489,6 +573,10 @@ function renderUnfilteredFeed() {
 
   if (sawThreadsEmbed) {
     reloadThreadsEmbedScript();
+  }
+
+  if (sawTwitterEmbed) {
+    reloadTwitterEmbeds();
   }
 
   if (totalPages > 1) {

@@ -370,6 +370,12 @@ width: 32px;
 
 /* --- Unfiltered Feed Component Styles --- */
 
+.unfiltered-threads-container iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block;
+}
+
 .unfiltered-section {
   position: relative;
   width: 100%;
