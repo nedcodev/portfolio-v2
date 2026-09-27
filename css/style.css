@@ -564,7 +564,8 @@ width: 32px;
 
 /*===== Subscribe List =====*/
 .subscribe-button {
-  margin-top: -135px;
+  /* margin-top: -135px; */
+  margin-top: 12px;
   border-radius: 0px;
   background-color: transparent;
   display: flex;
@@ -572,15 +573,15 @@ width: 32px;
 }
 
 .subscribe-description {
-  margin-top: -110px;
-  margin-left: 2.7px;
+  margin-top: -135px;
   font-size: 14px;
   text-align: center
 }
 
-.subscribe {
+.subscribe-font {
   color: #ffdc16;
   font-weight: 800;
+  /* margin-top: 110px; */
 }
 
 /*===== HOME =====*/
