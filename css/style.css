@@ -598,7 +598,7 @@ width: 32px;
 }
 
 .home .home-data {
-  margin-top: 0;   /* .home's own padding-top already provides this offset */
+  margin-top: 2rem;   /* .home's own padding-top already provides this offset */
 }
 
 .home-name-color {
