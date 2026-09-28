@@ -200,11 +200,11 @@ position: relative;
 .nav-logo7 { z-index: 3; }
 .nav-logo  { z-index: 1; }
 
-@media screen and (max-width: 767px) {
+ @media screen and (max-width: 767px) {
   .nav-menu {
     position: fixed;
     text-align: center;
-    top: 7rem;
+    top: 5rem;
     right: -100%;
     height: auto;
     padding: 3rem 2.9rem 1.6rem 3rem;
@@ -213,9 +213,6 @@ position: relative;
     border-radius: 10px 0 0 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
-  /* .unfiltered-underline-fix::after {
-    top: 1.2rem;
-  } */
 }
 
 .nav-item {
@@ -281,10 +278,15 @@ position: relative;
   -ms-user-select: none;
   user-select: none; */
 
-  grid-row: 1;
+  /* grid-row: 1;
   grid-column: 1;
   justify-self: end;
-  align-self: center;
+  align-self: center; */
+
+position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 200;
 }
 
 .hamRotate.active {
@@ -337,6 +339,10 @@ position: relative;
 /*=== VIEW MENU ===*/
 .show-menu {
   right: 0;
+}
+
+.nav-menu.show-menu ~ .nav-toggle {
+  top: 6rem;
 }
 
 /*=== WAVE ===*/
