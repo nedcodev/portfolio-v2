@@ -248,15 +248,54 @@ backToTopBtn.addEventListener('click', () => {
   });
 });
 
+/*=============== FIREBASE LOADER (shared by every page) ===============*/
+const FIREBASE_APP_SRC =
+  'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js';
+const FIREBASE_FIRESTORE_SRC =
+  'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js';
+let firebaseReadyPromise = null;
+
+function loadScriptOnce(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Failed to load ' + src));
+    document.head.appendChild(script);
+  });
+}
+
+// Loads the Firebase SDK if the page doesn't already include it, initializes
+// the app exactly once, and resolves with the Firestore instance (or null if
+// Firebase can't be reached). Safe to call from anywhere, any number of times.
+function ensureFirebase() {
+  if (firebaseReadyPromise) return firebaseReadyPromise;
+  firebaseReadyPromise = (async () => {
+    try {
+      if (typeof firebase === 'undefined')
+        await loadScriptOnce(FIREBASE_APP_SRC);
+      if (!firebase.firestore) await loadScriptOnce(FIREBASE_FIRESTORE_SRC);
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      return firebase.firestore();
+    } catch (err) {
+      console.error('Firebase unavailable:', err);
+      return null;
+    }
+  })();
+  return firebaseReadyPromise;
+}
+
 /*=============== FIREBASE CLOUD SYNC LOGIC ===============*/
 let db = null;
 
 async function initFirebaseAndData() {
-  try {
-    if (typeof firebase !== 'undefined') {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
+  // Only the Unfiltered page has a feed to load post views for.
+  if (!document.getElementById('unfilteredFeedList')) return;
 
+  try {
+    db = await ensureFirebase();
+
+    if (db) {
       const docRef = db.collection('stats').doc('post_views');
       const docSnap = await docRef.get();
 
@@ -282,7 +321,7 @@ async function initFirebaseAndData() {
         unfilteredData.forEach((p) => {
           initialData[p.id] = 0;
         });
-        await docRef.set(initialData);
+        await docRef.set(initialData, { merge: true });
       }
     }
   } catch (err) {
@@ -726,4 +765,179 @@ function setupUnfilteredGestures(id, totalSlides) {
   );
 }
 
-document.addEventListener('DOMContentLoaded', initFirebaseAndData);
+/*=============== SITE STATS: ONLINE NOW + VIEWS SINCE LAUNCH ===============*/
+// Shows "● 11 online · 102,661 views since launch" under the header on every page.
+// Views: one page view is counted per page, per browser session.
+// Online: every open tab sends a heartbeat; anyone seen recently counts as online.
+const SITE_VIEWS_BASE = 0; // starting number if you want the counter to begin above 0
+const SITE_STATS_REFRESH_MS = 30000; // heartbeat + refresh interval
+const SITE_ONLINE_WINDOW_MS = 75000; // seen within this window = online
+
+function getPresenceId() {
+  let id = null;
+  try {
+    id = sessionStorage.getItem('site_presence_id');
+  } catch (e) {}
+  if (!id) {
+    id =
+      window.crypto && crypto.randomUUID
+        ? crypto.randomUUID()
+        : 'v' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    try {
+      sessionStorage.setItem('site_presence_id', id);
+    } catch (e) {}
+  }
+  return id;
+}
+
+function createSiteStatsBadge() {
+  const header = document.querySelector('.l-header');
+  if (!header) return null;
+  const badge = document.createElement('div');
+  badge.className = 'site-stats';
+  badge.innerHTML = `
+    <span class="site-stats-dot"></span>
+    <span class="site-stats-online"><b>0</b> online</span>
+    <span class="site-stats-sep">&middot;</span>
+    <span class="site-stats-views"><b>0</b> <span class="site-stats-views-label">views</span> since launch</span>
+  `;
+  header.appendChild(badge);
+  positionSiteStats(badge);
+  return badge;
+}
+
+// Keeps the badge just below whichever is lower: the header, or the logo.
+// (On phones the logo hangs a little below the header box, so a fixed offset
+// would land on top of it.)
+function positionSiteStats(badge) {
+  const header = badge.parentElement;
+  const logoImg = header.querySelector('.nav-logo-layer.nav-logo img');
+
+  const place = () => {
+    let top = header.offsetHeight;
+    if (logoImg) {
+      const logoBottom =
+        logoImg.getBoundingClientRect().bottom -
+        header.getBoundingClientRect().top;
+      top = Math.max(top, logoBottom + 4);
+    }
+    badge.style.top = top + 'px';
+  };
+
+  place();
+  window.addEventListener('load', place);
+  window.addEventListener('resize', place);
+  if (logoImg) logoImg.addEventListener('load', place);
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(place);
+    observer.observe(header);
+    if (logoImg) observer.observe(logoImg);
+  }
+}
+
+async function initSiteStats() {
+  const badge = createSiteStatsBadge();
+  if (!badge) return;
+
+  const database = await ensureFirebase();
+  if (!database) return;
+
+  const statsRef = database.collection('stats').doc('post_views');
+  const presenceRef = database.collection('presence').doc(getPresenceId());
+  const state = { online: null, views: null };
+
+  const render = () => {
+    const onlineEl = badge.querySelector('.site-stats-online');
+    const viewsEl = badge.querySelector('.site-stats-views');
+    const sepEl = badge.querySelector('.site-stats-sep');
+    const hasOnline = state.online !== null;
+    const hasViews = state.views !== null;
+
+    if (hasOnline) {
+      onlineEl.querySelector('b').textContent =
+        state.online.toLocaleString('en-US');
+    }
+    if (hasViews) {
+      const total = SITE_VIEWS_BASE + state.views;
+      viewsEl.querySelector('b').textContent = total.toLocaleString('en-US');
+      viewsEl.querySelector('.site-stats-views-label').textContent =
+        total === 1 ? 'view' : 'views';
+    }
+    onlineEl.style.display = hasOnline ? '' : 'none';
+    viewsEl.style.display = hasViews ? '' : 'none';
+    sepEl.style.display = hasOnline && hasViews ? '' : 'none';
+    badge.classList.toggle('is-visible', hasOnline || hasViews);
+  };
+
+  // Count this page once per browser session.
+  const countKey = 'site_viewed_' + location.pathname;
+  const countThisView = async () => {
+    try {
+      if (sessionStorage.getItem(countKey)) return;
+      sessionStorage.setItem(countKey, 'true');
+    } catch (e) {}
+    try {
+      await statsRef.set(
+        { site_views: firebase.firestore.FieldValue.increment(1) },
+        { merge: true },
+      );
+    } catch (err) {
+      console.error('Could not count page view:', err);
+    }
+  };
+
+  const refreshViews = async () => {
+    try {
+      const snap = await statsRef.get();
+      const data = snap.exists ? snap.data() : {};
+      state.views = Number(data.site_views) || 0;
+      render();
+    } catch (err) {
+      console.error('Site views unavailable:', err);
+    }
+  };
+
+  const refreshOnline = async () => {
+    try {
+      await presenceRef.set({
+        lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      const cutoff = firebase.firestore.Timestamp.fromMillis(
+        Date.now() - SITE_ONLINE_WINDOW_MS,
+      );
+      const snap = await database
+        .collection('presence')
+        .where('lastSeen', '>', cutoff)
+        .limit(500)
+        .get();
+      state.online = Math.max(1, snap.size); // you're always online to yourself
+      render();
+    } catch (err) {
+      console.error('Online count unavailable:', err);
+    }
+  };
+
+  const tick = () => {
+    if (document.visibilityState === 'hidden') return Promise.resolve();
+    return Promise.all([refreshOnline(), refreshViews()]);
+  };
+
+  await countThisView();
+  await tick();
+  setInterval(tick, SITE_STATS_REFRESH_MS);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') tick();
+  });
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) tick();
+  });
+  window.addEventListener('pagehide', () => {
+    presenceRef.delete().catch(() => {});
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initFirebaseAndData();
+  initSiteStats();
+});

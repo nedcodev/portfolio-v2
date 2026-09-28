@@ -2360,3 +2360,54 @@ details>summary {
     line-height: 1.3;
     margin-bottom: 12px;
 }
+
+/*===== SITE STATS (online now + views since launch) =====*/
+.site-stats {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  display: none;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--second-color);
+  pointer-events: none;
+}
+
+.site-stats.is-visible {
+  display: flex;
+}
+
+.site-stats b {
+  font-weight: var(--font-semi);
+  color: var(--fourth-color);
+}
+
+.site-stats-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fifteenth-color);
+  box-shadow: 0 0 6px var(--fifteenth-color);
+  animation: site-stats-pulse 2s ease-in-out infinite;
+}
+
+@keyframes site-stats-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-stats-dot {
+    animation: none;
+  }
+}
