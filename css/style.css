@@ -173,9 +173,10 @@ position: relative;
 .nav-logo-group {
   position: relative;
   display: inline-block;
-  width: 180px;
+  width: 280px;
   grid-row: 1;
   grid-column: 1;
+  /* transform: translateX(-18px); */
 }
 
 .nav-logo-group .nav-logo-layer {
@@ -204,7 +205,7 @@ position: relative;
   .nav-menu {
     position: fixed;
     text-align: center;
-    top: 5rem;
+    top: 7rem;
     right: -100%;
     height: auto;
     /* padding: 3rem 2.9rem 1.6rem 3rem; */
@@ -292,7 +293,7 @@ position: relative;
   grid-column: 1;
   justify-self: end;
   align-self: center;
-  margin-top: 0.5rem;
+  margin-top: 1.2rem;
 }
 
 .hamRotate.active {
@@ -2161,7 +2162,7 @@ details>summary {
     display: flex;
     justify-content: center;
     padding-top: 0; 
-     margin-top: 90px;
+     margin-top: 120px;
   }
 
   .nav-item {
