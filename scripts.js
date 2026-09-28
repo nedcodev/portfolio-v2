@@ -752,13 +752,17 @@ function setupUnfilteredGestures(id, totalSlides) {
   );
 }
 
-/*=============== SITE STATS: ONLINE NOW + VIEWS SINCE LAUNCH ===============*/
-// Shows "● 11 online · 102,661 views since launch" under the header on every page.
-// Views: one page view is counted per page, per browser session.
-// Online: every open tab sends a heartbeat; anyone seen recently counts as online.
+//*=============== SITE STATS: ONLINE NOW + VIEWS ===============*/
 const SITE_VIEWS_BASE = 0; // starting number if you want the counter to begin above 0
 const SITE_STATS_REFRESH_MS = 30000; // heartbeat + refresh interval
 const SITE_ONLINE_WINDOW_MS = 75000; // seen within this window = online
+
+// Where the badge sits, measured against the logo (fractions of the logo's width).
+// Nudge these if you ever change the logo image.
+const SITE_STATS_LOGO_X = 0.73; // horizontal centre of the badge (0 = logo's left edge, 1 = right edge)
+const SITE_STATS_LOGO_Y = 0.05; // top edge of the badge, measured down from the top of the logo
+const SITE_STATS_LOGO_MIN_X = 0.38; // never further left than this (keeps clear of the blob outline)
+const SITE_STATS_LOGO_MAX_X = 1.05; // never further right than this
 
 function getPresenceId() {
   let id = null;
@@ -786,39 +790,73 @@ function createSiteStatsBadge() {
     <span class="site-stats-dot"></span>
     <span class="site-stats-online"><b>0</b> online</span>
     <span class="site-stats-sep">&middot;</span>
-        <span class="site-stats-views"><b>0</b> <span class="site-stats-views-label">views</span></span>
+    <span class="site-stats-views"><b>0</b> <span class="site-stats-views-label">views</span></span>
   `;
   header.appendChild(badge);
   positionSiteStats(badge);
   return badge;
 }
 
-// Keeps the badge just below whichever is lower: the header, or the logo.
-// (On phones the logo hangs a little below the header box, so a fixed offset
-// would land on top of it.)
+// Puts the badge in the empty space above the NEDCODE plate, and keeps it there
+// when the window resizes. It slides sideways if it would touch the blob outline
+// or the phone menu icon, and hides itself if there really isn't room.
 function positionSiteStats(badge) {
   const header = badge.parentElement;
   const logoImg = header.querySelector('.nav-logo-layer.nav-logo img');
+  if (!logoImg) return; // no logo found: the CSS fallback keeps it under the header
 
   const place = () => {
-    let top = header.offsetHeight;
-    if (logoImg) {
-      const logoBottom =
-        logoImg.getBoundingClientRect().bottom -
-        header.getBoundingClientRect().top;
-      top = Math.max(top, logoBottom + 4);
+    const h = header.getBoundingClientRect();
+    const l = logoImg.getBoundingClientRect();
+    if (!l.width) return; // logo not laid out yet
+
+    const w = badge.offsetWidth; // 0 while hidden; placed again as soon as it shows
+    const height = badge.offsetHeight || 16;
+    const top = l.top + l.width * SITE_STATS_LOGO_Y;
+
+    const minLeft = l.left + l.width * SITE_STATS_LOGO_MIN_X;
+    let maxRight = l.left + l.width * SITE_STATS_LOGO_MAX_X;
+
+    // On phones, keep clear of the hamburger icon.
+    const toggle = header.querySelector('.nav-toggle');
+    if (toggle && getComputedStyle(toggle).display !== 'none') {
+      let ink = null;
+      toggle.querySelectorAll('.line').forEach((line) => {
+        const r = line.getBoundingClientRect();
+        if (!r.width) return;
+        ink = ink
+          ? {
+              left: Math.min(ink.left, r.left),
+              top: Math.min(ink.top, r.top),
+              bottom: Math.max(ink.bottom, r.bottom),
+            }
+          : { left: r.left, top: r.top, bottom: r.bottom };
+      });
+      if (ink && top - 8 < ink.bottom && top + height + 8 > ink.top) {
+        maxRight = Math.min(maxRight, ink.left - 8);
+      }
     }
-    badge.style.top = top + 'px';
+
+    let centre = l.left + l.width * SITE_STATS_LOGO_X;
+    if (w) {
+      centre = Math.min(Math.max(centre, minLeft + w / 2), maxRight - w / 2);
+      // not enough room: hide instead of overlapping the logo or the menu icon
+      badge.classList.toggle('is-squeezed', w > maxRight - minLeft);
+    }
+    badge.style.left = centre - h.left + 'px';
+    badge.style.top = top - h.top + 'px';
   };
 
+  badge.placeSiteStats = place;
   place();
   window.addEventListener('load', place);
   window.addEventListener('resize', place);
-  if (logoImg) logoImg.addEventListener('load', place);
+  logoImg.addEventListener('load', place);
   if ('ResizeObserver' in window) {
     const observer = new ResizeObserver(place);
     observer.observe(header);
-    if (logoImg) observer.observe(logoImg);
+    observer.observe(logoImg);
+    observer.observe(badge);
   }
 }
 
@@ -854,6 +892,7 @@ async function initSiteStats() {
     viewsEl.style.display = hasViews ? '' : 'none';
     sepEl.style.display = hasOnline && hasViews ? '' : 'none';
     badge.classList.toggle('is-visible', hasOnline || hasViews);
+    if (badge.placeSiteStats) badge.placeSiteStats(); // width may have changed
   };
 
   // Count this page once per browser session.

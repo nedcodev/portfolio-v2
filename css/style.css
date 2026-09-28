@@ -2361,13 +2361,12 @@ details>summary {
     margin-bottom: 12px;
 }
 
-/*===== SITE STATS (online now + views since launch) =====*/
+/*===== SITE STATS (online now + views) =====*/
 .site-stats {
-  --site-stats-shift: 12px; /* lines the badge up with the NEDCODE lettering; 0 = page center */
   position: absolute;
-  top: 100%;
+  top: 100%; /* fallback only: scripts.js moves it next to the logo */
   left: 50%;
-  transform: translateX(calc(-50% + var(--site-stats-shift)));
+  transform: translateX(-50%);
   z-index: -1;
   display: none;
   align-items: center;
@@ -2383,6 +2382,11 @@ details>summary {
   display: flex;
 }
 
+/* not enough room next to the logo (very narrow phones): hide instead of overlapping */
+.site-stats.is-squeezed {
+  visibility: hidden;
+}
+
 .site-stats b {
   font-weight: var(--font-semi);
   color: var(--fourth-color);
@@ -2394,7 +2398,7 @@ details>summary {
   flex-shrink: 0;
   width: 6px;
   height: 6px;
-  margin: 0 0.2rem 0 -0.21rem;
+  margin: 0 0.2rem 0 -2.7rem;
   border-radius: 50%;
   background: var(--fifteenth-color);
   box-shadow: 0 0 5px rgba(255, 220, 22, 0.55);
