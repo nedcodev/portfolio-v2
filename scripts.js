@@ -13,8 +13,8 @@ let unfilteredData = [
   {
     id: 1,
     caption: 'uConsole - polybar gedit',
-    date: 'Sept 22, 2026',
-    views: 0,
+    // date: 'Sept 22, 2026',
+    // views: 0,
     mediaItems: [
       {
         type: 'threads',
@@ -22,23 +22,11 @@ let unfilteredData = [
       },
     ],
   },
-  // {
-  //   id: 2,
-  //   caption: 'Raspberry Pi CM4',
-  //   date: 'Sept 22, 2026',
-  //   views: 0,
-  //   mediaItems: [
-  //     {
-  //       type: 'twitter',
-  //       url: 'https://x.com/nedcodev/status/2102322618812772407',
-  //     },
-  //   ],
-  // },
   {
     id: 3,
     caption: 'ClockworkPi uConsole teardown & assembly',
-    date: 'Sept 22, 2026',
-    views: 0,
+    // date: 'Sept 22, 2026',
+    // views: 0,
     mediaItems: [
       {
         type: 'threads',
@@ -289,7 +277,6 @@ function ensureFirebase() {
 let db = null;
 
 async function initFirebaseAndData() {
-  // Only the Unfiltered page has a feed to load post views for.
   if (!document.getElementById('unfilteredFeedList')) return;
 
   try {
@@ -799,7 +786,7 @@ function createSiteStatsBadge() {
     <span class="site-stats-dot"></span>
     <span class="site-stats-online"><b>0</b> online</span>
     <span class="site-stats-sep">&middot;</span>
-    <span class="site-stats-views"><b>0</b> <span class="site-stats-views-label">views</span> since launch</span>
+        <span class="site-stats-views"><b>0</b> <span class="site-stats-views-label">views</span></span>
   `;
   header.appendChild(badge);
   positionSiteStats(badge);
