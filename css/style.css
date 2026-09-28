@@ -2005,6 +2005,8 @@ details>summary {
 .favorites-title .about-title-color::after {
   background-image: url(../img/navbar_brush4.png);
   margin-top: -15px;
+   width: 120%;
+  left: -9px;
 }
 
 }
