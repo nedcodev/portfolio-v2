@@ -237,16 +237,18 @@ position: relative;
 }
 
 .nav-close {
-  font-size: 2rem;
   position: absolute;
-  top: .1rem;
-  right: .7rem;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  color: var(--thirteenth-color);
+  color: var(--second-color);
 }
 
-
-
+.nav-menu.show-menu ~ .nav-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
 
 
 @keyframes flicker {
@@ -278,15 +280,10 @@ position: relative;
   -ms-user-select: none;
   user-select: none; */
 
-  /* grid-row: 1;
+  grid-row: 1;
   grid-column: 1;
   justify-self: end;
-  align-self: center; */
-
-position: fixed;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 200;
+  align-self: center;
 }
 
 .hamRotate.active {
@@ -339,10 +336,6 @@ position: fixed;
 /*=== VIEW MENU ===*/
 .show-menu {
   right: 0;
-}
-
-.nav-menu.show-menu ~ .nav-toggle {
-  top: 6rem;
 }
 
 /*=== WAVE ===*/
@@ -1278,7 +1271,7 @@ iconify-icon {
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;
-  width: 65%;
+  width: 100%;
   margin-bottom: 50px;
   margin-top: -60px;
   display: block;
@@ -1895,12 +1888,12 @@ details>summary {
 } */
 
 /* Better bio section */
-.favorites-bio {
+/* .favorites-bio {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
-}
+} */
 
 /*===== FOOTER =====*/
 .footer {
