@@ -245,10 +245,7 @@ position: relative;
   color: var(--second-color);
 }
 
-.nav-menu.show-menu ~ .nav-toggle {
-  opacity: 0;
-  pointer-events: none;
-}
+
 
 
 @keyframes flicker {
@@ -284,6 +281,7 @@ position: relative;
   grid-column: 1;
   justify-self: end;
   align-self: center;
+  margin-top: 0.5rem;
 }
 
 .hamRotate.active {
