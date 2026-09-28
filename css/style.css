@@ -1295,6 +1295,20 @@ iconify-icon {
   display: block;
   font-size: 12px;
   text-align: center;
+  text-wrap: balance;
+}
+
+.favorites-container-bio {
+  font-size: var(--normal-font-size);
+  color: var(--fourth-color);
+}
+
+.favorites-bio .bio-line {
+  display: block;
+}
+
+.favorites-bio .highlight {
+  display: inline-block;
 }
 
 .favorites-title-arrow {
