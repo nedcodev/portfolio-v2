@@ -207,13 +207,24 @@ position: relative;
     top: 5rem;
     right: -100%;
     height: auto;
-    padding: 3rem 2.9rem 1.6rem 3rem;
+    /* padding: 3rem 2.9rem 1.6rem 3rem; */
+     padding: 1.7rem;
     background-color: var(--sixteenth-color);
     transition: .5s;
     border-radius: 10px 0 0 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
 }
+
+  .nav-menu .nav-item {
+    margin-bottom: 1.2rem;
+    margin-top: -.2rem;
+
+  }
+
+  .nav-menu .nav-item:last-child {
+    margin-bottom: 0;
+  }
 
 .nav-item {
   margin-bottom: var(--mb-4);
@@ -320,10 +331,11 @@ position: relative;
 .active::after {
   position: absolute;
   content: '';
-  height: 47px;
+  /* height: 47px; */
+  height: 27px;
   width: 100%;
   left: -4px;
-  top: .3rem;
+  top: .6rem;
   background-image: url(../img/navbar_brush4.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
