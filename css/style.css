@@ -573,6 +573,13 @@ width: 32px;
 }
 
 /*===== Subscribe List =====*/
+.subscribe-container {
+  position: relative;
+  width: 100%;
+  margin-top: 70px;
+  text-align: center;
+}
+
 .subscribe-button {
   /* margin-top: -135px; */
   margin-top: 12px;
@@ -668,7 +675,7 @@ width: 32px;
   flex-direction: row;
     justify-content: center;   /* add this */
   position: relative;
-  top: -120%;
+  top: -180%;
 }
 
 iconify-icon {
@@ -1967,7 +1974,12 @@ details>summary {
     font-size: 50px;
     margin-bottom: var(--mb-1);
     margin-top: 30px;
+  }
 
+   .home-social-icon {
+    width: max-content;
+    margin-bottom: var(--mb-2);
+    margin-right: 1.2rem;
   }
 
   .about-title {
@@ -2010,6 +2022,12 @@ details>summary {
   .section-title {
     margin-bottom: var(--mb-6);
     margin-top: var(--page-title-gap);
+  }
+
+  .home-social-icon {
+    width: max-content;
+    margin-bottom: var(--mb-2);
+    margin-right: 1.2rem;
   }
 
   .about-title {
