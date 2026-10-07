@@ -2431,3 +2431,251 @@ details>summary {
     opacity: 0;
   }
 }
+
+/* Lab */
+/*===== LAB PAGE + DEPARTURE BOARD CLOCK =====*/
+.lab-item {
+  width: 100%;
+  max-width: 560px;
+  margin: 3rem auto 3rem;
+}
+
+.lab-item-title {
+  color: var(--fourth-color);
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semi);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.lab-item-note {
+  color: var(--second-color);
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 0.9rem;
+}
+
+.flap {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: clamp(0.75rem, 3vw, 1.25rem) clamp(0.6rem, 2.5vw, 1.25rem) 0.75rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+.flap-screen {
+  position: relative;
+  padding-right: 28px; /* room for the remove buttons */
+}
+
+.flap-canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.flap-remove-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flap-remove {
+  position: absolute;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--fourth-color);
+  font-size: 15px;
+  line-height: 22px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: auto;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+}
+
+.flap-remove.is-shown,
+.flap-remove:focus-visible {
+  opacity: 0.9;
+}
+
+.flap-remove:hover {
+  background: rgba(255, 220, 22, 0.18);
+  color: var(--fifteenth-color);
+}
+
+/* phones and tablets have no hover, so keep the buttons visible */
+@media (hover: none) {
+  .flap-remove {
+    opacity: 0.55;
+  }
+}
+
+.flap-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.flap-toggle {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.flap-toggle button,
+.flap-add {
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: var(--font-semi);
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.flap-toggle button {
+  padding: 0.35rem 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--second-color);
+  transition: background 0.15s, color 0.15s;
+}
+
+.flap-toggle button[aria-pressed='true'] {
+  background: var(--fifteenth-color);
+  color: var(--thirteenth-color);
+}
+
+.flap-add-wrap {
+  position: relative;
+}
+
+.flap-add {
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(255, 220, 22, 0.35);
+  background: rgba(255, 220, 22, 0.06);
+  color: var(--fifteenth-color);
+  transition: background 0.15s;
+}
+
+.flap-add:hover {
+  background: rgba(255, 220, 22, 0.14);
+}
+
+.flap-toggle button:focus-visible,
+.flap-add:focus-visible,
+.flap-remove:focus-visible,
+.flap-picker button:focus-visible {
+  outline: 2px solid var(--fifteenth-color);
+  outline-offset: 2px;
+}
+
+.flap-picker {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  z-index: 20;
+  width: min(300px, 85vw);
+  padding: 0.5rem;
+  background: var(--sixteenth-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.flap-picker[hidden] {
+  display: none;
+}
+
+.flap-picker input {
+  width: 100%;
+  margin-bottom: 0.4rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: var(--thirteenth-color);
+  color: var(--fourth-color);
+  font-family: var(--body-font);
+  font-size: 13px;
+  outline: none;
+}
+
+.flap-picker input:focus {
+  border-color: rgba(255, 220, 22, 0.6);
+}
+
+/* hide the browser's built-in blue clear button in the search box */
+.flap-picker input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.flap-picker-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.flap-picker-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--fourth-color);
+  font-family: var(--body-font);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.flap-picker-list button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.flap-picker-name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.flap-picker-country {
+  color: var(--second-color);
+  font-size: 11px;
+}
+
+.flap-picker-time {
+  flex-shrink: 0;
+  color: var(--second-color);
+}
+
+.flap-picker-note {
+  padding: 0.45rem 0.6rem;
+  color: var(--second-color);
+  font-size: 12px;
+}
+
+/* the times as text, for screen readers only */
+.flap-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
