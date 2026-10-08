@@ -1631,6 +1631,226 @@ ul li:before {
   transition-duration: 0.9s;
 } */
 
+/*===== PROJECTS: HOVER LIST =====*/
+.hl-wrap {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem 5rem;
+}
+
+.hl-count {
+  color: var(--fourteenth-color);
+  font-size: .85rem;
+  text-align: center;
+  margin: -1rem 0 3rem;
+}
+
+.hl-count b {
+  color: var(--fifteenth-color);
+}
+
+.hl-list {
+  border-top: 1px solid var(--third-color);
+}
+
+.hl-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.6rem .5rem;
+  border-bottom: 1px solid var(--third-color);
+  color: var(--fourth-color);
+  position: relative;
+  transition: padding .35s ease, color .35s;
+}
+
+.hl-num {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--second-color);
+  transition: color .35s;
+}
+
+.hl-name {
+  font-size: clamp(1.6rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  transition: color .35s;
+}
+
+.hl-desc {
+  display: block;
+  font-size: .9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--fourteenth-color);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height .4s, opacity .4s, margin .4s;
+}
+
+.hl-meta {
+  text-align: right;
+  font-size: .8rem;
+  color: var(--fourteenth-color);
+}
+
+.hl-year {
+  display: block;
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--fourth-color);
+}
+
+.hl-meta i {
+  display: inline-block;
+  font-size: 1.6rem;
+  margin-top: .25rem;
+  color: var(--fifteenth-color);
+  opacity: 0;
+  transform: translate(-8px, 8px);
+  transition: .35s;
+}
+
+/* Dim the others while one is hovered */
+.hl-list:hover .hl-row .hl-name {
+  color: var(--second-color);
+}
+
+.hl-list .hl-row:hover .hl-name {
+  color: var(--seventh-color);
+}
+
+.hl-row:hover {
+  padding-left: 1.5rem;
+}
+
+.hl-row:hover .hl-num {
+  color: var(--fifteenth-color);
+}
+
+.hl-row:hover .hl-desc {
+  max-height: 3rem;
+  opacity: 1;
+  margin-top: .4rem;
+}
+
+.hl-row:hover .hl-meta i {
+  opacity: 1;
+  transform: none;
+}
+
+/* Floating preview that follows the cursor */
+.hl-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 340px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.85) rotate(-3deg);
+  transition: opacity .25s, transform .25s;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .6), 0 0 0 2px var(--fifteenth-color);
+}
+
+.hl-preview.is-on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(-3deg);
+}
+
+.hl-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Touch screens: scroll position plays the role of the cursor (see projects.js) */
+@keyframes hl-swap {
+  0% {
+    transform: translateX(-50%) rotate(-3deg) scale(1);
+  }
+  40% {
+    transform: translateX(-50%) rotate(2deg) scale(.92);
+  }
+  100% {
+    transform: translateX(-50%) rotate(-3deg) scale(1);
+  }
+}
+
+@media (hover: none), (max-width: 768px) {
+  .hl-list {
+    padding-bottom: 55vh; /* lets the last row reach the middle */
+  }
+
+  .hl-row {
+    grid-template-columns: 2rem 1fr auto;
+    gap: .6rem;
+    padding: 1.4rem 0;
+  }
+
+  .hl-row:hover {
+    padding-left: 0;
+  }
+
+  .hl-list:hover .hl-row .hl-name {
+    color: inherit;
+  }
+
+  .hl-list.has-active .hl-row .hl-name {
+    color: var(--second-color);
+  }
+
+  .hl-list.has-active .hl-row.is-active .hl-name {
+    color: var(--seventh-color);
+  }
+
+  .hl-row.is-active {
+    padding-left: .75rem;
+  }
+
+  .hl-row.is-active .hl-num {
+    color: var(--fifteenth-color);
+  }
+
+  .hl-row.is-active .hl-desc {
+    max-height: 3rem;
+    opacity: 1;
+    margin-top: .4rem;
+  }
+
+  .hl-row.is-active .hl-meta i {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hl-meta {
+    font-size: .7rem;
+  }
+
+  .hl-preview {
+    top: auto !important;
+    left: 50% !important;
+    bottom: 7rem; /* clears the back-to-top button */
+    width: min(78vw, 340px);
+    transform: translateX(-50%) translateY(30px) rotate(-3deg) scale(.85);
+  }
+
+  .hl-preview.is-on {
+    transform: translateX(-50%) rotate(-3deg) scale(1);
+  }
+
+  .hl-preview.is-swapping {
+    animation: hl-swap .45s ease;
+  }
+}
+
 
 /*===== CONTACT =====*/
 .contact-title {
