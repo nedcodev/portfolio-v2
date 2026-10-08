@@ -1785,8 +1785,8 @@ ul li:before {
 }
 
 @media (hover: none), (max-width: 768px) {
-  .hl-list {
-    padding-bottom: 55vh; /* lets the last row reach the middle */
+  .hl-wrap {
+    padding-bottom: 2.5rem;
   }
 
   .hl-row {
@@ -1837,9 +1837,15 @@ ul li:before {
   .hl-preview {
     top: auto !important;
     left: 50% !important;
-    bottom: 7rem; /* clears the back-to-top button */
+    bottom: 1.25rem;
     width: min(78vw, 340px);
     transform: translateX(-50%) translateY(30px) rotate(-3deg) scale(.85);
+    transition: opacity .25s, transform .25s, bottom .3s ease;
+  }
+
+  /* Back-to-top button is showing: lift the card so it clears it */
+  body:has(#backToTopBtn.show) .hl-preview:not(.at-top) {
+    bottom: 7rem;
   }
 
   .hl-preview.is-on {
@@ -1848,6 +1854,12 @@ ul li:before {
 
   .hl-preview.is-swapping {
     animation: hl-swap .45s ease;
+  }
+
+  /* Page title has scrolled away: move the card to the top (see projects.js) */
+  .hl-preview.at-top {
+    top: 1.25rem !important;
+    bottom: auto;
   }
 }
 

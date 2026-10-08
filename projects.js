@@ -1,13 +1,14 @@
 /*===== PROJECTS: HOVER LIST =====*/
 // Desktop: the hovered row's GIF follows the cursor.
-// Phones: the row crossing the middle of the screen becomes active,
-// and its GIF swaps into a floating card pinned to the bottom.
+// Phones: after a short scroll, rows become active one by one as you scroll,
+// and the active row's GIF swaps into a floating card.
 
 const list = document.getElementById("hl-list");
 const rows = [...document.querySelectorAll(".hl-row")];
 const preview = document.getElementById("hl-preview");
 const previewImg = preview.querySelector("img");
 const touchMode = matchMedia("(hover: none), (max-width: 768px)");
+const title = document.querySelector("#projects .section-title");
 
 // Preload GIFs so the preview swaps instantly
 rows.forEach(row => { new Image().src = row.dataset.img; });
@@ -63,21 +64,37 @@ function setActive(row) {
   active = row;
 }
 
-const band = new IntersectionObserver(entries => {
-  if (!touchMode.matches) return;
-  const hit = entries.filter(e => e.isIntersecting).pop();
-  if (hit) {
-    setActive(hit.target);
-  } else {
-    // Only clear when the middle of the screen has left the list entirely
-    const mid = innerHeight * .43;
-    if (mid < rows[0].getBoundingClientRect().top || mid > rows.at(-1).getBoundingClientRect().bottom) setActive(null);
-  }
-}, { rootMargin: "-38% 0px -52% 0px" });
+// Nothing lights up until the visitor scrolls a little. After that, the rest of
+// the scroll distance is split evenly between the rows, so each one gets a turn
+// in order and the last row is active at the very bottom of the page.
+const START_AFTER = 80; // px of scrolling before anything lights up
 
-rows.forEach(r => band.observe(r));
+function update() {
+  if (!touchMode.matches) return;
+  const maxScroll = document.documentElement.scrollHeight - innerHeight;
+  if (scrollY < START_AFTER || maxScroll <= START_AFTER) return setActive(null);
+
+  const progress = (scrollY - START_AFTER) / (maxScroll - START_AFTER);
+  setActive(rows[Math.min(Math.floor(progress * rows.length), rows.length - 1)]);
+
+  // Card sits at the bottom while the page title is on screen, then moves to the top.
+  // It also moves up early if the active row would end up behind it.
+  const titleGone = title.getBoundingClientRect().bottom < 0;
+  const rowBehindCard = active.getBoundingClientRect().bottom > innerHeight - preview.offsetHeight - 40;
+  preview.classList.toggle("at-top", titleGone || rowBehindCard);
+}
+
+let ticking = false;
+window.addEventListener("scroll", () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { ticking = false; update(); });
+}, { passive: true });
+window.addEventListener("resize", update);
+update();
 
 touchMode.addEventListener("change", () => {
   setActive(null);
-  preview.classList.remove("is-on");
+  preview.classList.remove("is-on", "at-top");
+  update();
 });
