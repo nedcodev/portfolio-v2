@@ -162,6 +162,38 @@ function linkAction() {
 
 navLink.forEach((n) => n.addEventListener('click', linkAction));
 
+/*===== PHONE MENU EXTRAS =====*/
+// Adds the top bar (label + close) and the quick-contact footer to the phone
+// menu, so every page gets them without repeating the markup.
+(() => {
+  if (!navMenu) return;
+
+  navMenu.insertAdjacentHTML('afterbegin', `
+    <div class="menu-top">
+      <span class="menu-label">Menu</span>
+      <button type="button" class="menu-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>`);
+  navMenu.insertAdjacentHTML('beforeend', `
+    <div class="menu-foot">
+      <a class="menu-cta" href="/contact.html">Let's talk</a>
+      <a class="menu-dm" href="https://www.threads.com/@nedcodev/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M16.5 11.2c-.5-2.6-2.3-3.7-4.4-3.7-2.6 0-4.2 1.8-4.2 4.5s1.6 4.5 4.2 4.5c2.3 0 3.6-1.3 3.6-3 0-2-1.8-2.7-3.6-2.7-1.4 0-2.4.7-2.4 1.8 0 1 .9 1.6 2 1.6 2.5 0 3.3-2.4 3.3-5M12 21c-5 0-8-3.4-8-9s3-9 8-9 7.4 2.9 7.9 6.6"/></svg>
+        @nedcodev on Threads
+      </a>
+    </div>`);
+
+  const closeMenu = () => {
+    navMenu.classList.remove('show-menu');
+    navToggle?.querySelector('.ham1')?.classList.remove('active');
+  };
+  navMenu.querySelector('.menu-close').addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu.classList.contains('show-menu')) closeMenu();
+  });
+})();
+
 if (navMenu) {
   navMenu.addEventListener('click', (e) => {
     e.stopPropagation();
