@@ -3576,3 +3576,97 @@ details>summary {
   font-size: 1.4rem;
   color: var(--fifteenth-color);
 }
+
+/*===== BUTTONS: one shared soft-square style (Lab buttons keep their own) =====*/
+/* Main action: solid yellow */
+.product-link-button,
+.ab-cta a,
+.ct-send,
+.back-to-top-btn {
+  font-family: var(--body-font);
+  font-size: 1rem;
+  font-weight: 700;
+  min-height: 3rem;
+  padding: .7rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border: 2px solid var(--fifteenth-color);
+  border-radius: 12px;
+  background: var(--fifteenth-color);
+  color: var(--eleventh-color);
+  line-height: 1.25;
+  text-align: center;
+  transition: transform .2s;
+}
+
+.product-link-button:not(:disabled):hover,
+.product-link-button:not(:disabled):hover:active,
+.ab-cta a:hover,
+.ct-send:hover {
+  transform: translateY(-2px);
+}
+
+.ct-send {
+  width: 100%;
+}
+
+/* Back to top: square icon button */
+.back-to-top-btn {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  font-size: 1.4rem;
+}
+
+.back-to-top-btn:hover {
+  background: var(--fifteenth-color);
+  transform: translateY(-2px);
+}
+
+/* Filters and topic picks: grey outline, yellow when selected */
+.fav-filter,
+.fav-pick,
+.ct-topics span {
+  font-family: var(--body-font);
+  font-size: .9rem;
+  font-weight: 600;
+  height: 2.4rem;
+  padding: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  border-radius: 10px;
+}
+
+.fav-filter,
+.ct-topics span {
+  background: transparent;
+  border: 2px solid var(--third-color);
+  color: var(--fourth-color);
+}
+
+.fav-filter:hover {
+  border-color: var(--second-color);
+  color: var(--fourth-color);
+}
+
+.fav-filter[aria-pressed='true'],
+.ct-topics input:checked + span {
+  background: var(--fifteenth-color);
+  border-color: var(--fifteenth-color);
+  color: var(--eleventh-color);
+}
+
+/* "Pick for me" keeps its dashed outline as its special look */
+.fav-pick {
+  background: transparent;
+  border: 2px dashed var(--fifteenth-color);
+  color: var(--fifteenth-color);
+}
+
+.fav-pick:hover {
+  background: rgba(255, 220, 22, 0.08);
+  border-style: dashed;
+}
