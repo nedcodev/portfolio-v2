@@ -3731,14 +3731,26 @@ details>summary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--third-color);
-    border-radius: 12px;
+    margin-right: -.75rem; /* line the X up with the arrows below */
+    border: 0;
     background: transparent;
     color: var(--fourth-color);
     cursor: pointer;
   }
 
-  .menu-close svg,
+  .menu-close:hover {
+    color: var(--fifteenth-color);
+  }
+
+  .menu-close svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+  }
+
   .menu-dm svg {
     width: 1.3rem;
     height: 1.3rem;
