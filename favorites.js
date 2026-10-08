@@ -655,7 +655,7 @@
       .map((x) => x.f);
     sorted.forEach((f, i) => {
       const rating = Math.max(0, Math.min(5, Number(f.rating) || 0)); // always a number from 0 to 5
-      // a div acting as a button: Firefox can flatten 3D flips inside real <button>s
+
       const card = document.createElement('div');
       card.setAttribute('role', 'button');
       card.tabIndex = 0;
