@@ -162,6 +162,12 @@ function linkAction() {
 
 navLink.forEach((n) => n.addEventListener('click', linkAction));
 
+/*===== FOOTER YEAR =====*/
+// Keeps the copyright year current; the year written in the HTML is the fallback.
+document.querySelectorAll('.footer-year').forEach((el) => {
+  el.textContent = new Date().getFullYear();
+});
+
 /*===== PHONE MENU EXTRAS =====*/
 // Adds the top bar (label + close) and the quick-contact footer to the phone
 // menu, so every page gets them without repeating the markup.
