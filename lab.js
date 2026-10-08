@@ -1,5 +1,4 @@
 /*=============== LAB: DEPARTURE BOARD WORLD CLOCK ===============*/
-// A dot-matrix world clock in the NEDCODE yellow.
 // - the board types itself in, row by row, like a real departure board
 // - each row shows day/night and a +1 / -1 when that city is on another date
 // - the visitor's own city lights up brighter, with a marker
@@ -18,8 +17,6 @@
   const SWEEP_LEAD = 6; // flickering characters that appear right away when a row starts
   const SWEEP_SETTLE_DELAY = 100; // the real text starts typing in this long after its row starts
   const SWEEP_ROW_DELAY = 100; // each row starts this much later than the one above
-
-  // [ name as people write it, time zone, country, (optional) shorter name for the board ]
   // Board names are written in capitals without accents, 14 letters max.
   // When several cities share a time zone, the first one is used to label a visitor's own row.
   const CITY_DATA = [
@@ -162,7 +159,6 @@
     ['Mogadishu', 'Africa/Mogadishu', 'Somalia'],
     ['Moroni', 'Indian/Comoro', 'Comoros'],
     // ----- Rest of Middle East & Asia -----
-    ['Tel Aviv', 'Asia/Jerusalem', 'Israel'],
     ['Tehran', 'Asia/Tehran', 'Iran'],
     ['Kabul', 'Asia/Kabul', 'Afghanistan'],
     ['Yerevan', 'Asia/Yerevan', 'Armenia'],
@@ -279,7 +275,6 @@
     ['Yaren', 'Pacific/Nauru', 'Nauru'],
   ];
 
-  // "São Paulo" -> "SAO PAULO", "Port-au-Prince" -> "PORT AU PRINCE"
   function toBoard(text) {
     return text
       .normalize('NFD')
