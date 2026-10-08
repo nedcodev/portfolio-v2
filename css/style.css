@@ -3388,3 +3388,191 @@ details>summary {
 .ab-cta a:hover {
   transform: translateY(-2px);
 }
+
+/*===== CONTACT PAGE (form layout) =====*/
+.ct {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+  color: var(--fourteenth-color);
+}
+
+/* Intro */
+.ct-hero.favorites-title {
+  text-align: center;
+  margin-bottom: 2.5rem; /* overrides the shared negative margin */
+}
+
+.ct-hero .section-title {
+  margin-bottom: .5rem;
+}
+
+.ct-lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 34ch;
+  margin: 0 auto;
+}
+
+/* Labels, shared by the form and the DM card */
+.ct-label {
+  display: block;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--fifteenth-color);
+  margin-bottom: .6rem;
+}
+
+/* Spam trap: hidden from people, filled in by bots */
+.ct-trap {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Topic picker */
+.ct-topics {
+  border: 0;
+  padding: 0;
+  margin: 0 0 1.75rem;
+}
+
+.ct-topics legend {
+  padding: 0;
+}
+
+.ct-topics label {
+  display: inline-block;
+  margin: 0 .4rem .5rem 0;
+  cursor: pointer;
+}
+
+.ct-topics input {
+  position: absolute;
+  opacity: 0;
+}
+
+.ct-topics span {
+  display: inline-block;
+  padding: .55rem 1.1rem;
+  border: 2px solid var(--third-color);
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--fourth-color);
+  transition: border-color .2s, background .2s, color .2s;
+}
+
+.ct-topics input:checked + span {
+  background: var(--fifteenth-color);
+  border-color: var(--fifteenth-color);
+  color: var(--eleventh-color);
+}
+
+.ct-topics input:focus-visible + span {
+  outline: 2px solid var(--fifteenth-color);
+  outline-offset: 3px;
+}
+
+/* Fields */
+.ct-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  column-gap: 1rem;
+}
+
+.ct-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.ct-input {
+  width: 100%;
+  font-family: var(--body-font);
+  font-size: 1rem;
+  padding: .95rem 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--third-color);
+  background: var(--sixteenth-color);
+  color: var(--fourth-color);
+  outline: none;
+  resize: vertical;
+  transition: border-color .2s;
+}
+
+.ct-input::placeholder {
+  color: var(--second-color);
+}
+
+.ct-input:focus {
+  border-color: var(--fifteenth-color);
+}
+
+.ct-count {
+  display: block;
+  text-align: right;
+  font-size: .8rem;
+  margin-top: .4rem;
+}
+
+/* Send */
+.ct-send {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--fifteenth-color);
+  color: var(--eleventh-color);
+  font-family: var(--body-font);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.ct-send:hover {
+  transform: translateY(-2px);
+}
+
+/* Other ways to reach me */
+.ct-alt {
+  margin-top: 3rem;
+}
+
+.ct-dm {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  background: var(--sixteenth-color);
+  transition: transform .2s;
+}
+
+.ct-dm:hover {
+  transform: translateY(-2px);
+}
+
+.ct-dm iconify-icon {
+  font-size: 1.8rem;
+  color: var(--fourth-color);
+}
+
+.ct-dm span {
+  flex: 1;
+  font-size: .95rem;
+}
+
+.ct-dm b {
+  display: block;
+  color: var(--fourth-color);
+}
+
+.ct-dm i {
+  font-size: 1.4rem;
+  color: var(--fifteenth-color);
+}

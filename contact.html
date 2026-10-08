@@ -80,44 +80,60 @@
   </header>
 
   <!--===== CONTACT =====-->
-  <main class="l-main">
-    <section class="contact section " id="contact">
-      <div class="about-data">
-        <h2 class="contact-title section-title ">Contact</h2>
+  <main class="l-main ct">
 
-        <div class="contact-container bd-grid">
-          <p class="contact-bio">Fill out this quick form and I'll get back to you as soon as I can!
-            <br>
-            <span class="contact-instagram">You can also send me a direct message on&nbsp;<a
-                class="contact-instagram-link" href="https://www.threads.com/@nedcodev/" target="_blank">Threads</a>
-            </span>
-          </p>
-          <form name="contact" method="POST" class="contact-form" data-netlify="true" netlify-honeypot="bot-field">
-            <div class="form-group">
-              <!-- <label for="name" class="visually-hidden">Name</label> -->
-              <input type="text" id="name" name="name" placeholder="Name" class="contact-input" required />
-            </div>
+    <!--===== INTRO =====-->
+    <section class="ct-hero favorites-title">
+      <h1 class="about-title section-title">
+        let's
+        <span class="about-title-color">Talk</span>
+      </h1>
+      <p class="ct-lead">Have an idea, a question, or just want to say hi? Send me a note and I'll get back to you as soon as I can.</p>
+    </section>
 
-            <div class="form-group">
-              <!-- <label for="email" class="visually-hidden">Email</label> -->
-              <input type="email" id="email" name="email" placeholder="Email" class="contact-input" required />
-            </div>
+    <!--===== FORM =====-->
+    <form name="contact" method="POST" class="ct-form" data-netlify="true" netlify-honeypot="bot-field">
+      <p class="ct-trap"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
 
-            <div class="form-group">
-              <!-- <label for="textbox" class="visually-hidden">Message</label> -->
-              <textarea name="message" id="textbox" cols="0" rows="10" placeholder="Write something..."
-                class="contact-input" style="min-height: 10em;" required></textarea>
-              <span id="char_count" class="char-count">250/250</span>
-            </div>
+      <fieldset class="ct-topics">
+        <legend class="ct-label">What's this about?</legend>
+        <label><input type="radio" name="topic" value="Project idea" checked><span>Project idea</span></label>
+        <label><input type="radio" name="topic" value="Collaboration"><span>Collaboration</span></label>
+        <label><input type="radio" name="topic" value="Just saying hi"><span>Just saying hi</span></label>
+      </fieldset>
 
-            <button type="submit" class="contact-button button">SEND</button>
-          </form>
+      <div class="ct-row">
+        <div class="ct-field">
+          <label class="ct-label" for="name">Name</label>
+          <input type="text" id="name" name="name" class="ct-input" autocomplete="name" required>
+        </div>
+        <div class="ct-field">
+          <label class="ct-label" for="email">Email</label>
+          <input type="email" id="email" name="email" class="ct-input" autocomplete="email" required>
         </div>
       </div>
+
+      <div class="ct-field">
+        <label class="ct-label" for="textbox">Message</label>
+        <textarea id="textbox" name="message" rows="6" class="ct-input" placeholder="Tell me a little about it..." required></textarea>
+        <span id="char_count" class="char-count ct-count">250/250</span>
+      </div>
+
+      <button type="submit" class="ct-send">Send message <i class="uil uil-message"></i></button>
+    </form>
+
+    <!--===== OTHER WAYS =====-->
+    <section class="ct-alt">
+      <p class="ct-label">Prefer a DM?</p>
+      <a class="ct-dm" href="https://www.threads.com/@nedcodev/" target="_blank" rel="noopener">
+        <iconify-icon icon="mingcute:threads-line"></iconify-icon>
+        <span><b>@nedcodev</b>Message me on Threads</span>
+        <i class="uil uil-arrow-up-right"></i>
+      </a>
     </section>
   </main>
 
- <!--===== FOOTER =====-->
+  <!--===== FOOTER =====-->
       <footer class="footer">
           <a href="https://www.threads.net/@nedcodev/" target="_blank" class="footer-icon">
             <iconify-icon icon="mingcute:threads-line"></iconify-icon>
