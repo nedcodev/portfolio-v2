@@ -4883,3 +4883,64 @@ a.tk-item:hover {
 .ps-tldr p:last-child {
   margin-bottom: .8rem;
 }
+
+/* Review posts: yellow label instead of the red "live" one */
+.ps-kicker-review {
+  color: var(--fifteenth-color);
+}
+
+.ps-body h3 {
+  margin: 1.6rem 0 .4rem;
+  font-size: 1.1rem;
+  color: var(--fourth-color);
+}
+
+/* Photos with captions */
+.ps-fig {
+  max-width: 440px;
+  margin: 1.5rem auto 2rem;
+}
+
+.ps-fig img {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.ps-fig figcaption {
+  margin-top: .6rem;
+  font-size: .88rem;
+  text-align: center;
+  color: #8a8a8a;
+}
+
+/* In-article Amazon button */
+.ps-buy-wrap {
+  text-align: center;
+  margin: 1.5rem 0 2rem !important;
+}
+
+.ps-buy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: .7rem 1.5rem;
+  border: 2px solid var(--fifteenth-color);
+  border-radius: 12px;
+  color: var(--fifteenth-color) !important;
+  font-weight: 700;
+  transition: box-shadow .3s, background .3s, color .3s;
+}
+
+.ps-buy:hover {
+  background: var(--fifteenth-color);
+  color: var(--eleventh-color) !important;
+  box-shadow: 0 0 0 2px rgba(255, 220, 22, .35), 0 0 18px rgba(255, 220, 22, .55), 0 0 44px rgba(255, 220, 22, .3);
+}
+
+.ps-note {
+  font-size: .8rem;
+  color: #6a6a6a;
+  text-align: center;
+}
