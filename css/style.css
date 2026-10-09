@@ -3557,11 +3557,6 @@ details>summary {
   transform: translateY(-2px);
 }
 
-.ct-dm iconify-icon {
-  font-size: 1.8rem;
-  color: var(--fourth-color);
-}
-
 .ct-dm span {
   flex: 1;
   font-size: .95rem;
