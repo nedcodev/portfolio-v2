@@ -4583,6 +4583,12 @@ a.tk-item:hover {
   padding-bottom: 1.4rem; /* room for day labels */
 }
 
+.vs-chart-note {
+  margin: .3rem 0 .4rem;
+  font-size: .75rem;
+  color: #8a8a8a;
+}
+
 /* Wave at everyone */
 .vs-wave {
   display: flex;

@@ -858,6 +858,19 @@ function renderLabStats(panel, state) {
     return { key, count: Number(state.daily[key]) || 0 };
   });
   const max = Math.max(1, ...days.map((d) => d.count));
+
+  // Daily counts only exist from the day tracking began; say so while the
+  // chart still shows days from before that
+  const note = panel.querySelector('.vs-chart-note');
+  const tracked = Object.keys(state.daily).filter((k) => Number(state.daily[k]) > 0).sort();
+  const firstDay = tracked[0];
+  if (note) {
+    note.hidden = Boolean(firstDay && firstDay <= days[0].key);
+    note.textContent = firstDay
+      ? `Daily tracking started ${new Date(firstDay + 'T12:00:00Z').toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric' })}.`
+      : 'Daily tracking starts today.';
+  }
+
   const bars = panel.querySelector('.vs-bars');
   const list = panel.querySelector('.vs-sr');
   bars.textContent = '';
