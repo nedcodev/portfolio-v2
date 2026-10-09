@@ -3469,6 +3469,24 @@ details>summary {
   color: var(--eleventh-color);
 }
 
+/* Three equal options in one row */
+.ct-topic-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+}
+
+.ct-topics .ct-topic-row label {
+  margin: 0;
+}
+
+.ct-topics .ct-topic-row span {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 .5rem;
+}
+
 .ct-topics input:focus-visible + span {
   outline: 2px solid var(--fifteenth-color);
   outline-offset: 3px;
