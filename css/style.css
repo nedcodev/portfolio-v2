@@ -4945,3 +4945,93 @@ a.tk-item:hover {
   font-size: .78rem;
   color: #8a8a8a;
 }
+
+/* Blog post: pull quote */
+.ps-quote {
+  margin: 1.75rem 0;
+  padding: 1.4rem 1.4rem 1.2rem;
+  border-radius: 16px;
+  background: #242424;
+}
+
+.ps-quote blockquote {
+  margin: 0;
+  font-size: clamp(1.3rem, 5vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  color: var(--fifteenth-color);
+}
+
+.ps-quote figcaption {
+  margin-top: .7rem;
+  font-size: .8rem;
+  color: #8a8a8a;
+}
+
+/* Blog post: small horizontal bar chart */
+.ps-chart {
+  margin: 1.75rem 0 2rem;
+  padding: 1.2rem 1.2rem 1rem;
+  border-radius: 16px;
+  background: #242424;
+}
+
+.ps-chart-title {
+  margin: 0 !important;
+  font-weight: 700;
+  color: var(--fourth-color);
+}
+
+.ps-chart-sub {
+  margin: .1rem 0 1rem !important;
+  font-size: .8rem;
+  color: #8a8a8a;
+}
+
+.ps-gap {
+  display: grid;
+  gap: .85rem;
+}
+
+.ps-gap-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "name val" "track track";
+  row-gap: .35rem;
+  font-size: .85rem;
+}
+
+.ps-gap-name { grid-area: name; color: var(--fourteenth-color); }
+.ps-gap-val { grid-area: val; font-weight: 700; color: var(--fourth-color); }
+
+.ps-gap-track {
+  grid-area: track;
+  height: .7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ps-gap-bar {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--fifteenth-color);
+}
+
+.ps-gap-row.is-unknown .ps-gap-bar {
+  width: 100%;
+  background: none;
+  border: 2px dashed rgba(255, 220, 22, 0.55);
+}
+
+.ps-gap-row.is-unknown .ps-gap-val {
+  color: var(--fifteenth-color);
+}
+
+.ps-chart figcaption {
+  margin-top: 1rem;
+  font-size: .75rem;
+  line-height: 1.5;
+  color: #8a8a8a;
+}
