@@ -83,7 +83,7 @@
 
   <main class="l-main">
     <!-- HOME SECTION - Main content area -->
-    <section class="home bd-grid" id="home">
+    <section class="home hm-home bd-grid" id="home">
       <!-- Introduction text -->
       <div class="home-data">
         <h1 class="home-title">
@@ -106,42 +106,44 @@
         </h2>
       </div>
 
-      <!-- Social media links -->
-      <!-- <div class="home-social">
-        <a href="https://www.threads.net/@nedcodev/" target="_blank" class="home-social-icon">
-          <iconify-icon icon="mingcute:threads-line"></iconify-icon>
-        </a>
-        <a href="https://www.instagram.com/nedcodev/" target="_blank" class="home-social-icon">
-          <iconify-icon icon="uil:instagram"></iconify-icon>
-        </a>
-        <a href="https://www.youtube.com/@NEDCODEV" target="_blank" class="home-social-icon">
-          <iconify-icon icon="tdesign:logo-youtube"></iconify-icon>
-        </a>
-        <a href="https://www.tiktok.com/@nedcodev" target="_blank" class="home-social-icon">
-          <iconify-icon icon="bxl:tiktok"></iconify-icon>
-        </a>
-        <a href="https://twitter.com/nedcodev" target="_blank" class="home-social-icon">
-          <iconify-icon icon="fa6-brands:x-twitter"></iconify-icon>
-        </a>
-        <a href="https://github.com/nedcodev" target="_blank" class="home-social-icon">
-          <iconify-icon icon="mingcute:github-line"></iconify-icon>
-        </a>
-        <a href="https://buymeacoffee.com/nedcode" target="_blank" class="coffee-social-icon">
-          <iconify-icon icon="simple-icons:buymeacoffee"></iconify-icon>
-        </a>
-      </div> -->
+      <!--===== NEWS TICKER: Montreal time + scrolling gaming and tech headlines =====-->
+      <section class="tk" aria-label="Latest gaming and tech news">
+        <div class="tk-head">
+          <span class="tk-live"><span class="tk-dot"></span><b>Live</b> · Gaming &amp; Tech</span>
+        </div>
+        <div class="tk-bar">
+          <div class="tk-time"><b class="tk-clock">--:--</b><small>MTL</small></div>
+          <div class="tk-window">
+            <div class="tk-track"><span class="tk-item">Loading the latest headlines…</span></div>
+          </div>
+        </div>
+      </section>
 
-      <!-- Newsletter subscription section -->
-       <div class="subscribe-container">
-        <div class="subscribe-description">
-        <!-- <p>Exciting Updates <span class="highlight">Coming Soon!</span> -->
-          <br><strong><span class="subscribe-font">SUBSCRIBE</span></strong> to my newsletter to stay in the loop.
-        </p>
-       </div>
-       <div class="subscribe-button">
+      <!--===== EXPLORE =====-->
+      <div class="hm-block">
+        <p class="hm-label">Explore</p>
+        <div class="hm-list">
+          <a class="hm-row" href="projects.html">
+            <img src="img/ainovelpro.gif" alt="">
+            <div><span class="hm-kicker">Latest project</span><h3>AI Novel Pro</h3><p>An AI-powered writing community.</p></div>
+          </a>
+          <a class="hm-row" href="blog/A-Must-Have-Portable-Door-Lock-for-Every-Traveler.html">
+            <img src="img/NEDCODE_NED_MARAFAWI-Blog_Thumbnail_Cover.png" alt="">
+            <div><span class="hm-kicker">Latest post</span><h3>A Must-Have Portable Door Lock</h3><p>Compact and lightweight, perfect for travel.</p></div>
+          </a>
+          <a class="hm-row" href="lab.html">
+            <span class="hm-board" aria-hidden="true"><span class="hm-clock">00:00</span></span>
+            <div><span class="hm-kicker">From the lab</span><h3>Departure board clock</h3><p>A flip-board world clock you can play with.</p></div>
+          </a>
+        </div>
+      </div>
+
+      <!--===== NEWSLETTER =====-->
+      <div class="hm-news">
+        <p class="hm-label">Newsletter</p>
+        <p class="hm-news-text">Don't subscribe. Seriously, I'm never going to send you anything.</p>
         <iframe src="https://embeds.beehiiv.com/70a8bd62-70d8-435c-9c06-6860d82f5cf3?slim=true"
           data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no"></iframe>
-       </div>
       </div>
     </section>
   </main>

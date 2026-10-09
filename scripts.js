@@ -1004,3 +1004,74 @@ document.addEventListener('DOMContentLoaded', () => {
   initFirebaseAndData();
   initSiteStats();
 });
+
+/*===== HOME: NEWS TICKER =====*/
+// Montreal time + a scrolling ticker of gaming and tech headlines from /api/news
+(() => {
+  const ZONE = 'America/Toronto';
+  const boardClock = document.querySelector('.hm-clock');
+  const box = document.querySelector('.tk');
+  if (!box) return;
+  const clock = box.querySelector('.tk-clock');
+  const track = box.querySelector('.tk-track');
+
+  const tickClock = () => {
+    const now = new Date();
+    clock.textContent = now.toLocaleTimeString('en-US', { timeZone: ZONE, hour: 'numeric', minute: '2-digit' });
+    if (boardClock) boardClock.textContent = now.toLocaleTimeString('en-GB', { timeZone: ZONE, hour: '2-digit', minute: '2-digit' });
+  };
+  tickClock(); setInterval(tickClock, 30000);
+
+  // Alternate gaming and tech so both topics keep coming around
+  const mix = (gaming, tech) => {
+    const out = [];
+    for (let i = 0; i < Math.max(gaming.length, tech.length); i++) {
+      if (gaming[i]) out.push({ ...gaming[i], topic: 'Gaming' });
+      if (tech[i]) out.push({ ...tech[i], topic: 'Tech' });
+    }
+    return out;
+  };
+
+  const build = (items) => {
+    track.textContent = '';
+    if (!items.length) {
+      const empty = document.createElement('span');
+      empty.className = 'tk-item';
+      empty.textContent = 'No headlines right now.';
+      track.append(empty);
+      return;
+    }
+    // Two copies back to back so the loop has no gap
+    for (let copy = 0; copy < 2; copy++) {
+      for (const n of items) {
+        const a = document.createElement('a');
+        a.className = 'tk-item';
+        a.href = n.link;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        if (copy) { a.setAttribute('aria-hidden', 'true'); a.tabIndex = -1; }
+        const tag = document.createElement('span');
+        tag.className = 'tk-tag';
+        tag.textContent = n.topic;
+        const title = document.createElement('span');
+        title.textContent = n.title;
+        const src = document.createElement('span');
+        src.className = 'tk-src';
+        src.textContent = n.source;
+        a.append(tag, title, src);
+        track.append(a);
+      }
+    }
+    // Same reading speed no matter how many headlines: about 60px per second
+    requestAnimationFrame(() => {
+      track.style.setProperty('--tk-duration', `${Math.round(track.scrollWidth / 2 / 60)}s`);
+      box.classList.add('is-running');
+    });
+  };
+
+  fetch('/api/news')
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((data) => build(mix(data.gaming || [], data.tech || [])))
+    .catch(() => build([]));
+})();
+  
