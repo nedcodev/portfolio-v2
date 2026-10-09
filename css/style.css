@@ -4267,8 +4267,15 @@ a.bl-row:hover {
   animation: tk-scroll var(--tk-duration, 60s) linear infinite;
 }
 
-.tk.is-running:hover .tk-track,
-.tk.is-running:focus-within .tk-track {
+/* Pause for mouse hover and keyboard focus only. Touch taps leave a sticky
+   hover/focus behind, which would freeze the ticker after visiting a link. */
+@media (hover: hover) and (pointer: fine) {
+  .tk.is-running:hover .tk-track {
+    animation-play-state: paused;
+  }
+}
+
+.tk.is-running:has(:focus-visible) .tk-track {
   animation-play-state: paused;
 }
 

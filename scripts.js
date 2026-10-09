@@ -1069,6 +1069,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  // Let go of a tapped headline so the ticker keeps moving when the visitor comes back
+  const release = () => {
+    if (box.contains(document.activeElement)) document.activeElement.blur();
+  };
+  track.addEventListener('click', (e) => { if (e.target.closest('a')) setTimeout(release, 0); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) release(); });
+  window.addEventListener('pageshow', release);
+
   fetch('/api/news')
     .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
     .then((data) => build(mix(data.gaming || [], data.tech || [])))
