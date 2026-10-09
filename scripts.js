@@ -790,16 +790,12 @@ function setupUnfilteredGestures(id, totalSlides) {
 }
 
 //*=============== SITE STATS: ONLINE NOW + VIEWS ===============*/
+// Every page counts the visit and says "I'm here". Only the Lab page shows the
+// numbers, in the "Live visitors" experiment (#labStats).
 const SITE_VIEWS_BASE = 0; // starting number if you want the counter to begin above 0
 const SITE_STATS_REFRESH_MS = 30000; // heartbeat + refresh interval
 const SITE_ONLINE_WINDOW_MS = 75000; // seen within this window = online
-
-// Where the badge sits, measured against the logo (fractions of the logo's width).
-// Nudge these if you ever change the logo image.
-const SITE_STATS_LOGO_X = 0.73; // horizontal centre of the badge (0 = logo's left edge, 1 = right edge)
-const SITE_STATS_LOGO_Y = 0.05; // top edge of the badge, measured down from the top of the logo
-const SITE_STATS_LOGO_MIN_X = 0.38; // never further left than this (keeps clear of the blob outline)
-const SITE_STATS_LOGO_MAX_X = 1.05; // never further right than this
+const SITE_STATS_ZONE = 'America/Toronto'; // days are counted in Montreal time
 
 function getPresenceId() {
   let id = null;
@@ -818,143 +814,105 @@ function getPresenceId() {
   return id;
 }
 
-function createSiteStatsBadge() {
-  const header = document.querySelector('.l-header');
-  if (!header) return null;
-  const badge = document.createElement('div');
-  badge.className = 'site-stats';
-  badge.innerHTML = `
-    <span class="site-stats-dot"></span>
-    <span class="site-stats-online"><b>0</b> online</span>
-    <span class="site-stats-sep">&middot;</span>
-    <span class="site-stats-views"><b>0</b> <span class="site-stats-views-label">views</span></span>
-  `;
-  header.appendChild(badge);
-  positionSiteStats(badge);
-  return badge;
+// "2026-10-09" for a day in Montreal, `back` days ago
+function montrealDay(back = 0) {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: SITE_STATS_ZONE });
+  const [y, m, d] = today.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d - back)).toISOString().slice(0, 10);
 }
 
-// Puts the badge in the empty space above the NEDCODE plate, and keeps it there
-// when the window resizes. It slides sideways if it would touch the blob outline
-// or the phone menu icon, and hides itself if there really isn't room.
-function positionSiteStats(badge) {
-  const header = badge.parentElement;
-  const logoImg = header.querySelector('.nav-logo-layer.nav-logo img');
-  if (!logoImg) return; // no logo found: the CSS fallback keeps it under the header
-
-  const place = () => {
-    const h = header.getBoundingClientRect();
-    const l = logoImg.getBoundingClientRect();
-    if (!l.width) return; // logo not laid out yet
-
-    const w = badge.offsetWidth; // 0 while hidden; placed again as soon as it shows
-    const height = badge.offsetHeight || 16;
-    const top = l.top + l.width * SITE_STATS_LOGO_Y;
-
-    const minLeft = l.left + l.width * SITE_STATS_LOGO_MIN_X;
-    let maxRight = l.left + l.width * SITE_STATS_LOGO_MAX_X;
-
-    // On phones, keep clear of the hamburger icon.
-    const toggle = header.querySelector('.nav-toggle');
-    if (toggle && getComputedStyle(toggle).display !== 'none') {
-      let ink = null;
-      toggle.querySelectorAll('.line').forEach((line) => {
-        const r = line.getBoundingClientRect();
-        if (!r.width) return;
-        ink = ink
-          ? {
-              left: Math.min(ink.left, r.left),
-              top: Math.min(ink.top, r.top),
-              bottom: Math.max(ink.bottom, r.bottom),
-            }
-          : { left: r.left, top: r.top, bottom: r.bottom };
-      });
-      if (ink && top - 8 < ink.bottom && top + height + 8 > ink.top) {
-        maxRight = Math.min(maxRight, ink.left - 8);
-      }
-    }
-
-    let centre = l.left + l.width * SITE_STATS_LOGO_X;
-    if (w) {
-      centre = Math.min(Math.max(centre, minLeft + w / 2), maxRight - w / 2);
-      // not enough room: hide instead of overlapping the logo or the menu icon
-      badge.classList.toggle('is-squeezed', w > maxRight - minLeft);
-    }
-    badge.style.left = centre - h.left + 'px';
-    badge.style.top = top - h.top + 'px';
+// Draws the numbers and the 7-day bars inside the Lab's "Live visitors" panel
+function renderLabStats(panel, state) {
+  const fmt = (n) => Number(n).toLocaleString('en-US');
+  const set = (name, value) => {
+    const el = panel.querySelector(`[data-stat="${name}"]`);
+    if (el && value !== null && value !== undefined) el.textContent = fmt(value);
   };
+  set('online', state.online);
+  set('views', state.views === null ? null : SITE_VIEWS_BASE + state.views);
+  set('today', state.daily ? state.daily[montrealDay()] || 0 : null);
 
-  badge.placeSiteStats = place;
-  place();
-  window.addEventListener('load', place);
-  window.addEventListener('resize', place);
-  logoImg.addEventListener('load', place);
-  if ('ResizeObserver' in window) {
-    const observer = new ResizeObserver(place);
-    observer.observe(header);
-    observer.observe(logoImg);
-    observer.observe(badge);
-  }
+  if (!state.daily) return;
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const key = montrealDay(6 - i);
+    return { key, count: Number(state.daily[key]) || 0 };
+  });
+  const max = Math.max(1, ...days.map((d) => d.count));
+  const bars = panel.querySelector('.vs-bars');
+  const list = panel.querySelector('.vs-sr');
+  bars.textContent = '';
+  list.textContent = '';
+  days.forEach((d, i) => {
+    const date = new Date(d.key + 'T12:00:00Z');
+    const long = date.toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric' });
+    const label = `${long} · ${fmt(d.count)} view${d.count === 1 ? '' : 's'}`;
+
+    const col = document.createElement('div');
+    col.className = 'vs-col' + (i === 6 ? ' is-today' : '');
+    col.tabIndex = 0;
+    col.setAttribute('aria-hidden', 'true');
+    col.dataset.tip = label;
+    const bar = document.createElement('span');
+    bar.className = 'vs-bar';
+    bar.style.height = `${Math.max(2, (d.count / max) * 100)}%`;
+    const day = document.createElement('span');
+    day.className = 'vs-day';
+    day.textContent = i === 6 ? 'Today' : date.toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'short' });
+    if (i === 6) {
+      const value = document.createElement('span');
+      value.className = 'vs-value';
+      value.textContent = fmt(d.count);
+      col.append(value);
+    }
+    col.append(bar, day);
+    bars.append(col);
+
+    const li = document.createElement('li');
+    li.textContent = label;
+    list.append(li);
+  });
 }
 
 async function initSiteStats() {
-  const badge = createSiteStatsBadge();
-  if (!badge) return;
-
   const database = await ensureFirebase();
   if (!database) return;
 
+  const panel = document.getElementById('labStats');
   const statsRef = database.collection('stats').doc('post_views');
   const presenceRef = database.collection('presence').doc(getPresenceId());
-  const state = { online: null, views: null };
+  const state = { online: null, views: null, daily: null };
 
-  const render = () => {
-    const onlineEl = badge.querySelector('.site-stats-online');
-    const viewsEl = badge.querySelector('.site-stats-views');
-    const sepEl = badge.querySelector('.site-stats-sep');
-    const hasOnline = state.online !== null;
-    const hasViews = state.views !== null;
-
-    if (hasOnline) {
-      onlineEl.querySelector('b').textContent =
-        state.online.toLocaleString('en-US');
-    }
-    if (hasViews) {
-      const total = SITE_VIEWS_BASE + state.views;
-      viewsEl.querySelector('b').textContent = total.toLocaleString('en-US');
-      viewsEl.querySelector('.site-stats-views-label').textContent =
-        total === 1 ? 'view' : 'views';
-    }
-    onlineEl.style.display = hasOnline ? '' : 'none';
-    viewsEl.style.display = hasViews ? '' : 'none';
-    sepEl.style.display = hasOnline && hasViews ? '' : 'none';
-    badge.classList.toggle('is-visible', hasOnline || hasViews);
-    if (badge.placeSiteStats) badge.placeSiteStats(); // width may have changed
-  };
-
-  // Count this page once per browser session.
+  // Count this page once per browser session (total + today's count)
   const countKey = 'site_viewed_' + location.pathname;
   const countThisView = async () => {
     try {
       if (sessionStorage.getItem(countKey)) return;
       sessionStorage.setItem(countKey, 'true');
     } catch (e) {}
+    const inc = firebase.firestore.FieldValue.increment(1);
     try {
-      await statsRef.set(
-        { site_views: firebase.firestore.FieldValue.increment(1) },
-        { merge: true },
-      );
+      await statsRef.set({ site_views: inc }, { merge: true });
     } catch (err) {
       console.error('Could not count page view:', err);
     }
+    try {
+      await statsRef.set({ daily_views: { [montrealDay()]: inc } }, { merge: true });
+    } catch (err) {
+      console.error('Could not count daily view:', err);
+    }
   };
+
+  const heartbeat = () =>
+    presenceRef
+      .set({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() })
+      .catch((err) => console.error('Presence unavailable:', err));
 
   const refreshViews = async () => {
     try {
       const snap = await statsRef.get();
       const data = snap.exists ? snap.data() : {};
       state.views = Number(data.site_views) || 0;
-      render();
+      state.daily = data.daily_views || {};
     } catch (err) {
       console.error('Site views unavailable:', err);
     }
@@ -962,27 +920,20 @@ async function initSiteStats() {
 
   const refreshOnline = async () => {
     try {
-      await presenceRef.set({
-        lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-      const cutoff = firebase.firestore.Timestamp.fromMillis(
-        Date.now() - SITE_ONLINE_WINDOW_MS,
-      );
-      const snap = await database
-        .collection('presence')
-        .where('lastSeen', '>', cutoff)
-        .limit(500)
-        .get();
+      const cutoff = firebase.firestore.Timestamp.fromMillis(Date.now() - SITE_ONLINE_WINDOW_MS);
+      const snap = await database.collection('presence').where('lastSeen', '>', cutoff).limit(500).get();
       state.online = Math.max(1, snap.size); // you're always online to yourself
-      render();
     } catch (err) {
       console.error('Online count unavailable:', err);
     }
   };
 
-  const tick = () => {
-    if (document.visibilityState === 'hidden') return Promise.resolve();
-    return Promise.all([refreshOnline(), refreshViews()]);
+  const tick = async () => {
+    if (document.visibilityState === 'hidden') return;
+    await heartbeat();
+    if (!panel) return; // only the Lab page reads the numbers
+    await Promise.all([refreshOnline(), refreshViews()]);
+    renderLabStats(panel, state);
   };
 
   await countThisView();
