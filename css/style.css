@@ -5035,3 +5035,59 @@ a.tk-item:hover {
   line-height: 1.5;
   color: #8a8a8a;
 }
+
+/* Blog post: speaker card (who said it + their quote) */
+.ps-speaker {
+  margin: 1.5rem 0 1.75rem;
+  padding: 1.1rem 1.2rem 1rem;
+  border-radius: 16px;
+  background: #242424;
+}
+
+.ps-speaker-head {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-bottom: .8rem;
+}
+
+.ps-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  background: #1d1d1d;
+  border: 2px solid var(--fifteenth-color);
+  font-size: .9rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+  color: var(--fifteenth-color);
+}
+
+.ps-speaker-head b {
+  display: block;
+  line-height: 1.2;
+  color: var(--fourth-color);
+}
+
+.ps-speaker-head div span {
+  display: block;
+  font-size: .8rem;
+  color: #8a8a8a;
+}
+
+.ps-speaker blockquote {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--fourth-color);
+}
+
+.ps-speaker figcaption {
+  margin-top: .6rem;
+  font-size: .75rem;
+  color: #8a8a8a;
+}
