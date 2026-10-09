@@ -4873,3 +4873,13 @@ a.tk-item:hover {
   text-decoration: underline;
   text-decoration-color: var(--third-color);
 }
+
+.ps-lead {
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: var(--fourth-color);
+}
+
+.ps-tldr p:last-child {
+  margin-bottom: .8rem;
+}
