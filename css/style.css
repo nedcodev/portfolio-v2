@@ -3799,13 +3799,11 @@ details>summary {
   /* Numbered rows, like the projects list */
   .nav-menu .nav-list {
     counter-reset: menu;
-    border-top: 1px solid var(--third-color);
   }
 
   .nav-menu .nav-item {
     margin: 0;
     counter-increment: menu;
-    border-bottom: 1px solid var(--third-color);
     opacity: 0;
     transform: translateY(8px);
     transition: opacity .35s, transform .35s;
@@ -3828,7 +3826,8 @@ details>summary {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: .85rem .25rem;
+    padding: .85rem .75rem;
+    border-radius: 12px;
     font-size: 1.9rem;
     font-weight: 700;
     letter-spacing: -.02em;
@@ -3845,20 +3844,27 @@ details>summary {
     color: var(--second-color);
   }
 
-  /* Arrow on every row; replaces the brush underline inside the menu */
-  .nav-menu .nav-link::after,
+  /* No brush underline inside the menu */
+  .nav-menu .nav-link::after {
+    content: none;
+  }
+
+  /* Current page: soft band plus a glowing dot, like the "online" dot */
+  .nav-menu .nav-link.active {
+    background: var(--sixteenth-color);
+  }
+
   .nav-menu .nav-link.active::after {
-    content: '\2192';
+    content: '';
     position: static;
-    width: auto;
-    height: auto;
+    width: .7rem;
+    height: .7rem;
     margin-left: auto;
-    background: none;
+    border-radius: 50%;
+    background: var(--fifteenth-color);
     transform: none;
     opacity: 1;
-    font-size: 1.3rem;
-    font-weight: 400;
-    color: var(--second-color);
+    box-shadow: 0 0 0 4px rgba(255, 220, 22, .15), 0 0 14px rgba(255, 220, 22, .7);
   }
 
   .nav-menu .nav-link:hover {
@@ -3868,8 +3874,7 @@ details>summary {
 
   /* Current page */
   .nav-menu .nav-link.active,
-  .nav-menu .nav-link.active::before,
-  .nav-menu .nav-link.active::after {
+  .nav-menu .nav-link.active::before {
     color: var(--fifteenth-color);
   }
 
