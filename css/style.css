@@ -4052,3 +4052,42 @@ a.bl-row:hover {
     width: 150px;
   }
 }
+
+/*===== NEON GLOW: main buttons light up like the NEDCODE logo =====*/
+.ab-cta a,
+.ct-send,
+.menu-foot .menu-cta {
+  transition: transform .2s, box-shadow .3s;
+}
+
+.ab-cta a:hover,
+.ab-cta a:focus-visible,
+.ab-cta a:active,
+.ct-send:hover,
+.ct-send:focus-visible,
+.ct-send:active,
+.menu-foot .menu-cta:hover,
+.menu-foot .menu-cta:focus-visible,
+.menu-foot .menu-cta:active {
+  box-shadow:
+    0 0 0 2px rgba(255, 220, 22, .35),
+    0 0 18px rgba(255, 220, 22, .55),
+    0 0 44px rgba(255, 220, 22, .3);
+  animation: neon-flicker .9s steps(1) 1;
+}
+
+@keyframes neon-flicker {
+  0% { opacity: 1; }
+  12% { opacity: .55; }
+  18% { opacity: 1; }
+  30% { opacity: .7; }
+  36% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-cta a,
+  .ct-send,
+  .menu-foot .menu-cta {
+    animation: none !important;
+  }
+}
