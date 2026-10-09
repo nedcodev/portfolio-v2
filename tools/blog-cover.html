@@ -7,6 +7,11 @@
     thumb  940x788  --pad:70px --big:230px --mid:62px --s1:22px --s2:30px
   Save as JPEG (quality ~86) in img/blog/<slug>-og.jpg and <slug>-thumb.jpg.
   Kicker colour: red (#ff3b3b) for breaking news/leaks, yellow for explainers.
+  To tell same-topic posts apart, drop a simple inline SVG icon in the page
+  with class "art" (yellow strokes at .35 opacity + one red accent) and set
+    og    --ax:70px --ay:190px --ah:250px
+    thumb --ax:60px --ay:505px --ah:225px
+  Add class "leak" to <body> for the red glow.
 -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
@@ -24,6 +29,8 @@ p{margin-top:18px;font-size:var(--s2);font-weight:500;color:#8a8a8a}
 .tag{position:absolute;left:var(--pad);bottom:calc(var(--pad) * .55);font-size:var(--s1);font-weight:700;letter-spacing:.2em;color:#ffdc16}
 .time{position:absolute;right:var(--pad);bottom:calc(var(--pad) * .5);display:flex;flex-direction:column;align-items:center;padding:12px 20px;border-radius:14px;background:#ffdc16;color:#000;line-height:1}
 .time b{font-size:var(--s2);font-weight:800}.time small{font-size:calc(var(--s1) * .8);font-weight:700;letter-spacing:.14em;margin-top:6px}
+.art{position:absolute;right:var(--ax,70px);bottom:var(--ay,190px);height:var(--ah,250px)}
+body.leak .glow{background:radial-gradient(closest-side,rgba(255,59,59,.22),transparent)}
 </style></head><body><div class="wrap"><div class="glow"></div>
 <span class="live" style="color:#ffdc16"><i style="background:#ffdc16;box-shadow:0 0 0 7px rgba(255,220,22,.2),0 0 22px rgba(255,220,22,.8)"></i>Online</span>
 <h1>GTA 6</h1>

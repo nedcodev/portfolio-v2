@@ -42,9 +42,10 @@ creator.
 **Visuals: always find a way.** Every post gets:
 
 - An original cover from `tools/blog-cover.html` (og + thumb sizes).
-  GTA 6 posts use Ned's official sunset art as the cover background (wide
-  for og, square palms for thumb) with a dark fade under the text, plus a
-  `.ps-credit` line under the cover ("Background: Rockstar Games").
+  Posts on the same topic (e.g. several GTA 6 posts) stay on the dark/yellow
+  template but each gets its own simple icon on the right (`.art` slot) and,
+  for leaks, the red glow (`body.leak`): wifi crossed out for "no online",
+  cracked video with a red drip for leaks. No characters or photos.
 - Visuals between sections so there's never a wall of text. Use official images
   when Ned provides them (credit "Image: Rockstar Games"; keep GTA posts free
   of ads/affiliate links per Rockstar's non-commercial policy). Otherwise build
