@@ -4707,6 +4707,17 @@ a.tk-item:hover {
   margin-bottom: 2rem;
 }
 
+.ps-cover:has(+ .ps-credit) {
+  margin-bottom: .5rem;
+}
+
+.ps-credit {
+  margin: 0 0 2rem;
+  font-size: .8rem;
+  text-align: right;
+  color: #8a8a8a;
+}
+
 .ps-body {
   font-size: 1.05rem;
   line-height: 1.75;

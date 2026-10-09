@@ -42,6 +42,9 @@ creator.
 **Visuals: always find a way.** Every post gets:
 
 - An original cover from `tools/blog-cover.html` (og + thumb sizes).
+  GTA 6 posts use Ned's official sunset art as the cover background (wide
+  for og, square palms for thumb) with a dark fade under the text, plus a
+  `.ps-credit` line under the cover ("Background: Rockstar Games").
 - Visuals between sections so there's never a wall of text. Use official images
   when Ned provides them (credit "Image: Rockstar Games"; keep GTA posts free
   of ads/affiliate links per Rockstar's non-commercial policy). Otherwise build
