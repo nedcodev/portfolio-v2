@@ -147,9 +147,20 @@
           </div>
 
           <div class="vs-chart">
-            <p class="vs-chart-title">Views, last 7 days</p>
+            <div class="vs-chart-head">
+              <p class="vs-chart-title">Views, last <span class="vs-range-label">7 days</span></p>
+              <div class="flap-toggle" role="group" aria-label="Chart range">
+                <button type="button" data-range="7" aria-pressed="true">7D</button>
+                <button type="button" data-range="30" aria-pressed="false">30D</button>
+              </div>
+            </div>
             <div class="vs-bars" aria-hidden="true"></div>
-            <ul class="vs-sr" aria-label="Views in the last 7 days"></ul>
+            <ul class="vs-sr" aria-label="Daily views"></ul>
+          </div>
+
+          <div class="vs-wave">
+            <button type="button" class="flap-add vs-wave-btn"><span class="vs-hand" aria-hidden="true">👋</span> <span class="vs-wave-text">Wave at everyone</span></button>
+            <p class="vs-wave-count" aria-live="polite"><b data-stat="waves">–</b> waves today</p>
           </div>
         </div>
       </article>

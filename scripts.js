@@ -821,20 +821,40 @@ function montrealDay(back = 0) {
   return new Date(Date.UTC(y, m - 1, d - back)).toISOString().slice(0, 10);
 }
 
-// Draws the numbers and the 7-day bars inside the Lab's "Live visitors" panel
+// Rolls a number from what's shown now to its new value
+function countTo(el, value) {
+  const fmt = (n) => Math.round(n).toLocaleString('en-US');
+  const from = Number(el.dataset.value) || 0;
+  el.dataset.value = value;
+  if (from === value || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = fmt(value);
+    return;
+  }
+  const start = performance.now();
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / 700);
+    el.textContent = fmt(from + (value - from) * (1 - Math.pow(1 - t, 3)));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Draws the numbers and the daily bars inside the Lab's "Live visitors" panel
 function renderLabStats(panel, state) {
   const fmt = (n) => Number(n).toLocaleString('en-US');
   const set = (name, value) => {
     const el = panel.querySelector(`[data-stat="${name}"]`);
-    if (el && value !== null && value !== undefined) el.textContent = fmt(value);
+    if (el && value !== null && value !== undefined) countTo(el, Number(value));
   };
   set('online', state.online);
   set('views', state.views === null ? null : SITE_VIEWS_BASE + state.views);
   set('today', state.daily ? state.daily[montrealDay()] || 0 : null);
+  set('waves', state.waves ? state.waves[montrealDay()] || 0 : null);
 
   if (!state.daily) return;
-  const days = Array.from({ length: 7 }, (_, i) => {
-    const key = montrealDay(6 - i);
+  const range = state.range || 7;
+  const days = Array.from({ length: range }, (_, i) => {
+    const key = montrealDay(range - 1 - i);
     return { key, count: Number(state.daily[key]) || 0 };
   });
   const max = Math.max(1, ...days.map((d) => d.count));
@@ -842,29 +862,39 @@ function renderLabStats(panel, state) {
   const list = panel.querySelector('.vs-sr');
   bars.textContent = '';
   list.textContent = '';
+  bars.classList.toggle('is-month', range > 7);
   days.forEach((d, i) => {
     const date = new Date(d.key + 'T12:00:00Z');
     const long = date.toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric' });
     const label = `${long} · ${fmt(d.count)} view${d.count === 1 ? '' : 's'}`;
+    const isToday = i === range - 1;
 
     const col = document.createElement('div');
-    col.className = 'vs-col' + (i === 6 ? ' is-today' : '');
+    col.className = 'vs-col' + (isToday ? ' is-today' : '');
     col.tabIndex = 0;
-    col.setAttribute('aria-hidden', 'true');
     col.dataset.tip = label;
     const bar = document.createElement('span');
     bar.className = 'vs-bar';
     bar.style.height = `${Math.max(2, (d.count / max) * 100)}%`;
-    const day = document.createElement('span');
-    day.className = 'vs-day';
-    day.textContent = i === 6 ? 'Today' : date.toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'short' });
-    if (i === 6) {
+    bar.style.animationDelay = `${i * (range > 7 ? 12 : 40)}ms`;
+    if (isToday) {
       const value = document.createElement('span');
       value.className = 'vs-value';
       value.textContent = fmt(d.count);
       col.append(value);
     }
-    col.append(bar, day);
+    col.append(bar);
+    // Week view labels every day; month view labels about once a week
+    if (range <= 7 || isToday || (range - 1 - i) % 7 === 0) {
+      const day = document.createElement('span');
+      day.className = 'vs-day';
+      day.textContent = isToday
+        ? 'Today'
+        : range <= 7
+          ? date.toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'short' })
+          : date.toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric' });
+      col.append(day);
+    }
     bars.append(col);
 
     const li = document.createElement('li');
@@ -880,7 +910,7 @@ async function initSiteStats() {
   const panel = document.getElementById('labStats');
   const statsRef = database.collection('stats').doc('post_views');
   const presenceRef = database.collection('presence').doc(getPresenceId());
-  const state = { online: null, views: null, daily: null };
+  const state = { online: null, views: null, daily: null, waves: null, range: 7 };
 
   // Count this page once per browser session (total + today's count)
   const countKey = 'site_viewed_' + location.pathname;
@@ -913,6 +943,7 @@ async function initSiteStats() {
       const data = snap.exists ? snap.data() : {};
       state.views = Number(data.site_views) || 0;
       state.daily = data.daily_views || {};
+      state.waves = data.daily_waves || {};
     } catch (err) {
       console.error('Site views unavailable:', err);
     }
@@ -935,6 +966,45 @@ async function initSiteStats() {
     await Promise.all([refreshOnline(), refreshViews()]);
     renderLabStats(panel, state);
   };
+
+  if (panel) {
+    // 7D / 30D switch
+    const label = panel.querySelector('.vs-range-label');
+    panel.querySelectorAll('[data-range]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.range = Number(btn.dataset.range);
+        panel.querySelectorAll('[data-range]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        label.textContent = `${state.range} days`;
+        renderLabStats(panel, state);
+      });
+    });
+
+    // Wave at everyone: one wave per visit, counted for the day
+    const waveBtn = panel.querySelector('.vs-wave-btn');
+    const waveKey = 'site_waved_' + montrealDay();
+    const markWaved = () => {
+      waveBtn.disabled = true;
+      waveBtn.classList.add('is-waved');
+      waveBtn.querySelector('.vs-wave-text').textContent = 'Waved!';
+    };
+    try {
+      if (sessionStorage.getItem(waveKey)) markWaved();
+    } catch (e) {}
+    waveBtn.addEventListener('click', async () => {
+      markWaved();
+      try {
+        sessionStorage.setItem(waveKey, 'true');
+      } catch (e) {}
+      const today = montrealDay();
+      state.waves = { ...(state.waves || {}), [today]: (Number((state.waves || {})[today]) || 0) + 1 };
+      renderLabStats(panel, state);
+      try {
+        await statsRef.set({ daily_waves: { [today]: firebase.firestore.FieldValue.increment(1) } }, { merge: true });
+      } catch (err) {
+        console.error('Could not save wave:', err);
+      }
+    });
+  }
 
   await countThisView();
   await tick();

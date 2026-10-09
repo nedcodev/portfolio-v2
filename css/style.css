@@ -4451,8 +4451,15 @@ a.tk-item:hover {
   margin-top: 1rem;
 }
 
+.vs-chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .8rem;
+}
+
 .vs-chart-title {
-  margin: 0 0 .6rem;
+  margin: 0;
   font-size: .72rem;
   font-weight: 600;
   letter-spacing: .08em;
@@ -4462,7 +4469,8 @@ a.tk-item:hover {
 
 .vs-bars {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: 2px;
   height: 7.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -4484,7 +4492,27 @@ a.tk-item:hover {
   max-width: 28px;
   border-radius: 4px 4px 0 0;
   background: rgba(255, 220, 22, 0.45);
+  transform-origin: bottom;
+  animation: vs-grow .5s cubic-bezier(.2, .8, .2, 1) both;
   transition: background .2s;
+}
+
+@keyframes vs-grow {
+  from { transform: scaleY(0); }
+}
+
+/* 30 days: thinner bars, tighter gaps */
+.vs-bars.is-month {
+  gap: 1px;
+}
+
+.vs-bars.is-month .vs-col {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.vs-bars.is-month .vs-bar {
+  border-radius: 2px 2px 0 0;
 }
 
 .vs-col.is-today .vs-bar,
@@ -4505,7 +4533,13 @@ a.tk-item:hover {
   top: 100%;
   margin-top: .35rem;
   font-size: .65rem;
+  white-space: nowrap;
   color: #8a8a8a;
+}
+
+/* keep the last label ("Today") inside the panel */
+.vs-col:last-child .vs-day {
+  right: 0;
 }
 
 /* hover / focus tooltip */
@@ -4549,7 +4583,57 @@ a.tk-item:hover {
   padding-bottom: 1.4rem; /* room for day labels */
 }
 
+/* Wave at everyone */
+.vs-wave {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: .4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vs-wave-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.vs-wave-btn:hover .vs-hand,
+.vs-wave-btn.is-waved .vs-hand {
+  animation: vs-wave 1s ease-in-out;
+}
+
+.vs-wave-btn.is-waved {
+  cursor: default;
+  opacity: .75;
+}
+
+@keyframes vs-wave {
+  0%, 100% { transform: rotate(0); }
+  20%, 60% { transform: rotate(18deg); }
+  40%, 80% { transform: rotate(-10deg); }
+}
+
+.vs-hand {
+  display: inline-block;
+  transform-origin: 70% 80%;
+}
+
+.vs-wave-count {
+  margin: 0;
+  font-size: .8rem;
+  color: #8a8a8a;
+}
+
+.vs-wave-count b {
+  color: var(--fourth-color);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .vs-dot::after { animation: none; }
+  .vs-dot::after,
+  .vs-bar,
+  .vs-wave-btn .vs-hand { animation: none !important; }
 }
 
