@@ -5091,3 +5091,74 @@ a.tk-item:hover {
   font-size: .75rem;
   color: #8a8a8a;
 }
+
+/* Blog post: vertical timeline */
+.ps-timeline {
+  margin: .8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ps-timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: .75rem;
+  padding: 0 0 1rem 1.2rem;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+
+.ps-timeline li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .35rem;
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: #6a6a6a;
+}
+
+.ps-timeline li::after {
+  content: '';
+  position: absolute;
+  left: calc(.275rem - 1px);
+  top: 1.1rem;
+  bottom: -.1rem;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ps-timeline li:last-child {
+  padding-bottom: 0;
+}
+
+.ps-timeline li:last-child::after {
+  display: none;
+}
+
+.ps-timeline b {
+  color: var(--fourth-color);
+}
+
+.ps-timeline span {
+  color: var(--fourteenth-color);
+}
+
+.ps-timeline .is-now::before {
+  background: #ff3b3b;
+  box-shadow: 0 0 8px rgba(255, 59, 59, .8);
+}
+
+.ps-timeline .is-now b {
+  color: #ff3b3b;
+}
+
+.ps-timeline .is-next::before {
+  background: var(--fifteenth-color);
+}
+
+.ps-timeline .is-next b {
+  color: var(--fifteenth-color);
+}

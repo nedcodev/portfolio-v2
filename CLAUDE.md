@@ -30,7 +30,8 @@ creator.
   Quotes must match the reported wording exactly. Search Reddit/fan coverage
   for reaction, and report it as reaction, not fact.
 - No spoilers, and never link leaked footage.
-- **Short and sweet:** 300–500 words, 2–3 min read, punchy H2 sections.
+- **Short and sweet:** 300–500 words of article (not counting FAQ, captions
+  and sources), 2–3 min read, punchy H2 sections.
   One topic per post (price, release date, online, PC… each gets its own).
 - End with a **"My take"** box in Ned's voice: casual, short, human. Avoid AI
   tells: no em dashes, no "game-changer", no tidy three-item lists, no
