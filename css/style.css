@@ -3546,30 +3546,62 @@ details>summary {
 .ct-dm {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   padding: 1.1rem 1.25rem;
   border-radius: 14px;
   background: var(--sixteenth-color);
-  transition: transform .2s;
 }
 
-.ct-dm:hover {
-  transform: translateY(-2px);
-}
-
-.ct-dm span {
-  flex: 1;
-  font-size: .95rem;
-}
-
-.ct-dm b {
+.ct-dm-text small {
   display: block;
-  color: var(--fourth-color);
+  font-size: .85rem;
+  color: var(--fourteenth-color);
+  margin-bottom: .15rem;
 }
 
-.ct-dm i {
-  font-size: 1.4rem;
+.ct-dm-text b {
+  display: block;
+  font-size: 1.3rem;
   color: var(--fifteenth-color);
+}
+
+/* "Open" fills and glows like the other main buttons */
+.ct-open {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  height: 2.4rem;
+  padding: 0 .9rem;
+  border: 2px solid var(--fifteenth-color);
+  border-radius: 10px;
+  color: var(--fifteenth-color);
+  font-size: .9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background .3s, color .3s, box-shadow .3s;
+}
+
+.ct-open i {
+  font-size: 1.1rem;
+}
+
+.ct-dm:hover .ct-open,
+.ct-dm:focus-visible .ct-open,
+.ct-dm:active .ct-open {
+  background: var(--fifteenth-color);
+  color: var(--eleventh-color);
+  box-shadow:
+    0 0 0 2px rgba(255, 220, 22, .35),
+    0 0 18px rgba(255, 220, 22, .55),
+    0 0 44px rgba(255, 220, 22, .3);
+  animation: neon-flicker .9s steps(1) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-open {
+    animation: none !important;
+  }
 }
 
 /*===== BUTTONS: one shared soft-square style (Lab buttons keep their own) =====*/
