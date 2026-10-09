@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://nedcode.com/</loc>
-  <lastmod>2021-08-04T20:53:31+00:00</lastmod>
-</url>
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://nedcode.com/</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/blog/GTA-6-Leak-Cyberleek-Extended-Leek-Explained.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/blog.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/about.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/projects.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/lab.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/favorites.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/contact.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://nedcode.com/blog/The-Apple-Watch-Band-That-Completely-Won-Me-Over.html</loc><lastmod>2024-07-12</lastmod></url>
+  <url><loc>https://nedcode.com/blog/A-Must-Have-Portable-Door-Lock-for-Every-Traveler.html</loc><lastmod>2024-07-15</lastmod></url>
 </urlset>
