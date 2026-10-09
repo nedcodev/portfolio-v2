@@ -15,6 +15,11 @@ Shared styles live in `css/style.css`, shared behaviour in `scripts.js`.
 
 ## Blog posts
 
+These rules apply to **every** blog post, whatever the topic (gaming, tech,
+travel, product reviews…), new or old. When the post format or these rules
+improve, update all existing posts in `blog/` to match, so the blog always
+looks and reads consistently.
+
 **Voice: journalist + content creator.** Report like a journalist, hook like a
 creator.
 
@@ -42,6 +47,7 @@ creator.
   them: charts (`.ps-chart`), quote cards (`.ps-quote`), speaker cards
   (`.ps-speaker`), timelines, comparison tables (`.ps-table`).
 - Never fake photos of real people or use company logos.
+- Review posts use Ned's own product photos, with short captions.
 
 **SEO: aim for the top of Google.** For every post:
 
