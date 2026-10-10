@@ -66,7 +66,9 @@ creator.
 - File name: `blog/Title-Words-Like-This.html`.
 - Add the URL to `sitemap.xml`; make it the featured post on `blog.html`
   (move the previous one into "More posts"); point the home page's Explore
-  "Blog" card at it; link related posts to each other.
+  "Blog" card at it; link related posts to each other (every post ends
+  with a `.ps-related` "Keep reading" box of 2 posts; update the others' boxes
+  so the new post gets linked too).
 - After publishing, remind Ned to share on Threads and request indexing in
   Google Search Console.
 

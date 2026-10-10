@@ -5214,3 +5214,54 @@ a.tk-item:hover {
   text-transform: uppercase;
   color: #6a6a6a;
 }
+
+/* Related posts at the end of every post */
+.ps-related {
+  margin-top: 2.5rem;
+}
+
+.ps-related-title {
+  margin: 0 0 .8rem !important;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--fifteenth-color);
+}
+
+.ps-related-list {
+  display: grid;
+  gap: .75rem;
+}
+
+.ps-rel {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: .9rem;
+  align-items: center;
+  padding: .6rem;
+  border-radius: 14px;
+  background: #242424;
+  color: #e6e6e6;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: transform .2s;
+}
+
+.ps-rel:hover {
+  transform: translateY(-2px);
+}
+
+.ps-rel img {
+  width: 96px;
+  height: auto;
+  aspect-ratio: 940 / 788;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .ps-related-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
