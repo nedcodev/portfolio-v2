@@ -1104,14 +1104,35 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(() => {
       track.style.setProperty('--tk-duration', `${Math.round(track.scrollWidth / 2 / 60)}s`);
       box.classList.add('is-running');
+      resume();
     });
   };
+
+  // Remember where the loop was, so coming back to the home page continues
+  // from the same spot instead of starting over at the first post
+  const SPOT_KEY = 'nedcode-ticker-spot';
+  const loop = () => track.getAnimations?.()[0];
+  const save = () => {
+    const anim = loop();
+    const total = anim?.effect?.getComputedTiming().duration;
+    if (!anim || !total) return;
+    try { sessionStorage.setItem(SPOT_KEY, String((anim.currentTime % total) / total)); } catch (e) {}
+  };
+  const resume = () => {
+    const anim = loop();
+    const total = anim?.effect?.getComputedTiming().duration;
+    let spot = NaN;
+    try { spot = parseFloat(sessionStorage.getItem(SPOT_KEY)); } catch (e) {}
+    if (anim && total && spot >= 0 && spot < 1) anim.currentTime = spot * total;
+  };
+  window.addEventListener('pagehide', save);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
 
   // Let go of a tapped post so the ticker keeps moving when the visitor comes back
   const release = () => {
     if (box.contains(document.activeElement)) document.activeElement.blur();
   };
-  track.addEventListener('click', (e) => { if (e.target.closest('a')) setTimeout(release, 0); });
+  track.addEventListener('click', (e) => { if (e.target.closest('a')) { save(); setTimeout(release, 0); } });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) release(); });
   window.addEventListener('pageshow', release);
 
