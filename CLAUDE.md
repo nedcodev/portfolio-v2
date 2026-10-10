@@ -69,6 +69,12 @@ creator.
   "Blog" card at it; link related posts to each other (every post ends
   with a `.ps-related` "Keep reading" box of 2 posts; update the others' boxes
   so the new post gets linked too).
+- Link sources inline too: the first time an outlet or official source is
+  cited, link its name to that article (`target="_blank" rel="noopener"`),
+  and link the main subject on first mention (e.g. FiveM → fivem.net). One
+  link per source, first mention only; keep the Sources list at the end.
+  Link to other posts on the site where it fits. Review posts (Apple Watch
+  band, door lock) keep their Amazon links only.
 - After publishing, remind Ned to share on Threads and request indexing in
   Google Search Console.
 
