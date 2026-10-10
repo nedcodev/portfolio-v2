@@ -4757,6 +4757,10 @@ a.tk-item:hover {
   color: var(--fifteenth-color);
 }
 
+.ps-body a strong {
+  color: inherit;
+}
+
 /* "The short version" box */
 .ps-tldr {
   margin-bottom: 2rem;
