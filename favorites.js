@@ -161,7 +161,7 @@
       year: 2025,
       by: 'Jake Schreier',
       genre: 'Superhero',
-      rating: 4,
+      rating: 3.3,
     },
     {
       type: 'movie',
@@ -201,7 +201,7 @@
       year: 2025,
       by: "Gavin O'Connor",
       genre: 'Action',
-      rating: 3.7,
+      rating: 3.3,
     },
     {
       type: 'movie',
