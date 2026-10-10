@@ -36,7 +36,7 @@ creator.
 - End with a **"My take"** box in Ned's voice: casual, short, human. Avoid AI
   tells: no em dashes, no "game-changer", no tidy three-item lists, no
   "Here's the thing". Only use facts about Ned that are true (he *watches*
-  GTA RP on Twitch; he doesn't claim to play it). Ask Ned if unsure.
+  GTA RP on Twitch; he doesn't claim to play it; his phone is an iPhone Air). Ask Ned if unsure.
 - Then a short FAQ (3–4 questions) and a Sources list.
 
 **Visuals: always find a way.** Every post gets:
