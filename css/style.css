@@ -3988,7 +3988,7 @@ a.bl-row:hover {
 
 .bl-row img {
   width: 110px;
-  aspect-ratio: 1;
+  aspect-ratio: 940 / 788;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -4274,7 +4274,7 @@ a.tk-item:hover {
 
 .hm-row {
   display: grid;
-  grid-template-columns: 84px 1fr;
+  grid-template-columns: 100px 1fr;
   gap: 1rem;
   align-items: center;
   padding: .7rem;
@@ -4290,7 +4290,7 @@ a.tk-item:hover {
 
 .hm-row img,
 .hm-board {
-  width: 84px;
+  width: 100px;
   height: 84px;
   border-radius: 10px;
   object-fit: cover;
