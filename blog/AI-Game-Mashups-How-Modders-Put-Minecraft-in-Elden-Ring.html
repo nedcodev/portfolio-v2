@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Game Mashups: How Modders Put Minecraft in Elden Ring | NEDCODE</title>
+  <meta name="description" content="Minecraft in Elden Ring, Mario Kart in CoD Zombies: AI decompiling lets modders mash whole games together. How it works and why publishers push back.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://nedcode.com/blog/AI-Game-Mashups-How-Modders-Put-Minecraft-in-Elden-Ring.html">
+  <meta name="author" content="Ned">
+
+  <!-- Social previews -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="NEDCODE">
+  <meta property="og:title" content="AI Game Mashups: How Modders Put Minecraft in Elden Ring">
+  <meta property="og:description" content="Minecraft in Elden Ring, Mario Kart in CoD Zombies: AI decompiling lets modders mash whole games together. How it works and why publishers push back.">
+  <meta property="og:url" content="https://nedcode.com/blog/AI-Game-Mashups-How-Modders-Put-Minecraft-in-Elden-Ring.html">
+  <meta property="og:image" content="https://nedcode.com/img/blog/ai-mashups-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AI game mashups: how modders merge whole games.">
+  <meta property="article:published_time" content="2026-10-11T12:00:00-04:00">
+  <meta property="article:section" content="Gaming">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Game Mashups: How Modders Put Minecraft in Elden Ring">
+  <meta name="twitter:description" content="Minecraft in Elden Ring, Mario Kart in CoD Zombies: AI decompiling lets modders mash whole games together. How it works and why publishers push back.">
+  <meta name="twitter:image" content="https://nedcode.com/img/blog/ai-mashups-og.jpg">
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AI Game Mashups: How Modders Are Putting Minecraft in Elden Ring",
+    "description": "Minecraft in Elden Ring, Mario Kart in CoD Zombies: AI decompiling lets modders mash whole games together. How it works and why publishers push back.",
+    "image": [
+      "https://nedcode.com/img/blog/ai-mashups-og.jpg"
+    ],
+    "datePublished": "2026-10-11T12:00:00-04:00",
+    "dateModified": "2026-10-11T12:00:00-04:00",
+    "author": {
+      "@type": "Person",
+      "name": "Ned",
+      "url": "https://nedcode.com/about.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NEDCODE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nedcode.com/img/full-logo.png"
+      }
+    },
+    "mainEntityOfPage": "https://nedcode.com/blog/AI-Game-Mashups-How-Modders-Put-Minecraft-in-Elden-Ring.html",
+    "keywords": "AI game mashups, AI decompiling, AI decompilation games, Minecraft in Elden Ring, game mashup mods, Melee decompilation, AI mods"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is AI decompiling?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Decompiling turns a game’s machine code back into code people can read and edit. AI tools now do a lot of that work much faster, which makes big mods like game mashups easier to build."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download Minecraft in Elden Ring?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not yet. Its creator, Tobyn Jacobs, has shown clips but hasn’t released it publicly, according to Dexerto."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is AI decompiling legal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It’s a gray area. Publishers have pushed back: Activision and Bethesda had AI-built Modern Warfare 2 and Fallout projects taken down. No court has ruled on AI decompiles yet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I get banned for using mashup mods?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, if you take them online. Most mashups only run with anti-cheat turned off, so keep them offline."
+        }
+      }
+    ]
+  }
+]
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <meta name="p:domain_verify" content="e3b1d962e4fb8d9743a73038bff9eb11" />
+</head>
+
+<body>
+  <!--===== HEADER =====-->
+  <header class="l-header">
+    <nav class="nav bd-grid">
+
+            <div class="nav-logo-group">
+  <div class="nav-logo-layer nav-logo">
+    <a href="../index.html"><img src="../img/full-logo.png" alt="NEDCODE logo"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo1">
+    <a href="../index.html"><img src="../img/logo-ned-n.png" alt="N letter"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo2">
+    <a href="../index.html"><img src="../img/logo-ned-e.png" alt="E letter"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo3">
+    <a href="../index.html"><img src="../img/logo-ned-d.png" alt="D letter"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo4">
+    <a href="../index.html"><img src="../img/logo-code-c.png" alt="C letter"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo5">
+    <a href="../index.html"><img src="../img/logo-code-o.png" alt="O letter"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo6">
+    <a href="../index.html"><img src="../img/logo-code-d.png" alt="D letter"></a>
+  </div>
+  <div class="nav-logo-layer nav-logo7">
+    <a href="../index.html"><img src="../img/logo-code-e.png" alt="E letter"></a>
+  </div>
+</div>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+         <li class="nav-item"><a href="../index.html" class="nav-link ">home</a></li>
+          <li class="nav-item"><a href="../about.html" class="nav-link">about</a></li>
+          <!-- <li class="nav-item"><a href="../unfiltered.html" class="nav-link">unfiltered</a></li> -->
+          <li class="nav-item"><a href="../blog.html" class="nav-link active">blog</a></li>
+          <li class="nav-item"><a href="../favorites.html" class="nav-link">favorites</a></li>
+          <li class="nav-item"><a href="../projects.html" class="nav-link">projects</a></li>
+          <li class="nav-item"><a href="../lab.html" class="nav-link">lab</a></li>
+          <li class="nav-item"><a href="../contact.html" class="nav-link">contact</a></li>
+        </ul>
+      </div>
+
+      <!-- <div class="nav-toggle" id="nav-toggle">
+        <i class="uil uil-align-right"></i>
+      </div> -->
+
+      <!--===== MENU ICON =====-->
+<div class="nav-toggle" id="nav-toggle">
+      <svg class="nav-toggle hamRotate ham1" viewBox="0 0 100 100" width="50" onclick="this.classList.toggle('active')">
+  <path
+        class="line top"
+        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+  <path
+        class="line middle"
+        d="m 30,50 h 40" />
+  <path
+        class="line bottom"
+        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+</svg>
+</div>
+
+
+    </nav>
+  </header>
+
+  <main class="l-main ps">
+    <article class="ps-article">
+      <header class="ps-head">
+        <a class="ps-back" href="../blog.html">&larr; buzz Blog</a>
+        <p class="ps-kicker ps-kicker-review">Gaming · AI</p>
+        <h1 class="ps-title">AI Game Mashups: How Modders Are Putting Minecraft in Elden Ring</h1>
+        <p class="ps-meta">By <a href="https://www.threads.com/@nedcodev/" target="_blank" rel="noopener">Ned</a> · <time datetime="2026-10-11">October 11, 2026</time> · 3 min read</p>
+        <img class="ps-cover" src="../img/blog/ai-mashups-thumb.jpg" alt="AI game mashups: how modders merge whole games." width="940" height="788">
+      </header>
+
+      <div class="ps-body">
+        <p class="ps-lead">Minecraft running inside Elden Ring. Mario Kart racing in Call of Duty Zombies. A wave of <strong>game mashup mods</strong> just took over X, and AI is a big reason they’re suddenly possible.</p>
+
+        <h2>The AI game mashups going viral</h2>
+        <p>The one everyone’s talking about comes from modder Tobyn Jacobs. On September 29, Jacobs posted clips of Minecraft running inside Elden Ring, claiming all 1,600 items, working redstone and Creative Mode made it over, <a href="https://www.dexerto.com/minecraft/modder-recreates-all-of-minecraft-inside-elden-ring-with-1600-items-and-working-redstone-3413457/" target="_blank" rel="noopener">Dexerto</a> and <a href="https://www.tweaktown.com/news/113855/minecraft-runs-inside-elden-ring-as-modders-mash-up-entire-games/index.html" target="_blank" rel="noopener">TweakTown</a> reported. Jacobs credits experiments with AI for it, but the mod isn’t public yet.</p>
+        <p>Others include Mario Kart vehicles in CoD Zombies and Spider-Man swinging around Batman’s Gotham, according to <a href="https://decrypt.co/380407/ai-video-game-mod-mashups-are-taking-off-here-are-the-wackiest-examples" target="_blank" rel="noopener">Decrypt</a> and <a href="https://videocardz.com/newz/modders-are-now-merging-entire-games-from-minecraft-in-elden-ring-to-mario-kart-in-cod-zombies" target="_blank" rel="noopener">VideoCardz</a>. <strong>Unconfirmed:</strong> Decrypt notes it isn’t clear which viral clips actually used AI.</p>
+
+        <h2>What AI decompiling actually is</h2>
+        <p>Games ship as machine code, which is basically unreadable. <strong>Decompiling</strong> turns it back into code people can read, edit and rebuild. It used to take years of work by hand. AI coding agents now handle huge chunks of it, and that’s what makes merging two games realistic.</p>
+        <figure class="ps-chart">
+          <p class="ps-chart-title">How a game mashup gets made</p>
+          <ol class="ps-timeline">
+            <li><b>Step 1</b><span>Decompile the game into readable code</span></li>
+            <li><b>Step 2</b><span>AI agents map and rewrite the parts</span></li>
+            <li><b>Step 3</b><span>Pull in a second game’s world or mechanics</span></li>
+            <li class="is-now"><b>Step 4</b><span>Test and fix until it runs</span></li>
+            <li class="is-next"><b>Result</b><span>Offline only, anti-cheat off</span></li>
+          </ol>
+        </figure>
+
+        <h2>The proof: Melee is 100% decompiled</h2>
+        <p>The biggest sign this is real: Super Smash Bros. Melee was fully decompiled in September, more than six years after the project started, with AI helping finish the last stretch, <a href="https://www.tomshardware.com/video-games/retro-gaming/super-smash-bros-melee-gets-fully-decompiled-after-over-six-years-of-effort-ambitious-and-technically-impressive-project-delivers-gamecube-classic-as-c-code" target="_blank" rel="noopener">Tom’s Hardware</a> and <a href="https://www.eventhubs.com/news/2026/sep/19/super-smash-melee-decompiled-c/" target="_blank" rel="noopener">EventHubs</a> reported.</p>
+        <figure class="ps-quote">
+          <blockquote>“Super Smash Bros. Melee is now 100% decompiled!”</blockquote>
+          <figcaption><a href="https://x.com/ReticentY2K/status/2097085534317211972" target="_blank" rel="noopener">Reticent on X</a>, with the note “Used with AI (Claude)”</figcaption>
+        </figure>
+        <p>That doesn’t mean a PC version you can download. EventHubs points out a full port is still far away.</p>
+
+        <h2>Publishers are pushing back</h2>
+        <p>Not everyone’s a fan. Activision had footage of Maurice Heumann’s AI-assisted Modern Warfare 2 decompile taken down and the site hosting it blocked, while Bethesda went after an AI-built Fallout project, <a href="https://www.thegamer.com/ai-vibecoded-decompilations-takedown-fallout-mw2-dmca/" target="_blank" rel="noopener">TheGamer</a> and <a href="https://opencritic.com/news/37073/vibecoded-decomps-face-takedowns-as-fallout-and-mw2-projects-removed" target="_blank" rel="noopener">OpenCritic</a> reported.</p>
+        <div class="ps-table-wrap">
+          <table class="ps-table">
+            <thead><tr><th scope="col">Project</th><th scope="col">Status</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Minecraft in Elden Ring</th><td>Clips only, not released</td></tr>
+              <tr><th scope="row">Melee decompile</th><td>100% done, no PC port</td></tr>
+              <tr><th scope="row">MW2 AI decompile</th><td>Taken down by Activision</td></tr>
+              <tr><th scope="row">AI Fallout project</th><td>Taken down by Bethesda</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>One more catch: most mashups only run with anti-cheat turned off, so taking them online is a quick way to get banned.</p>
+
+        <div class="ps-tldr">
+          <p class="ps-tldr-title">My take</p>
+          <p>This is the most fun gaming has felt in a while. Give me Iron Man in CoD Zombies or Minecraft blocks in GTA and I’m downloading it day one.</p>
+          <p>Just keep it offline. A ban isn’t worth a meme.</p>
+        </div>
+
+        <h2>FAQ</h2>
+          <details class="ps-faq">
+            <summary>What is AI decompiling?</summary>
+            <p>Decompiling turns a game’s machine code back into code people can read and edit. AI tools now do a lot of that work much faster, which makes big mods like game mashups easier to build.</p>
+          </details>
+          <details class="ps-faq">
+            <summary>Can I download Minecraft in Elden Ring?</summary>
+            <p>Not yet. Its creator, Tobyn Jacobs, has shown clips but hasn’t released it publicly, according to Dexerto.</p>
+          </details>
+          <details class="ps-faq">
+            <summary>Is AI decompiling legal?</summary>
+            <p>It’s a gray area. Publishers have pushed back: Activision and Bethesda had AI-built Modern Warfare 2 and Fallout projects taken down. No court has ruled on AI decompiles yet.</p>
+          </details>
+          <details class="ps-faq">
+            <summary>Can I get banned for using mashup mods?</summary>
+            <p>Yes, if you take them online. Most mashups only run with anti-cheat turned off, so keep them offline.</p>
+          </details>
+
+        <p class="ps-sources-title">Sources</p>
+        <ul class="ps-sources">
+          <li><a href="https://www.dexerto.com/minecraft/modder-recreates-all-of-minecraft-inside-elden-ring-with-1600-items-and-working-redstone-3413457/" target="_blank" rel="noopener">Dexerto: Minecraft in Elden Ring</a></li>
+          <li><a href="https://www.tweaktown.com/news/113855/minecraft-runs-inside-elden-ring-as-modders-mash-up-entire-games/index.html" target="_blank" rel="noopener">TweakTown</a></li>
+          <li><a href="https://decrypt.co/380407/ai-video-game-mod-mashups-are-taking-off-here-are-the-wackiest-examples" target="_blank" rel="noopener">Decrypt: the wackiest mashups</a></li>
+          <li><a href="https://videocardz.com/newz/modders-are-now-merging-entire-games-from-minecraft-in-elden-ring-to-mario-kart-in-cod-zombies" target="_blank" rel="noopener">VideoCardz</a></li>
+          <li><a href="https://gamerant.com/ai-gaming-mods-decompilation-preservation-call-of-duty-skate-3/" target="_blank" rel="noopener">Game Rant: AI mods and preservation</a></li>
+          <li><a href="https://www.tomshardware.com/video-games/retro-gaming/super-smash-bros-melee-gets-fully-decompiled-after-over-six-years-of-effort-ambitious-and-technically-impressive-project-delivers-gamecube-classic-as-c-code" target="_blank" rel="noopener">Tom’s Hardware: Melee fully decompiled</a></li>
+          <li><a href="https://www.eventhubs.com/news/2026/sep/19/super-smash-melee-decompiled-c/" target="_blank" rel="noopener">EventHubs: Melee decompiled, PC port far away</a></li>
+          <li><a href="https://x.com/ReticentY2K/status/2097085534317211972" target="_blank" rel="noopener">Reticent on X</a></li>
+          <li><a href="https://www.thegamer.com/ai-vibecoded-decompilations-takedown-fallout-mw2-dmca/" target="_blank" rel="noopener">TheGamer: Fallout and MW2 takedowns</a></li>
+          <li><a href="https://opencritic.com/news/37073/vibecoded-decomps-face-takedowns-as-fallout-and-mw2-projects-removed" target="_blank" rel="noopener">OpenCritic</a></li>
+        </ul>
+
+        <nav class="ps-related" aria-label="Related posts">
+          <p class="ps-related-title">Keep reading</p>
+          <div class="ps-related-list">
+            <a class="ps-rel" href="What-Is-GTA-RP-Beginners-Guide-to-GTA-Roleplay.html">
+              <img src="../img/blog/gta-rp-thumb.jpg" alt="" width="940" height="788" loading="lazy">
+              <span>What Is GTA RP? A Beginner’s Guide</span>
+            </a>
+            <a class="ps-rel" href="Is-Sony-Killing-PS5-Discs-What-Changes-in-2028.html">
+              <img src="../img/blog/ps5-discs-thumb.jpg" alt="" width="940" height="788" loading="lazy">
+              <span>Is Sony Killing PS5 Discs?</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+ <!--===== FOOTER =====-->
+      <footer class="footer">
+          <a href="https://www.threads.net/@nedcodev/" target="_blank" class="footer-icon">
+            <iconify-icon icon="mingcute:threads-line"></iconify-icon>
+          </a>
+        <p>&#169; Designed & Developed by Ned, <span class="footer-year">2026</span>
+          <br>
+          <br>
+        </p>
+      </footer>
+      
+  <!--===== SCRIPTS =====-->
+  <script src="../scripts.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+
+  <!-- Pinterest Tag -->
+  <script>
+    !function (e) {
+      if (!window.pintrk) {
+        window.pintrk = function () {
+          window.pintrk.queue.push(Array.prototype.slice.call(arguments))
+        }; var
+          n = window.pintrk; n.queue = [], n.version = "3.0"; var
+            t = document.createElement("script"); t.async = !0, t.src = e; var
+              r = document.getElementsByTagName("script")[0];
+        r.parentNode.insertBefore(t, r)
+      }
+    }("https://s.pinimg.com/ct/core.js");
+    pintrk('load', '2613109788970', { em: 'ned.marafawi@gmail.com' });
+    pintrk('page');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none;" alt=""
+      src="https://ct.pinterest.com/v3/?event=init&tid=2613109788970&pd[em]=<hashed_email_address>&noscript=1" />
+  </noscript>
+  <!-- end Pinterest Tag -->
+
+  <script>
+    pintrk('track', 'pagevisit', {
+      event_id: 'eventId0001'
+    });
+  </script>
+</body>
+
+</html>
