@@ -1039,8 +1039,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSiteStats();
 });
 
-/*===== HOME: NEWS TICKER =====*/
-// Montreal time + a scrolling ticker of gaming and tech headlines from /api/news
+/*===== HOME: BLOG TICKER =====*/
+// Montreal time + a scrolling loop of Ned's latest blog posts, read from blog.html
+// (so a new post shows up here automatically once it's on the blog page)
 (() => {
   const ZONE = 'America/Toronto';
   const boardClock = document.querySelector('.hm-clock');
@@ -1056,22 +1057,27 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   tickClock(); setInterval(tickClock, 30000);
 
-  // Alternate gaming and tech so both topics keep coming around
-  const mix = (gaming, tech) => {
-    const out = [];
-    for (let i = 0; i < Math.max(gaming.length, tech.length); i++) {
-      if (gaming[i]) out.push({ ...gaming[i], topic: 'Gaming' });
-      if (tech[i]) out.push({ ...tech[i], topic: 'Tech' });
-    }
-    return out;
+  // Featured post + "More posts" (skipping "coming soon" cards), newest first
+  const readPosts = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return [...doc.querySelectorAll('a.bl-feature, a.bl-row')].map((a) => {
+      const meta = (a.querySelector('.bl-meta')?.textContent || '').split('·').map((t) => t.trim());
+      return {
+        link: a.getAttribute('href'),
+        title: a.querySelector('h2, h3')?.textContent.trim() || '',
+        topic: meta[1] || 'Blog',
+        read: meta[2] || '',
+      };
+    }).filter((p) => p.link && p.title);
   };
 
   const build = (items) => {
     track.textContent = '';
     if (!items.length) {
-      const empty = document.createElement('span');
+      const empty = document.createElement('a');
       empty.className = 'tk-item';
-      empty.textContent = 'No headlines right now.';
+      empty.href = 'blog.html';
+      empty.textContent = 'Read the latest on the blog';
       track.append(empty);
       return;
     }
@@ -1081,8 +1087,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = document.createElement('a');
         a.className = 'tk-item';
         a.href = n.link;
-        a.target = '_blank';
-        a.rel = 'noopener';
         if (copy) { a.setAttribute('aria-hidden', 'true'); a.tabIndex = -1; }
         const tag = document.createElement('span');
         tag.className = 'tk-tag';
@@ -1091,19 +1095,19 @@ document.addEventListener('DOMContentLoaded', () => {
         title.textContent = n.title;
         const src = document.createElement('span');
         src.className = 'tk-src';
-        src.textContent = n.source;
+        src.textContent = n.read;
         a.append(tag, title, src);
         track.append(a);
       }
     }
-    // Same reading speed no matter how many headlines: about 60px per second
+    // Same reading speed no matter how many posts: about 60px per second
     requestAnimationFrame(() => {
       track.style.setProperty('--tk-duration', `${Math.round(track.scrollWidth / 2 / 60)}s`);
       box.classList.add('is-running');
     });
   };
 
-  // Let go of a tapped headline so the ticker keeps moving when the visitor comes back
+  // Let go of a tapped post so the ticker keeps moving when the visitor comes back
   const release = () => {
     if (box.contains(document.activeElement)) document.activeElement.blur();
   };
@@ -1111,9 +1115,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('visibilitychange', () => { if (!document.hidden) release(); });
   window.addEventListener('pageshow', release);
 
-  fetch('/api/news')
-    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-    .then((data) => build(mix(data.gaming || [], data.tech || [])))
+  fetch('blog.html')
+    .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+    .then((html) => build(readPosts(html)))
     .catch(() => build([]));
 })();
   
