@@ -1,6 +1,7 @@
 /*=============== FAVORITES: FLIP CARD WALL ===============*/
 // Covers load automatically:
-// - movies & TV shows from TMDB (needs your free API key below)
+// - movies & TV shows from TMDB via netlify/functions/tmdb.js
+//   (the key lives in a server-side env var, never in this file)
 // - books from Open Library (no key needed)
 // To add a favorite, add one line to FAVORITES. Fields:
 //   type: 'book' | 'movie' | 'tv'      title, year, by (author / director), genre
@@ -12,7 +13,6 @@
   if (!grid) return;
 
   /*---------- settings ----------*/
-  const TMDB_API_KEY = 'c8c6ab0583643f0bad4674680643e4fc';
   const COVER_CACHE_KEY = 'nedcode-fav-covers-v1';
   const CACHE_DAYS_FOUND = 30;
   const CACHE_DAYS_MISSING = 3;
@@ -956,28 +956,25 @@
   }
 
   async function findScreenCover(f) {
-    if (!TMDB_API_KEY) return null; // no key yet: keep the placeholder, don't cache
+    // Covers come from our own Netlify Function proxy, which holds the TMDB
+    // key server-side (see netlify/functions/tmdb.js). If the proxy is down
+    // or unconfigured, getJSON throws and the caller keeps the placeholder.
     const kind = f.type === 'tv' ? 'tv' : 'movie';
-    const base = 'https://api.themoviedb.org/3';
-    const key = `api_key=${encodeURIComponent(TMDB_API_KEY)}`;
+    const base = '/.netlify/functions/tmdb';
     let poster = '';
     if (f.tmdbId) {
-      const data = await getJSON(`${base}/${kind}/${f.tmdbId}?${key}`);
+      const data = await getJSON(
+        `${base}?kind=${kind}&id=${encodeURIComponent(f.tmdbId)}`,
+      );
       poster = data.poster_path || '';
     } else {
-      const query = `query=${encodeURIComponent(f.title)}&include_adult=false`;
-      const yearParam = f.year
-        ? kind === 'tv'
-          ? `&first_air_date_year=${f.year}`
-          : `&year=${f.year}`
-        : '';
-      let data = await getJSON(
-        `${base}/search/${kind}?${key}&${query}${yearParam}`,
-      );
+      const query = `q=${encodeURIComponent(f.title)}`;
+      const yearParam = f.year ? `&year=${f.year}` : '';
+      let data = await getJSON(`${base}?kind=${kind}&${query}${yearParam}`);
       let hit = (data.results || []).find((r) => r.poster_path);
-      if (!hit && yearParam) {
+      if (!hit && f.year) {
         // release dates differ between countries, so try once more without the year
-        data = await getJSON(`${base}/search/${kind}?${key}&${query}`);
+        data = await getJSON(`${base}?kind=${kind}&${query}`);
         hit = (data.results || []).find((r) => r.poster_path);
       }
       poster = hit ? hit.poster_path : '';
